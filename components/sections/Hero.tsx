@@ -109,7 +109,7 @@ export function Hero() {
                   <div className="grid grid-cols-[96px_1fr] md:grid-cols-[100px_1fr]">
                     <div className="relative min-h-[108px] md:min-h-[110px]">
                       <Image
-                        src="/images/royal-cargo-enclosed-1.JPG"
+                        src="/images/royal-cargo-enclosed-3.JPG"
                         alt="Enclosed Trailer"
                         fill
                         className="object-cover transition duration-300 group-hover:scale-105"
