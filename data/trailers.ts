@@ -18,7 +18,7 @@ export const trailers: Trailer[] = [
     name: `2026 Royal Cargo 7'6" x 16' + V-Nose Enclosed Trailer`,
     shortName: "Enclosed Trailer",
     status: "Available Now",
-    image: "/images/royal-cargo-enclosed-1.jpg",
+    image: "/images/royal-cargo-enclosed-1.JPG",
     images: [
       "/images/royal-cargo-enclosed-1.JPG",
       "/images/royal-cargo-enclosed-2.JPG",
