@@ -1,3 +1,18 @@
+export type Trailer = {
+  id: string;
+  name: string;
+  shortName: string;
+  status: "Available Now" | "Coming Soon";
+  image: string;
+  images?: string[];
+  startingPrice: string;
+  summary: string;
+  description: string;
+  specs: string[];
+  bestFor: string[];
+  accessories: string[];
+};
+
 export const trailers: Trailer[] = [
   {
     id: "royal-cargo-enclosed",
@@ -13,12 +28,11 @@ export const trailers: Trailer[] = [
       "/images/royal-cargo-enclosed-5.jpg",
       "/images/royal-cargo-enclosed-6.jpg",
     ],
-    startingPrice: 115,
-    priceUnit: "day",
+    startingPrice: "$115/day",
     summary:
       "Secure enclosed hauling with a clean blacked-out look and protected cargo space.",
     description:
-      `This 2026 Royal Cargo 7'6" x 16' + V-Nose enclosed trailer with dual 3500lb axles is a strong option for customers needing secure, weather-protected hauling.`,
+      "This 2026 Royal Cargo 7'6\" x 16' + V-Nose enclosed trailer with dual 3500lb axles is a strong option for customers needing secure, weather-protected hauling. Ideal for moving, equipment transport, and enclosed cargo that needs to stay clean, dry, and protected on the road.",
     specs: [
       "2026 Royal Cargo",
       `7'6" x 16' + V-Nose`,
@@ -56,12 +70,11 @@ export const trailers: Trailer[] = [
       "/images/suretrac-dump-8.jpg",
       "/images/suretrac-dump-9.jpg",
     ],
-    startingPrice: 115,
-    priceUnit: "day",
+    startingPrice: "$115/day",
     summary:
       "Heavy-duty dump trailer built for real cleanup, hauling, and job site work.",
     description:
-      "This 2025 SureTrac 6x10 dump trailer with dual 5000lb axles is built for real-world jobs.",
+      "This 2025 SureTrac 6x10 dump trailer with dual 5000lb axles is built for real-world jobs. Whether you're handling landscaping cleanup, renovation debris, or hauling gravel and material, this trailer is designed to be reliable, simple to use, and capable under load. The hydraulic dump system makes unloading fast and efficient, saving time on every job.",
     specs: [
       "2025 SureTrac",
       "6x10 dump bed",
@@ -99,12 +112,11 @@ export const trailers: Trailer[] = [
       "/images/southland-dovetail-7.jpg",
       "/images/southland-dovetail-8.jpg",
     ],
-    startingPrice: 115,
-    priceUnit: "day",
+    startingPrice: "$115/day",
     summary:
       "Heavy-duty flat deck built for equipment, vehicles, and serious hauling.",
     description:
-      "This 2026 Southland 7x20 + dovetail trailer is built for serious hauling.",
+      "This 2026 Southland 7x20 + dovetail trailer with dual 7000lb axles is built for serious hauling. Ideal for equipment, vehicles, and larger loads with the stability and strength needed for heavier jobs.",
     specs: [
       "2026 Southland",
       "7x20 deck + dovetail",

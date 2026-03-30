@@ -26,7 +26,7 @@ export default function RentalsPage() {
                   ? trailer.images
                   : [trailer.image];
 
-              const mainImage: string = galleryImages[0];
+              const mainImage: string = galleryImages[0]!;
               const extraImages: string[] = galleryImages.slice(1);
 
               return (
@@ -159,7 +159,9 @@ export default function RentalsPage() {
 
                       <div className="mt-10 flex flex-wrap gap-4">
                         <Button
-                          href={`/contact?trailer=${encodeURIComponent(trailer.name)}`}
+                          href={`/contact?trailer=${encodeURIComponent(
+                            trailer.name
+                          )}`}
                           className="min-w-[200px]"
                         >
                           Request This Trailer
