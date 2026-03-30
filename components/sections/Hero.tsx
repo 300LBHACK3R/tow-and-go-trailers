@@ -7,7 +7,6 @@ import { siteConfig } from "@/lib/site";
 export function Hero() {
   return (
     <section className="relative min-h-screen overflow-hidden border-b border-white/10 pt-[128px] md:pt-[140px]">
-      {/* REAL BACKGROUND IMAGE */}
       <Image
         src="/images/hero.jpg"
         alt="Tow-N-Go trailer in use"
@@ -16,24 +15,14 @@ export function Hero() {
         className="object-cover"
       />
 
-      {/* DARK BASE OVERLAY */}
       <div className="absolute inset-0 bg-black/68" />
-
-      {/* PREMIUM GOLD ATMOSPHERIC GLOW */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(212,175,55,0.34),transparent_30%),radial-gradient(circle_at_75%_20%,rgba(212,175,55,0.26),transparent_26%),radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.06),transparent_28%)]" />
-
-      {/* CINEMATIC VIGNETTE */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_35%,rgba(0,0,0,0.25)_65%,rgba(0,0,0,0.65)_100%)]" />
-
-      {/* DEPTH GRADIENT */}
       <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.70),rgba(0,0,0,0.45),rgba(0,0,0,0.88))]" />
-
-      {/* SUBTLE LIGHT BEAM */}
       <div className="absolute inset-y-0 left-[55%] hidden w-[32rem] -translate-x-1/2 rotate-[10deg] bg-[linear-gradient(to_bottom,rgba(212,175,55,0.14),rgba(212,175,55,0.05),transparent)] blur-3xl xl:block" />
 
       <Container className="relative py-16 md:py-24 lg:py-28">
         <div className="grid items-center gap-10 xl:grid-cols-[1.08fr_0.92fr] xl:gap-14">
-          {/* LEFT */}
           <div className="max-w-4xl">
             <p className="mb-5 text-xs font-semibold uppercase tracking-[0.35em] text-[#d4af37]">
               Premium Trailer Rentals in the Okanagan
@@ -45,6 +34,11 @@ export function Hero() {
               <span className="block">and Work Hard.</span>
             </h1>
 
+            <p className="mt-5 text-lg text-zinc-200 md:text-xl">
+              Trailer rentals starting at{" "}
+              <span className="font-semibold text-[#d4af37]">$115/day</span>
+            </p>
+
             <p className="mt-6 max-w-2xl text-base leading-8 text-zinc-300 md:mt-8 md:text-xl">
               {siteConfig.shortName} offers a growing premium fleet with flexible
               daily, weekly, and monthly rental options, delivery and pickup
@@ -55,7 +49,11 @@ export function Hero() {
               <Button href="/rentals" className="min-w-[170px]">
                 View Trailers
               </Button>
-              <Button href="/contact" variant="secondary" className="min-w-[170px]">
+              <Button
+                href="/contact"
+                variant="secondary"
+                className="min-w-[170px]"
+              >
                 Request a Rental
               </Button>
             </div>
@@ -80,11 +78,10 @@ export function Hero() {
             </div>
           </div>
 
-          {/* RIGHT PANEL */}
           <div className="relative">
             <div className="absolute -inset-6 rounded-[2rem] bg-[radial-gradient(circle,rgba(212,175,55,0.28),transparent_60%)] blur-2xl" />
 
-            <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-black/45 p-5 backdrop-blur-xl shadow-[0_30px_120px_rgba(0,0,0,0.70)] md:p-6">
+            <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-black/45 p-5 shadow-[0_30px_120px_rgba(0,0,0,0.70)] backdrop-blur-xl md:p-6">
               <div className="mb-5 flex items-center justify-between">
                 <div>
                   <p className="text-xs uppercase tracking-[0.28em] text-[#d4af37]">
@@ -101,7 +98,6 @@ export function Hero() {
               </div>
 
               <div className="grid gap-4">
-                {/* Enclosed Trailer */}
                 <Link
                   href="/rentals#royal-cargo-enclosed"
                   className="group overflow-hidden rounded-2xl border border-white/10 bg-black/45 transition hover:border-[#d4af37]/40 hover:bg-white/[0.02]"
@@ -122,6 +118,9 @@ export function Hero() {
                       <h3 className="mt-2 text-lg font-semibold text-white">
                         Enclosed Trailer
                       </h3>
+                      <p className="mt-1 text-sm font-medium text-[#d4af37]">
+                        Pricing starting at $115/day
+                      </p>
                       <p className="mt-1 text-sm leading-6 text-zinc-300">
                         Secure, clean, and ideal for moving and protected cargo.
                       </p>
@@ -134,7 +133,6 @@ export function Hero() {
                   </div>
                 </Link>
 
-                {/* Dump Trailer */}
                 <Link
                   href="/rentals#suretrac-dump"
                   className="group overflow-hidden rounded-2xl border border-white/10 bg-black/45 transition hover:border-[#d4af37]/40 hover:bg-white/[0.02]"
@@ -155,6 +153,9 @@ export function Hero() {
                       <h3 className="mt-2 text-lg font-semibold text-white">
                         Dump Trailer
                       </h3>
+                      <p className="mt-1 text-sm font-medium text-[#d4af37]">
+                        Pricing starting at $115/day
+                      </p>
                       <p className="mt-1 text-sm leading-6 text-zinc-300">
                         Perfect for landscaping, debris, and heavy hauling jobs.
                       </p>
@@ -167,7 +168,6 @@ export function Hero() {
                   </div>
                 </Link>
 
-                {/* Dovetail Trailer */}
                 <Link
                   href="/rentals#southland-dovetail"
                   className="group overflow-hidden rounded-2xl border border-white/10 bg-black/45 transition hover:border-[#d4af37]/40 hover:bg-white/[0.02]"
@@ -188,8 +188,12 @@ export function Hero() {
                       <h3 className="mt-2 text-lg font-semibold text-white">
                         7x20 Dovetail Trailer
                       </h3>
+                      <p className="mt-1 text-sm font-medium text-[#d4af37]">
+                        Pricing starting at $115/day
+                      </p>
                       <p className="mt-1 text-sm leading-6 text-zinc-300">
-                        Heavy-duty flat deck built for equipment, vehicles, and serious hauling.
+                        Heavy-duty flat deck built for equipment, vehicles, and
+                        serious hauling.
                       </p>
                       <div className="mt-2 flex flex-wrap gap-3 text-xs text-zinc-400">
                         <span>7x20</span>
@@ -202,7 +206,6 @@ export function Hero() {
               </div>
             </div>
           </div>
-          {/* END RIGHT PANEL */}
         </div>
       </Container>
     </section>

@@ -11,6 +11,7 @@ export default function RentalsPage() {
         eyebrow="Trailer Rentals"
         title="A growing premium fleet built for real work."
         description="Explore the Tow-N-Go Trailers lineup, from secure enclosed hauling to heavy-duty dump and dovetail options. Built for real jobs, presented cleanly, and backed by flexible rental support."
+        pricing="$115/day" // 👈 ADDED HERE
       />
 
       <section className="relative overflow-hidden bg-[#050505] py-24 md:py-28">
@@ -35,6 +36,7 @@ export default function RentalsPage() {
                   className="group overflow-hidden rounded-[2rem] border border-white/10 bg-black/40 shadow-[0_25px_80px_rgba(0,0,0,0.50)] backdrop-blur-sm transition hover:border-[#d4af37]/30"
                 >
                   <div className="grid gap-0 xl:grid-cols-[1.1fr_0.9fr]">
+                    
                     {/* LEFT SIDE */}
                     <div className="border-b border-white/10 xl:border-b-0 xl:border-r xl:border-white/10">
                       <div className="relative h-[320px] md:h-[420px] overflow-hidden">
@@ -91,6 +93,14 @@ export default function RentalsPage() {
                       <h2 className="mt-3 text-3xl font-bold text-white">
                         {trailer.name}
                       </h2>
+
+                      {/* 🔥 PRICING (MAIN ADDITION) */}
+                      <p className="mt-3 text-lg text-zinc-200">
+                        Pricing starting at{" "}
+                        <span className="font-semibold text-[#d4af37]">
+                          {trailer.startingPrice}
+                        </span>
+                      </p>
 
                       <p className="mt-5 text-base leading-8 text-zinc-300">
                         {trailer.description}
@@ -166,7 +176,6 @@ export default function RentalsPage() {
                         </a>
                       </div>
 
-                      {/* Trust line */}
                       <p className="mt-5 text-xs text-zinc-500">
                         Commercial-grade trailers • Clean, maintained, and ready for real jobs
                       </p>

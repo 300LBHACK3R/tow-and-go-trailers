@@ -28,8 +28,15 @@ export function TrailerCard({ trailer }: TrailerCardProps) {
         </div>
 
         <div className="absolute bottom-4 left-4 right-4">
-          <h3 className="text-2xl font-semibold text-white">{trailer.shortName}</h3>
-          <p className="mt-1 max-w-[90%] text-sm text-zinc-300">
+          <h3 className="text-2xl font-semibold text-white">
+            {trailer.shortName}
+          </h3>
+
+          <p className="mt-1 text-sm font-medium text-[#d4af37]">
+            Pricing starting at {trailer.startingPrice}
+          </p>
+
+          <p className="mt-2 max-w-[90%] text-sm text-zinc-300">
             {trailer.summary}
           </p>
         </div>
@@ -68,7 +75,11 @@ export function TrailerCard({ trailer }: TrailerCardProps) {
             Request This Trailer
           </Button>
 
-          <Button href={`/rentals#${trailer.id}`} variant="secondary" className="w-full">
+          <Button
+            href={`/rentals#${trailer.id}`}
+            variant="secondary"
+            className="w-full"
+          >
             View Details
           </Button>
         </div>
