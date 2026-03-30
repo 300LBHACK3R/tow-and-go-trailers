@@ -13,8 +13,6 @@ export default function AboutPage() {
       <section className="section-padding">
         <Container className="max-w-4xl">
           <div className="space-y-10 text-zinc-300">
-
-            {/* OUR STORY */}
             <div className="surface p-6 md:p-8">
               <h2 className="text-2xl font-semibold text-white">Our Story</h2>
               <div className="mt-4 space-y-5 leading-8">
@@ -46,66 +44,6 @@ export default function AboutPage() {
                 </p>
               </div>
             </div>
-
-            {/* WHY WE STARTED */}
-            <div className="surface p-6 md:p-8">
-              <h2 className="text-2xl font-semibold text-white">Why We Started</h2>
-              <div className="mt-4 space-y-5 leading-8">
-                <p>
-                  We saw a gap in the market. Trailer rentals were often overpriced, poorly maintained,
-                  limited in selection, and frustrating to deal with.
-                </p>
-
-                <p>
-                  We wanted to offer something different — a clean, safe, and dependable option
-                  with real customer service behind it.
-                </p>
-
-                <p>
-                  Whether someone is moving, hauling equipment, or dealing with a stressful situation,
-                  the last thing they should worry about is the trailer they rented.
-                </p>
-              </div>
-            </div>
-
-            {/* VALUES */}
-            <div className="surface p-6 md:p-8">
-              <h2 className="text-2xl font-semibold text-white">What We Value</h2>
-              <div className="mt-4 space-y-5 leading-8">
-                <p>
-                  We are a family-owned business built on integrity, honesty, reliability, and respect.
-                </p>
-
-                <p>
-                  We believe in helping people, being fair, and treating every customer with
-                  professionalism and care.
-                </p>
-
-                <p>
-                  Quality matters to us — not just in our trailers, but in the experience we provide.
-                </p>
-              </div>
-            </div>
-
-            {/* FUTURE */}
-            <div className="surface p-6 md:p-8">
-              <h2 className="text-2xl font-semibold text-white">Where We’re Going</h2>
-              <div className="mt-4 space-y-5 leading-8">
-                <p>
-                  Our goal is to grow Tow-N-Go Trailers into a full-time family business with a strong fleet
-                  and a trusted reputation.
-                </p>
-
-                <p>
-                  As we expand, we plan to add more trailers, explore equipment rentals, and move into transport services.
-                </p>
-
-                <p>
-                  We’re building this the right way — with long-term vision, strong values, and a commitment to doing things properly.
-                </p>
-              </div>
-            </div>
-
           </div>
         </Container>
       </section>
