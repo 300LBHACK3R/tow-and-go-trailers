@@ -2,7 +2,7 @@ import Image from "next/image";
 import { PageHero } from "@/components/ui/PageHero";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
-import { trailers } from "@/data/trailers";
+import { trailers, type Trailer } from "@/data/trailers";
 
 export default function RentalsPage() {
   return (
@@ -11,7 +11,7 @@ export default function RentalsPage() {
         eyebrow="Trailer Rentals"
         title="A growing premium fleet built for real work."
         description="Explore the Tow-N-Go Trailers lineup, from secure enclosed hauling to heavy-duty dump and dovetail options. Built for real jobs, presented cleanly, and backed by flexible rental support."
-        pricing="$115/day" // 👈 ADDED HERE
+        pricing="$115/day"
       />
 
       <section className="relative overflow-hidden bg-[#050505] py-24 md:py-28">
@@ -20,14 +20,14 @@ export default function RentalsPage() {
 
         <Container className="relative">
           <div className="space-y-12">
-            {trailers.map((trailer) => {
-              const galleryImages =
+            {trailers.map((trailer: Trailer) => {
+              const galleryImages: string[] =
                 trailer.images && trailer.images.length > 0
                   ? trailer.images
                   : [trailer.image];
 
-              const mainImage = galleryImages[0];
-              const extraImages = galleryImages.slice(1);
+              const mainImage: string = galleryImages[0];
+              const extraImages: string[] = galleryImages.slice(1);
 
               return (
                 <article
@@ -36,10 +36,8 @@ export default function RentalsPage() {
                   className="group overflow-hidden rounded-[2rem] border border-white/10 bg-black/40 shadow-[0_25px_80px_rgba(0,0,0,0.50)] backdrop-blur-sm transition hover:border-[#d4af37]/30"
                 >
                   <div className="grid gap-0 xl:grid-cols-[1.1fr_0.9fr]">
-                    
-                    {/* LEFT SIDE */}
                     <div className="border-b border-white/10 xl:border-b-0 xl:border-r xl:border-white/10">
-                      <div className="relative h-[320px] md:h-[420px] overflow-hidden">
+                      <div className="relative h-[320px] overflow-hidden md:h-[420px]">
                         <Image
                           src={mainImage}
                           alt={trailer.name}
@@ -64,18 +62,18 @@ export default function RentalsPage() {
                         </div>
                       </div>
 
-                      {/* Gallery */}
                       {extraImages.length > 0 && (
                         <div className="grid grid-cols-2 gap-3 border-t border-white/10 p-4 md:grid-cols-4">
-                          {extraImages.map((image, index) => (
+                          {extraImages.map((image: string, index: number) => (
                             <div
-                              key={image}
+                              key={`${trailer.id}-gallery-${index}`}
                               className="relative h-28 overflow-hidden rounded-2xl border border-white/10 bg-black/30 md:h-32"
                             >
                               <Image
                                 src={image}
                                 alt={`${trailer.shortName} photo ${index + 2}`}
                                 fill
+                                sizes="(max-width: 768px) 50vw, 25vw"
                                 className="object-cover transition duration-300 hover:scale-105"
                               />
                             </div>
@@ -84,7 +82,6 @@ export default function RentalsPage() {
                       )}
                     </div>
 
-                    {/* RIGHT SIDE */}
                     <div className="p-6 md:p-8">
                       <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[#d4af37]">
                         Trailer Details
@@ -94,7 +91,6 @@ export default function RentalsPage() {
                         {trailer.name}
                       </h2>
 
-                      {/* 🔥 PRICING (MAIN ADDITION) */}
                       <p className="mt-3 text-lg text-zinc-200">
                         Pricing starting at{" "}
                         <span className="font-semibold text-[#d4af37]">
@@ -106,9 +102,8 @@ export default function RentalsPage() {
                         {trailer.description}
                       </p>
 
-                      {/* Quick Specs */}
                       <div className="mt-5 flex flex-wrap gap-3 text-xs text-zinc-400">
-                        {trailer.specs.slice(0, 3).map((spec) => (
+                        {trailer.specs.slice(0, 3).map((spec: string) => (
                           <span
                             key={spec}
                             className="rounded-full border border-white/10 bg-white/5 px-3 py-1"
@@ -124,7 +119,7 @@ export default function RentalsPage() {
                             Key Specs
                           </h3>
                           <ul className="mt-4 space-y-3 text-sm text-zinc-300">
-                            {trailer.specs.map((item) => (
+                            {trailer.specs.map((item: string) => (
                               <li key={item} className="flex gap-3">
                                 <span className="mt-[9px] h-1.5 w-1.5 rounded-full bg-[#d4af37]" />
                                 <span>{item}</span>
@@ -138,7 +133,7 @@ export default function RentalsPage() {
                             Best For
                           </h3>
                           <ul className="mt-4 space-y-3 text-sm text-zinc-300">
-                            {trailer.bestFor.map((item) => (
+                            {trailer.bestFor.map((item: string) => (
                               <li key={item} className="flex gap-3">
                                 <span className="mt-[9px] h-1.5 w-1.5 rounded-full bg-[#d4af37]" />
                                 <span>{item}</span>
@@ -153,7 +148,7 @@ export default function RentalsPage() {
                           Available Add-Ons
                         </h3>
                         <ul className="mt-4 space-y-3 text-sm text-zinc-300">
-                          {trailer.accessories.map((item) => (
+                          {trailer.accessories.map((item: string) => (
                             <li key={item} className="flex gap-3">
                               <span className="mt-[9px] h-1.5 w-1.5 rounded-full bg-[#d4af37]" />
                               <span>{item}</span>
@@ -162,9 +157,11 @@ export default function RentalsPage() {
                         </ul>
                       </div>
 
-                      {/* CTA */}
                       <div className="mt-10 flex flex-wrap gap-4">
-                        <Button href="/contact" className="min-w-[200px]">
+                        <Button
+                          href={`/contact?trailer=${encodeURIComponent(trailer.name)}`}
+                          className="min-w-[200px]"
+                        >
                           Request This Trailer
                         </Button>
 
@@ -177,7 +174,8 @@ export default function RentalsPage() {
                       </div>
 
                       <p className="mt-5 text-xs text-zinc-500">
-                        Commercial-grade trailers • Clean, maintained, and ready for real jobs
+                        Commercial-grade trailers • Clean, maintained, and ready
+                        for real jobs
                       </p>
                     </div>
                   </div>
