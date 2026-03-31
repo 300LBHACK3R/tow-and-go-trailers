@@ -1,8 +1,204 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
 import { PageHero } from "@/components/ui/PageHero";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { trailers, type Trailer } from "@/data/trailers";
+
+type TrailerGalleryCardProps = {
+  trailer: Trailer;
+};
+
+function TrailerGalleryCard({ trailer }: TrailerGalleryCardProps) {
+  const galleryImages: string[] =
+    trailer.images && trailer.images.length > 0
+      ? trailer.images
+      : [trailer.image];
+
+  const [selectedImage, setSelectedImage] = useState<string>(galleryImages[0]!);
+  const [isLightboxOpen, setIsLightboxOpen] = useState<boolean>(false);
+
+  return (
+    <>
+      <article
+        id={trailer.id}
+        className="group overflow-hidden rounded-[2rem] border border-white/10 bg-black/40 shadow-[0_25px_80px_rgba(0,0,0,0.50)] backdrop-blur-sm transition hover:border-[#d4af37]/30"
+      >
+        <div className="grid gap-0 xl:grid-cols-[1.1fr_0.9fr]">
+          <div className="border-b border-white/10 xl:border-b-0 xl:border-r xl:border-white/10">
+            <button
+              type="button"
+              onClick={() => setIsLightboxOpen(true)}
+              className="relative block h-[320px] w-full overflow-hidden md:h-[420px]"
+            >
+              <Image
+                src={selectedImage}
+                alt={trailer.name}
+                fill
+                sizes="(max-width: 1280px) 100vw, 55vw"
+                className="object-cover transition duration-500 group-hover:scale-105"
+              />
+
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
+
+              <div className="absolute left-5 top-5 rounded-full border border-white/10 bg-black/55 px-3 py-1 text-xs font-semibold text-white backdrop-blur-sm">
+                {trailer.status}
+              </div>
+
+              <div className="absolute bottom-5 left-5 right-5 text-left">
+                <p className="text-xs uppercase tracking-[0.24em] text-[#d4af37]">
+                  Tow-N-Go Fleet
+                </p>
+                <h2 className="mt-2 text-3xl font-bold text-white md:text-4xl">
+                  {trailer.shortName}
+                </h2>
+              </div>
+            </button>
+
+            {galleryImages.length > 1 && (
+              <div className="grid grid-cols-2 gap-3 border-t border-white/10 p-4 md:grid-cols-4">
+                {galleryImages.map((image: string, index: number) => {
+                  const isActive = selectedImage === image;
+
+                  return (
+                    <button
+                      key={`${trailer.id}-gallery-${index}`}
+                      type="button"
+                      onClick={() => setSelectedImage(image)}
+                      className={`relative h-28 overflow-hidden rounded-2xl border md:h-32 ${
+                        isActive
+                          ? "border-[#d4af37] ring-1 ring-[#d4af37]/40"
+                          : "border-white/10 bg-black/30"
+                      }`}
+                    >
+                      <Image
+                        src={image}
+                        alt={`${trailer.shortName} photo ${index + 1}`}
+                        fill
+                        sizes="(max-width: 768px) 50vw, 25vw"
+                        className="object-cover transition duration-300 hover:scale-105"
+                      />
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+
+          <div className="p-6 md:p-8">
+            <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[#d4af37]">
+              Trailer Details
+            </p>
+
+            <h2 className="mt-3 text-3xl font-bold text-white">
+              {trailer.name}
+            </h2>
+
+            <p className="mt-5 text-base leading-8 text-zinc-300">
+              {trailer.description}
+            </p>
+
+            <div className="mt-5 flex flex-wrap gap-3 text-xs text-zinc-400">
+              {trailer.specs.slice(0, 3).map((spec: string) => (
+                <span
+                  key={spec}
+                  className="rounded-full border border-white/10 bg-white/5 px-3 py-1"
+                >
+                  {spec}
+                </span>
+              ))}
+            </div>
+
+            <div className="mt-8 grid gap-8 md:grid-cols-2">
+              <div>
+                <h3 className="text-sm font-semibold uppercase tracking-[0.22em] text-[#d4af37]">
+                  Key Specs
+                </h3>
+                <ul className="mt-4 space-y-3 text-sm text-zinc-300">
+                  {trailer.specs.map((item: string) => (
+                    <li key={item} className="flex gap-3">
+                      <span className="mt-[9px] h-1.5 w-1.5 rounded-full bg-[#d4af37]" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div>
+                <h3 className="text-sm font-semibold uppercase tracking-[0.22em] text-[#d4af37]">
+                  Best For
+                </h3>
+                <ul className="mt-4 space-y-3 text-sm text-zinc-300">
+                  {trailer.bestFor.map((item: string) => (
+                    <li key={item} className="flex gap-3">
+                      <span className="mt-[9px] h-1.5 w-1.5 rounded-full bg-[#d4af37]" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <div className="mt-8">
+              <h3 className="text-sm font-semibold uppercase tracking-[0.22em] text-[#d4af37]">
+                Available Add-Ons
+              </h3>
+              <ul className="mt-4 space-y-3 text-sm text-zinc-300">
+                {trailer.accessories.map((item: string) => (
+                  <li key={item} className="flex gap-3">
+                    <span className="mt-[9px] h-1.5 w-1.5 rounded-full bg-[#d4af37]" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="mt-10 flex flex-wrap gap-4">
+              <Button
+                href={`/contact?trailer=${encodeURIComponent(trailer.name)}`}
+                className="min-w-[200px]"
+              >
+                Request This Trailer
+              </Button>
+
+              <a
+                href="tel:+17782156486"
+                className="inline-flex min-w-[200px] items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-6 py-3.5 text-sm font-semibold text-white backdrop-blur transition-all duration-200 hover:-translate-y-[1px] hover:bg-white/10"
+              >
+                Call Now
+              </a>
+            </div>
+
+            <p className="mt-5 text-xs text-zinc-500">
+              Commercial-grade trailers • Clean, maintained, and ready for real
+              jobs
+            </p>
+          </div>
+        </div>
+      </article>
+
+      {isLightboxOpen && (
+        <button
+          type="button"
+          onClick={() => setIsLightboxOpen(false)}
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4"
+        >
+          <div className="relative h-[80vh] w-full max-w-6xl">
+            <Image
+              src={selectedImage}
+              alt={trailer.name}
+              fill
+              sizes="100vw"
+              className="object-contain"
+            />
+          </div>
+        </button>
+      )}
+    </>
+  );
+}
 
 export default function RentalsPage() {
   return (
@@ -20,170 +216,9 @@ export default function RentalsPage() {
 
         <Container className="relative">
           <div className="space-y-12">
-            {trailers.map((trailer: Trailer) => {
-              const galleryImages: string[] =
-                trailer.images && trailer.images.length > 0
-                  ? trailer.images
-                  : [trailer.image];
-
-              const mainImage: string = galleryImages[0]!;
-              const extraImages: string[] = galleryImages.slice(1);
-
-              return (
-                <article
-                  id={trailer.id}
-                  key={trailer.id}
-                  className="group overflow-hidden rounded-[2rem] border border-white/10 bg-black/40 shadow-[0_25px_80px_rgba(0,0,0,0.50)] backdrop-blur-sm transition hover:border-[#d4af37]/30"
-                >
-                  <div className="grid gap-0 xl:grid-cols-[1.1fr_0.9fr]">
-                    <div className="border-b border-white/10 xl:border-b-0 xl:border-r xl:border-white/10">
-                      <div className="relative h-[320px] overflow-hidden md:h-[420px]">
-                        <Image
-                          src={mainImage}
-                          alt={trailer.name}
-                          fill
-                          sizes="(max-width: 1280px) 100vw, 55vw"
-                          className="object-cover transition duration-500 group-hover:scale-105"
-                        />
-
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
-
-                        <div className="absolute left-5 top-5 rounded-full border border-white/10 bg-black/55 px-3 py-1 text-xs font-semibold text-white backdrop-blur-sm">
-                          {trailer.status}
-                        </div>
-
-                        <div className="absolute bottom-5 left-5 right-5">
-                          <p className="text-xs uppercase tracking-[0.24em] text-[#d4af37]">
-                            Tow-N-Go Fleet
-                          </p>
-                          <h2 className="mt-2 text-3xl font-bold text-white md:text-4xl">
-                            {trailer.shortName}
-                          </h2>
-                        </div>
-                      </div>
-
-                      {extraImages.length > 0 && (
-                        <div className="grid grid-cols-2 gap-3 border-t border-white/10 p-4 md:grid-cols-4">
-                          {extraImages.map((image: string, index: number) => (
-                            <div
-                              key={`${trailer.id}-gallery-${index}`}
-                              className="relative h-28 overflow-hidden rounded-2xl border border-white/10 bg-black/30 md:h-32"
-                            >
-                              <Image
-                                src={image}
-                                alt={`${trailer.shortName} photo ${index + 2}`}
-                                fill
-                                sizes="(max-width: 768px) 50vw, 25vw"
-                                className="object-cover transition duration-300 hover:scale-105"
-                              />
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="p-6 md:p-8">
-                      <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[#d4af37]">
-                        Trailer Details
-                      </p>
-
-                      <h2 className="mt-3 text-3xl font-bold text-white">
-                        {trailer.name}
-                      </h2>
-
-                      <p className="mt-3 text-lg text-zinc-200">
-                        Pricing starting at{" "}
-                        <span className="font-semibold text-[#d4af37]">
-                          {trailer.startingPrice}
-                        </span>
-                      </p>
-
-                      <p className="mt-5 text-base leading-8 text-zinc-300">
-                        {trailer.description}
-                      </p>
-
-                      <div className="mt-5 flex flex-wrap gap-3 text-xs text-zinc-400">
-                        {trailer.specs.slice(0, 3).map((spec: string) => (
-                          <span
-                            key={spec}
-                            className="rounded-full border border-white/10 bg-white/5 px-3 py-1"
-                          >
-                            {spec}
-                          </span>
-                        ))}
-                      </div>
-
-                      <div className="mt-8 grid gap-8 md:grid-cols-2">
-                        <div>
-                          <h3 className="text-sm font-semibold uppercase tracking-[0.22em] text-[#d4af37]">
-                            Key Specs
-                          </h3>
-                          <ul className="mt-4 space-y-3 text-sm text-zinc-300">
-                            {trailer.specs.map((item: string) => (
-                              <li key={item} className="flex gap-3">
-                                <span className="mt-[9px] h-1.5 w-1.5 rounded-full bg-[#d4af37]" />
-                                <span>{item}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-
-                        <div>
-                          <h3 className="text-sm font-semibold uppercase tracking-[0.22em] text-[#d4af37]">
-                            Best For
-                          </h3>
-                          <ul className="mt-4 space-y-3 text-sm text-zinc-300">
-                            {trailer.bestFor.map((item: string) => (
-                              <li key={item} className="flex gap-3">
-                                <span className="mt-[9px] h-1.5 w-1.5 rounded-full bg-[#d4af37]" />
-                                <span>{item}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </div>
-
-                      <div className="mt-8">
-                        <h3 className="text-sm font-semibold uppercase tracking-[0.22em] text-[#d4af37]">
-                          Available Add-Ons
-                        </h3>
-                        <ul className="mt-4 space-y-3 text-sm text-zinc-300">
-                          {trailer.accessories.map((item: string) => (
-                            <li key={item} className="flex gap-3">
-                              <span className="mt-[9px] h-1.5 w-1.5 rounded-full bg-[#d4af37]" />
-                              <span>{item}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-
-                      <div className="mt-10 flex flex-wrap gap-4">
-                        <Button
-                          href={`/contact?trailer=${encodeURIComponent(
-                            trailer.name
-                          )}`}
-                          className="min-w-[200px]"
-                        >
-                          Request This Trailer
-                        </Button>
-
-                        <a
-                          href="tel:+17782156486"
-                          className="inline-flex min-w-[200px] items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-6 py-3.5 text-sm font-semibold text-white backdrop-blur transition-all duration-200 hover:-translate-y-[1px] hover:bg-white/10"
-                        >
-                          Call Now
-                        </a>
-                      </div>
-
-                      <p className="mt-5 text-xs text-zinc-500">
-                        Commercial-grade trailers • Clean, maintained, and ready
-                        for real jobs
-                      </p>
-                    </div>
-                  </div>
-                </article>
-              );
-            })}
+            {trailers.map((trailer: Trailer) => (
+              <TrailerGalleryCard key={trailer.id} trailer={trailer} />
+            ))}
           </div>
         </Container>
       </section>
