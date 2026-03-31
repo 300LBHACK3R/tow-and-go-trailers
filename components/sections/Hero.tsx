@@ -98,8 +98,6 @@ export function Hero() {
               </div>
 
               <div className="grid gap-4">
-
-                {/* ENCLOSED */}
                 <Link
                   href="/rentals#royal-cargo-enclosed"
                   className="group overflow-hidden rounded-2xl border border-white/10 bg-black/45 transition hover:border-[#d4af37]/40 hover:bg-white/[0.02]"
@@ -124,11 +122,15 @@ export function Hero() {
                       <p className="mt-1 text-sm leading-6 text-zinc-300">
                         Secure, clean, and ideal for moving and protected cargo.
                       </p>
+                      <div className="mt-2 flex flex-wrap gap-3 text-xs text-zinc-400">
+                        <span>7&apos;6&quot; x 16&apos;</span>
+                        <span>Dual 3500lb</span>
+                        <span>Enclosed</span>
+                      </div>
                     </div>
                   </div>
                 </Link>
 
-                {/* DUMP */}
                 <Link
                   href="/rentals#suretrac-dump"
                   className="group overflow-hidden rounded-2xl border border-white/10 bg-black/45 transition hover:border-[#d4af37]/40 hover:bg-white/[0.02]"
@@ -137,21 +139,31 @@ export function Hero() {
                     <div className="relative min-h-[108px] md:min-h-[110px]">
                       <Image
                         src="/images/suretrac-6x10-dump-trailer-okanagan-1.jpg"
-                        alt="SureTrac dump trailer rental"
+                        alt="SureTrac 6x10 dump trailer rental in Okanagan"
                         fill
                         sizes="100px"
                         className="object-cover transition duration-300 group-hover:scale-105"
                       />
                     </div>
                     <div className="p-4">
+                      <p className="text-xs uppercase tracking-[0.24em] text-zinc-500">
+                        Available Now
+                      </p>
                       <h3 className="mt-2 text-lg font-semibold text-white">
                         Dump Trailer
                       </h3>
+                      <p className="mt-1 text-sm leading-6 text-zinc-300">
+                        Perfect for landscaping, debris, and heavy hauling jobs.
+                      </p>
+                      <div className="mt-2 flex flex-wrap gap-3 text-xs text-zinc-400">
+                        <span>6x10</span>
+                        <span>Dual 5000lb</span>
+                        <span>Hydraulic dump</span>
+                      </div>
                     </div>
                   </div>
                 </Link>
 
-                {/* DOVETAIL FIXED */}
                 <Link
                   href="/rentals#southland-dovetail"
                   className="group overflow-hidden rounded-2xl border border-white/10 bg-black/45 transition hover:border-[#d4af37]/40 hover:bg-white/[0.02]"
@@ -160,20 +172,31 @@ export function Hero() {
                     <div className="relative min-h-[108px] md:min-h-[110px]">
                       <Image
                         src="/images/tow-and-go-southland-dovetail-deckover-trailer-kelowna-angled-view-03.jpg"
-                        alt="Southland dovetail trailer rental Kelowna"
+                        alt="Southland 7x20 dovetail trailer rental in Kelowna"
                         fill
                         sizes="100px"
                         className="object-cover transition duration-300 group-hover:scale-105"
                       />
                     </div>
                     <div className="p-4">
+                      <p className="text-xs uppercase tracking-[0.24em] text-zinc-500">
+                        Available Now
+                      </p>
                       <h3 className="mt-2 text-lg font-semibold text-white">
                         7x20 Dovetail Trailer
                       </h3>
+                      <p className="mt-1 text-sm leading-6 text-zinc-300">
+                        Heavy-duty flat deck built for equipment, vehicles, and
+                        serious hauling.
+                      </p>
+                      <div className="mt-2 flex flex-wrap gap-3 text-xs text-zinc-400">
+                        <span>7x20</span>
+                        <span>Dual 7000lb</span>
+                        <span>Ramps</span>
+                      </div>
                     </div>
                   </div>
                 </Link>
-
               </div>
             </div>
           </div>
