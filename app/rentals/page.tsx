@@ -31,17 +31,17 @@ function TrailerGalleryCard({ trailer }: TrailerGalleryCardProps) {
             <button
               type="button"
               onClick={() => setIsLightboxOpen(true)}
-              className="relative block h-[320px] w-full overflow-hidden md:h-[420px]"
+              className="relative block h-[360px] w-full overflow-hidden bg-black md:h-[520px]"
             >
               <Image
                 src={selectedImage}
                 alt={trailer.name}
                 fill
                 sizes="(max-width: 1280px) 100vw, 55vw"
-                className="object-cover transition duration-500 group-hover:scale-105"
+                className="object-contain bg-black transition duration-500"
               />
 
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
 
               <div className="absolute left-5 top-5 rounded-full border border-white/10 bg-black/55 px-3 py-1 text-xs font-semibold text-white backdrop-blur-sm">
                 {trailer.status}
