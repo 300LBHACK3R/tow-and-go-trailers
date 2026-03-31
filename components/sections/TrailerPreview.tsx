@@ -9,7 +9,6 @@ export function TrailerPreview() {
 
   return (
     <section className="relative overflow-hidden border-b border-white/10 bg-[#060606] py-24 md:py-28">
-      {/* premium background atmosphere */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(212,175,55,0.10),transparent_24%),radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.04),transparent_20%)]" />
       <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.25),rgba(0,0,0,0.55))]" />
 

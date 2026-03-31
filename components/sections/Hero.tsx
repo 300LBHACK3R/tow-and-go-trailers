@@ -106,8 +106,9 @@ export function Hero() {
                     <div className="relative min-h-[108px] md:min-h-[110px]">
                       <Image
                         src="/images/royal-cargo-enclosed-3.JPG"
-                        alt="Enclosed Trailer"
+                        alt="Royal Cargo enclosed trailer rental in Okanagan"
                         fill
+                        sizes="100px"
                         className="object-cover transition duration-300 group-hover:scale-105"
                       />
                     </div>
@@ -118,9 +119,6 @@ export function Hero() {
                       <h3 className="mt-2 text-lg font-semibold text-white">
                         Enclosed Trailer
                       </h3>
-                      <p className="mt-1 text-sm font-medium text-[#d4af37]">
-                        Pricing starting at $115/day
-                      </p>
                       <p className="mt-1 text-sm leading-6 text-zinc-300">
                         Secure, clean, and ideal for moving and protected cargo.
                       </p>
@@ -140,9 +138,10 @@ export function Hero() {
                   <div className="grid grid-cols-[96px_1fr] md:grid-cols-[100px_1fr]">
                     <div className="relative min-h-[108px] md:min-h-[110px]">
                       <Image
-                        src="/images/suretrac-dump-2.jpg"
-                        alt="Dump Trailer"
+                        src="/images/suretrac-6x10-dump-trailer-okanagan-1.jpg"
+                        alt="SureTrac 6x10 dump trailer rental in Okanagan"
                         fill
+                        sizes="100px"
                         className="object-cover transition duration-300 group-hover:scale-105"
                       />
                     </div>
@@ -153,9 +152,6 @@ export function Hero() {
                       <h3 className="mt-2 text-lg font-semibold text-white">
                         Dump Trailer
                       </h3>
-                      <p className="mt-1 text-sm font-medium text-[#d4af37]">
-                        Pricing starting at $115/day
-                      </p>
                       <p className="mt-1 text-sm leading-6 text-zinc-300">
                         Perfect for landscaping, debris, and heavy hauling jobs.
                       </p>
@@ -176,8 +172,9 @@ export function Hero() {
                     <div className="relative min-h-[108px] md:min-h-[110px]">
                       <Image
                         src="/images/southland-dovetail-3.jpg"
-                        alt="7x20 Dovetail Trailer"
+                        alt="Southland 7x20 dovetail trailer rental in Okanagan"
                         fill
+                        sizes="100px"
                         className="object-cover transition duration-300 group-hover:scale-105"
                       />
                     </div>
@@ -188,9 +185,6 @@ export function Hero() {
                       <h3 className="mt-2 text-lg font-semibold text-white">
                         7x20 Dovetail Trailer
                       </h3>
-                      <p className="mt-1 text-sm font-medium text-[#d4af37]">
-                        Pricing starting at $115/day
-                      </p>
                       <p className="mt-1 text-sm leading-6 text-zinc-300">
                         Heavy-duty flat deck built for equipment, vehicles, and
                         serious hauling.

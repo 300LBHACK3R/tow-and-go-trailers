@@ -100,7 +100,7 @@ export const trailers: Trailer[] = [
     image: "/images/southland-dovetail-3.jpg",
     images: [
       "/images/southland-dovetail-3.jpg",
-      "/images/southland-dovetail-1.jpeg",
+      "/images/southland-dovetail-1.jpg",
       "/images/southland-dovetail-2.jpg",
       "/images/southland-dovetail-4.jpg",
       "/images/southland-dovetail-5.jpg",
