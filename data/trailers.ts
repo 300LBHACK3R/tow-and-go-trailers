@@ -65,6 +65,7 @@ export const trailers: Trailer[] = [
       "/images/suretrac-6x10-dump-trailer-okanagan-3.jpg",
       "/images/suretrac-6x10-dump-trailer-okanagan-4.jpg",
       "/images/suretrac-6x10-dump-trailer-okanagan-5.jpg",
+      "/images/suretrac-6x10-dump-trailer-okanagan-6.jpg",
     ],
     startingPrice: "$115/day",
     summary:
@@ -93,37 +94,35 @@ export const trailers: Trailer[] = [
   },
 
   {
-    id: "southland-dovetail",
-    name: "2026 Southland 7x20 + Dovetail Trailer",
-    shortName: "Dovetail Trailer",
-    status: "Available Now",
-    image: "/images/southland-dovetail-3.jpg",
-    images: [
-      "/images/southland-dovetail-3.jpg",
-      "/images/southland-dovetail-1.jpg",
-      "/images/southland-dovetail-2.jpg",
-      "/images/southland-dovetail-4.jpg",
-      "/images/southland-dovetail-5.jpg",
-      "/images/southland-dovetail-6.jpg",
-      "/images/southland-dovetail-7.jpg",
-      "/images/southland-dovetail-8.jpg",
-    ],
-    startingPrice: "$115/day",
-    summary:
-      "Heavy-duty flat deck built for equipment, vehicles, and serious hauling.",
-    description:
-      "This 2026 Southland 7x20 + dovetail trailer with dual 7000lb axles is built for serious hauling. Ideal for equipment, vehicles, and larger loads with the stability and strength needed for heavier jobs.",
-    specs: [
-      "2026 Southland",
-      "7x20 deck + dovetail",
-      "Dual 7000lb axles",
-      "Heavy-duty flat deck",
-    ],
-    bestFor: [
-      "Equipment hauling",
-      "Vehicle transport",
-      "Heavy-duty jobs",
-    ],
-    accessories: ["Ramps", "Straps", "Tie-down support"],
-  },
+  id: "southland-dovetail",
+  name: "2026 Southland 7x20 + Dovetail Trailer",
+  shortName: "Dovetail Trailer",
+  status: "Available Now",
+  image:
+    "/images/tow-and-go-southland-dovetail-deckover-trailer-kelowna-side-view-01.jpg",
+  images: [
+    "/images/tow-and-go-southland-dovetail-deckover-trailer-kelowna-side-view-01.jpg",
+    "/images/tow-and-go-southland-dovetail-deckover-trailer-kelowna-ramp-view-02.jpg",
+    "/images/tow-and-go-southland-dovetail-deckover-trailer-kelowna-angled-view-03.jpg",
+    "/images/tow-and-go-southland-dovetail-deckover-trailer-kelowna-hitch-view-04.jpg",
+    "/images/tow-and-go-southland-dovetail-deckover-trailer-kelowna-full-length-05.jpg",
+  ],
+  startingPrice: "$115/day",
+  summary:
+    "Heavy-duty flat deck built for equipment, vehicles, and serious hauling.",
+  description:
+    "This 2026 Southland 7x20 + dovetail trailer with dual 7000lb axles is built for serious hauling. Ideal for equipment, vehicles, and larger loads with the stability and strength needed for heavier jobs.",
+  specs: [
+    "2026 Southland",
+    "7x20 deck + dovetail",
+    "Dual 7000lb axles",
+    "Heavy-duty flat deck",
+  ],
+  bestFor: [
+    "Equipment hauling",
+    "Vehicle transport",
+    "Heavy-duty jobs",
+  ],
+  accessories: ["Ramps", "Straps", "Tie-down support"],
+},
 ];
