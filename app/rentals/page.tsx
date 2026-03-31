@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import { PageHero } from "@/components/ui/PageHero";
 import { Container } from "@/components/ui/Container";
@@ -12,13 +12,46 @@ type TrailerGalleryCardProps = {
 };
 
 function TrailerGalleryCard({ trailer }: TrailerGalleryCardProps) {
-  const galleryImages: string[] =
-    trailer.images && trailer.images.length > 0
-      ? trailer.images
-      : [trailer.image];
+  const galleryImages: string[] = useMemo(
+    () =>
+      trailer.images && trailer.images.length > 0
+        ? trailer.images
+        : [trailer.image],
+    [trailer.image, trailer.images]
+  );
 
   const [selectedImage, setSelectedImage] = useState<string>(galleryImages[0]!);
   const [isLightboxOpen, setIsLightboxOpen] = useState<boolean>(false);
+
+  const currentIndex = Math.max(galleryImages.indexOf(selectedImage), 0);
+  const totalImages = galleryImages.length;
+
+  const goToPreviousImage = () => {
+    const prevIndex = currentIndex === 0 ? totalImages - 1 : currentIndex - 1;
+    setSelectedImage(galleryImages[prevIndex]!);
+  };
+
+  const goToNextImage = () => {
+    const nextIndex = currentIndex === totalImages - 1 ? 0 : currentIndex + 1;
+    setSelectedImage(galleryImages[nextIndex]!);
+  };
+
+  useEffect(() => {
+    if (!isLightboxOpen) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsLightboxOpen(false);
+      } else if (event.key === "ArrowLeft") {
+        goToPreviousImage();
+      } else if (event.key === "ArrowRight") {
+        goToNextImage();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isLightboxOpen, currentIndex, totalImages]);
 
   return (
     <>
@@ -38,7 +71,7 @@ function TrailerGalleryCard({ trailer }: TrailerGalleryCardProps) {
                 alt={trailer.name}
                 fill
                 sizes="(max-width: 1280px) 100vw, 55vw"
-                className="object-contain bg-black transition duration-500"
+                className="object-contain bg-black transition duration-500 group-hover:scale-[1.02]"
               />
 
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
@@ -46,6 +79,12 @@ function TrailerGalleryCard({ trailer }: TrailerGalleryCardProps) {
               <div className="absolute left-5 top-5 rounded-full border border-white/10 bg-black/55 px-3 py-1 text-xs font-semibold text-white backdrop-blur-sm">
                 {trailer.status}
               </div>
+
+              {totalImages > 1 && (
+                <div className="absolute right-5 top-5 rounded-full border border-white/10 bg-black/55 px-3 py-1 text-xs font-semibold text-white backdrop-blur-sm">
+                  {currentIndex + 1} / {totalImages}
+                </div>
+              )}
 
               <div className="absolute bottom-5 left-5 right-5 text-left">
                 <p className="text-xs uppercase tracking-[0.24em] text-[#d4af37]">
@@ -193,6 +232,32 @@ function TrailerGalleryCard({ trailer }: TrailerGalleryCardProps) {
           >
             ✕ Close
           </button>
+
+          {totalImages > 1 && (
+            <>
+              <button
+                type="button"
+                onClick={goToPreviousImage}
+                className="absolute left-4 top-1/2 z-[110] -translate-y-1/2 rounded-full border border-white/20 bg-black/60 px-4 py-3 text-xl font-semibold text-white backdrop-blur hover:bg-white/10 md:left-6"
+                aria-label="Previous image"
+              >
+                ←
+              </button>
+
+              <button
+                type="button"
+                onClick={goToNextImage}
+                className="absolute right-4 top-1/2 z-[110] -translate-y-1/2 rounded-full border border-white/20 bg-black/60 px-4 py-3 text-xl font-semibold text-white backdrop-blur hover:bg-white/10 md:right-6"
+                aria-label="Next image"
+              >
+                →
+              </button>
+
+              <div className="absolute left-1/2 top-6 z-[110] -translate-x-1/2 rounded-full border border-white/20 bg-black/60 px-4 py-2 text-sm font-semibold text-white backdrop-blur">
+                {currentIndex + 1} / {totalImages}
+              </div>
+            </>
+          )}
 
           <div className="relative z-[105] flex h-full w-full items-center justify-center p-4 md:p-8">
             <div className="relative h-full w-full">
