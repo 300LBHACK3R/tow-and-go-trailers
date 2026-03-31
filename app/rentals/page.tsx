@@ -180,21 +180,33 @@ function TrailerGalleryCard({ trailer }: TrailerGalleryCardProps) {
       </article>
 
       {isLightboxOpen && (
-        <button
-          type="button"
-          onClick={() => setIsLightboxOpen(false)}
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4"
-        >
-          <div className="relative h-[80vh] w-full max-w-6xl">
-            <Image
-              src={selectedImage}
-              alt={trailer.name}
-              fill
-              sizes="100vw"
-              className="object-contain"
-            />
+        <div className="fixed inset-0 z-[100] bg-black/95">
+          <div
+            className="absolute inset-0"
+            onClick={() => setIsLightboxOpen(false)}
+          />
+
+          <button
+            type="button"
+            onClick={() => setIsLightboxOpen(false)}
+            className="absolute right-6 top-6 z-[110] rounded-full border border-white/20 bg-black/60 px-4 py-2 text-sm font-semibold text-white backdrop-blur hover:bg-white/10"
+          >
+            ✕ Close
+          </button>
+
+          <div className="relative z-[105] flex h-full w-full items-center justify-center p-4 md:p-8">
+            <div className="relative h-full w-full">
+              <Image
+                src={selectedImage}
+                alt={trailer.name}
+                fill
+                sizes="100vw"
+                className="object-contain"
+                priority
+              />
+            </div>
           </div>
-        </button>
+        </div>
       )}
     </>
   );
