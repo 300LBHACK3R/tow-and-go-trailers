@@ -19,14 +19,15 @@ export const trailers: Trailer[] = [
     name: `2026 Royal Cargo 7'6" x 16' + V-Nose Enclosed Trailer`,
     shortName: "Enclosed Trailer",
     status: "Available Now",
-    image: "/images/royal-cargo-enclosed-1.JPG",
+    image:
+      "/images/tow-and-go-royal-cargo-enclosed-trailer-kelowna-rear-view-01.jpg",
     images: [
-      "/images/royal-cargo-enclosed-1.JPG",
-      "/images/royal-cargo-enclosed-2.JPG",
-      "/images/royal-cargo-enclosed-3.JPG",
-      "/images/royal-cargo-enclosed-4.JPG",
-      "/images/royal-cargo-enclosed-5.jpg",
-      "/images/royal-cargo-enclosed-6.jpg",
+      "/images/tow-and-go-royal-cargo-enclosed-trailer-kelowna-rear-view-01.jpg",
+      "/images/tow-and-go-royal-cargo-enclosed-trailer-okanagan-interior-empty-02.jpg",
+      "/images/tow-and-go-royal-cargo-enclosed-trailer-kelowna-rear-door-closed-03.jpg",
+      "/images/tow-and-go-royal-cargo-enclosed-trailer-vernon-rear-door-open-04.jpg",
+      "/images/tow-and-go-royal-cargo-enclosed-trailer-penticton-side-view-05.jpg",
+      "/images/tow-and-go-royal-cargo-enclosed-trailer-west-kelowna-loading-view-06.jpg",
     ],
     startingPrice: "$115/day",
     summary:
@@ -94,35 +95,35 @@ export const trailers: Trailer[] = [
   },
 
   {
-  id: "southland-dovetail",
-  name: "2026 Southland 7x20 + Dovetail Trailer",
-  shortName: "Dovetail Trailer",
-  status: "Available Now",
-  image:
-    "/images/tow-and-go-southland-dovetail-deckover-trailer-kelowna-side-view-01.jpg",
-  images: [
-    "/images/tow-and-go-southland-dovetail-deckover-trailer-kelowna-side-view-01.jpg",
-    "/images/tow-and-go-southland-dovetail-deckover-trailer-kelowna-ramp-view-02.jpg",
-    "/images/tow-and-go-southland-dovetail-deckover-trailer-kelowna-angled-view-03.jpg",
-    "/images/tow-and-go-southland-dovetail-deckover-trailer-kelowna-hitch-view-04.jpg",
-    "/images/tow-and-go-southland-dovetail-deckover-trailer-kelowna-full-length-05.jpg",
-  ],
-  startingPrice: "$115/day",
-  summary:
-    "Heavy-duty flat deck built for equipment, vehicles, and serious hauling.",
-  description:
-    "This 2026 Southland 7x20 + dovetail trailer with dual 7000lb axles is built for serious hauling. Ideal for equipment, vehicles, and larger loads with the stability and strength needed for heavier jobs.",
-  specs: [
-    "2026 Southland",
-    "7x20 deck + dovetail",
-    "Dual 7000lb axles",
-    "Heavy-duty flat deck",
-  ],
-  bestFor: [
-    "Equipment hauling",
-    "Vehicle transport",
-    "Heavy-duty jobs",
-  ],
-  accessories: ["Ramps", "Straps", "Tie-down support"],
-},
+    id: "southland-dovetail",
+    name: "2026 Southland 7x20 + Dovetail Trailer",
+    shortName: "Dovetail Trailer",
+    status: "Available Now",
+    image:
+      "/images/tow-and-go-southland-dovetail-deckover-trailer-kelowna-side-view-01.jpg",
+    images: [
+      "/images/tow-and-go-southland-dovetail-deckover-trailer-kelowna-side-view-01.jpg",
+      "/images/tow-and-go-southland-dovetail-deckover-trailer-kelowna-ramp-view-02.jpg",
+      "/images/tow-and-go-southland-dovetail-deckover-trailer-kelowna-angled-view-03.jpg",
+      "/images/tow-and-go-southland-dovetail-deckover-trailer-kelowna-hitch-view-04.jpg",
+      "/images/tow-and-go-southland-dovetail-deckover-trailer-kelowna-full-length-05.jpg",
+    ],
+    startingPrice: "$115/day",
+    summary:
+      "Heavy-duty flat deck built for equipment, vehicles, and serious hauling.",
+    description:
+      "This 2026 Southland 7x20 + dovetail trailer with dual 7000lb axles is built for serious hauling. Ideal for equipment, vehicles, and larger loads with the stability and strength needed for heavier jobs.",
+    specs: [
+      "2026 Southland",
+      "7x20 deck + dovetail",
+      "Dual 7000lb axles",
+      "Heavy-duty flat deck",
+    ],
+    bestFor: [
+      "Equipment hauling",
+      "Vehicle transport",
+      "Heavy-duty jobs",
+    ],
+    accessories: ["Ramps", "Straps", "Tie-down support"],
+  },
 ];

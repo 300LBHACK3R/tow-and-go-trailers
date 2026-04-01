@@ -105,8 +105,8 @@ export function Hero() {
                   <div className="grid grid-cols-[96px_1fr] md:grid-cols-[100px_1fr]">
                     <div className="relative min-h-[108px] md:min-h-[110px]">
                       <Image
-                        src="/images/royal-cargo-enclosed-3.JPG"
-                        alt="Royal Cargo enclosed trailer rental in Okanagan"
+                        src="/images/tow-and-go-royal-cargo-enclosed-trailer-penticton-side-view-05.jpg"
+                        alt="Royal Cargo enclosed trailer rental in Kelowna and the Okanagan"
                         fill
                         sizes="100px"
                         className="object-cover transition duration-300 group-hover:scale-105"
