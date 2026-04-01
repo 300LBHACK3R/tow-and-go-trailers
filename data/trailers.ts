@@ -27,7 +27,6 @@ export const trailers: Trailer[] = [
       "/images/tow-and-go-royal-cargo-enclosed-trailer-kelowna-rear-door-closed-03.jpg",
       "/images/tow-and-go-royal-cargo-enclosed-trailer-vernon-rear-door-open-04.jpg",
       "/images/tow-and-go-royal-cargo-enclosed-trailer-penticton-side-view-05.jpg",
-      "/images/tow-and-go-royal-cargo-enclosed-trailer-west-kelowna-loading-view-06.jpg",
     ],
     startingPrice: "$115/day",
     summary:
