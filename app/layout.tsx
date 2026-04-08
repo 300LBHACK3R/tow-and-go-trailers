@@ -27,6 +27,10 @@ export const metadata: Metadata = {
     "dovetail trailer rental",
     "Tow-N-Go Trailers",
   ],
+  icons: {
+    icon: "/icon.png",
+    apple: "/apple-icon.png",
+  },
   openGraph: {
     title: "Tow-N-Go Trailers | Premium Trailer Rentals in the Okanagan",
     description: siteConfig.description,
