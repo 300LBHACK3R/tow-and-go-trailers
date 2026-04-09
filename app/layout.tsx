@@ -31,6 +31,7 @@ export const metadata: Metadata = {
     icon: "/icon.png",
     apple: "/apple-icon.png",
   },
+  manifest: "/site.webmanifest",
   openGraph: {
     title: "Tow-N-Go Trailers | Premium Trailer Rentals in the Okanagan",
     description: siteConfig.description,
