@@ -6,7 +6,7 @@ import { siteConfig } from "@/lib/site";
 
 export function Hero() {
   return (
-    <section className="relative min-h-screen overflow-hidden border-b border-white/10 pt-[128px] md:pt-[140px]">
+<section className="relative min-h-screen overflow-hidden border-b border-white/10 pt-[56px] md:pt-[68px]">
       <Image
         src="/images/hero.jpg"
         alt="Tow-N-Go trailer in use"
