@@ -138,7 +138,7 @@ export function Hero() {
                   <div className="grid grid-cols-[96px_1fr] md:grid-cols-[100px_1fr]">
                     <div className="relative min-h-[108px] md:min-h-[110px]">
                       <Image
-                        src="/images/suretrac-6x10-dump-trailer-okanagan-1.jpg"
+                        src="/images/suretrac-6x10-dump-trailer-okanagan-3.jpg"
                         alt="SureTrac 6x10 dump trailer rental in Okanagan"
                         fill
                         sizes="100px"
@@ -171,7 +171,7 @@ export function Hero() {
                   <div className="grid grid-cols-[96px_1fr] md:grid-cols-[100px_1fr]">
                     <div className="relative min-h-[108px] md:min-h-[110px]">
                       <Image
-                        src="/images/tow-and-go-southland-dovetail-deckover-trailer-kelowna-angled-view-03.jpg"
+                        src="/images/tow-and-go-southland-dovetail-deckover-trailer-kelowna-ramp-view-02.jpg"
                         alt="Southland 7x20 dovetail trailer rental in Kelowna"
                         fill
                         sizes="100px"
