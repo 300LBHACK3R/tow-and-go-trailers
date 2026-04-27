@@ -49,8 +49,8 @@ export function Hero() {
 
             <div className="mt-8 flex flex-wrap gap-4 md:mt-10">
               <Button href="/rentals" className="min-w-[170px]">
-                View Trailers
-              </Button>
+  Browse Available Trailers
+</Button>
               <Button
                 href="/contact"
                 variant="secondary"
