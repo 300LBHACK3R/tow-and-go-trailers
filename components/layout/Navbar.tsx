@@ -2,9 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Container } from "@/components/ui/Container";
 
-const links = [
+const baseLinks = [
   { href: "/rentals", label: "Trailer Rentals" },
   { href: "/services", label: "Services / Add-Ons" },
   { href: "/about", label: "About" },
@@ -12,6 +13,13 @@ const links = [
 ];
 
 export function Navbar() {
+  const pathname = usePathname();
+
+  const links =
+    pathname === "/"
+      ? baseLinks
+      : [{ href: "/", label: "Home" }, ...baseLinks];
+
   return (
     <header className="fixed inset-x-0 top-0 z-[100] border-b border-white/10 bg-black/85 backdrop-blur-xl">
       <Container className="flex h-[84px] items-center justify-between">
@@ -69,7 +77,7 @@ export function Navbar() {
                 href="tel:+17782156486"
                 className="mt-2 rounded-xl bg-[#d4af37] px-5 py-3 text-center font-semibold text-black"
               >
-                Call Now
+                Call or Text
               </a>
             </nav>
           </div>
