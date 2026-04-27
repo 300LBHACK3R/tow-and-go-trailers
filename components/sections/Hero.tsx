@@ -6,7 +6,7 @@ import { siteConfig } from "@/lib/site";
 
 export function Hero() {
   return (
-<section className="relative min-h-screen overflow-hidden border-b border-white/10 pt-[56px] md:pt-[68px]">
+    <section className="relative min-h-screen overflow-hidden border-b border-white/10 pt-[56px] md:pt-[68px]">
       <Image
         src="/images/hero.jpg"
         alt="Tow-N-Go trailer in use"
@@ -34,16 +34,18 @@ export function Hero() {
               <span className="block">and Work Hard.</span>
             </h1>
 
-            <p className="mt-5 text-lg text-zinc-200 md:text-xl">
-              Trailer rentals starting at{" "}
-              <span className="font-semibold text-[#d4af37]">$115/day</span>
-            </p>
+            <div className="mt-5">
+              <p className="text-lg text-zinc-200 md:text-xl">
+                Trailer rentals starting at{" "}
+                <span className="font-semibold text-[#d4af37]">$115/day</span>
+              </p>
 
-            <p className="mt-6 max-w-2xl text-base leading-8 text-zinc-300 md:mt-8 md:text-xl">
-              {siteConfig.shortName} offers a growing premium fleet with flexible
-              daily, weekly, and monthly rental options, delivery and pickup
-              availability, and the accessories needed to haul with confidence.
-            </p>
+              <p className="mt-2 max-w-2xl text-sm text-zinc-400 md:text-base">
+                Daily, weekly, and monthly options • No hidden fees • Flexible
+                pickup &amp; delivery • Discounts for longer rentals
+              </p>
+            </div>
+            
 
             <div className="mt-8 flex flex-wrap gap-4 md:mt-10">
               <Button href="/rentals" className="min-w-[170px]">

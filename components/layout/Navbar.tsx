@@ -42,7 +42,7 @@ export function Navbar() {
             href="tel:+17782156486"
             className="rounded-2xl bg-[#d4af37] px-6 py-3 text-sm font-semibold text-black transition hover:bg-yellow-400"
           >
-            Call Now
+            Call or Text
           </a>
         </nav>
 
