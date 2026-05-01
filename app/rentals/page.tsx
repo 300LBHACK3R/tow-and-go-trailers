@@ -2,7 +2,6 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
-import { PageHero } from "@/components/ui/PageHero";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { trailers, type Trailer } from "@/data/trailers";
@@ -71,7 +70,7 @@ function TrailerGalleryCard({ trailer }: TrailerGalleryCardProps) {
                 alt={trailer.name}
                 fill
                 sizes="(max-width: 1280px) 100vw, 55vw"
-                className="object-contain bg-black transition duration-500 group-hover:scale-[1.02]"
+                className="bg-black object-contain transition duration-500 group-hover:scale-[1.02]"
               />
 
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
@@ -281,47 +280,44 @@ export default function RentalsPage() {
   return (
     <>
       <section className="relative overflow-hidden border-b border-white/10">
-  {/* Background Image */}
-  <div className="absolute inset-0">
-    <Image
-      src="/images/rentals-premium-fleet-flatdeck-dump-banner.png"
-      alt="Flat deck and dump trailer rentals in the Okanagan"
-      fill
-      priority
-      className="object-cover"
-    />
+        <div className="absolute inset-0">
+          <Image
+            src="/images/rentals-premium-fleet-flatdeck-dump-banner.png"
+            alt="Flat deck and dump trailer rentals in the Okanagan"
+            fill
+            priority
+            className="object-cover"
+          />
 
-    {/* Dark overlay for readability */}
-    <div className="absolute inset-0 bg-black/65" />
+          <div className="absolute inset-0 bg-black/25" />
+          <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.48),rgba(0,0,0,0.20),rgba(0,0,0,0.62))]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.05),rgba(0,0,0,0.38))]" />
+        </div>
 
-    {/* Gradient blend (top + bottom) */}
-    <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.80),rgba(0,0,0,0.45),rgba(0,0,0,0.90))]" />
-  </div>
+        <Container className="relative z-10 flex min-h-[560px] items-center justify-center py-28 text-center md:min-h-[640px]">
+          <div className="mx-auto max-w-4xl">
+            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-[#d4af37]">
+              Trailer Rentals
+            </p>
 
-  {/* Content */}
-  <Container className="relative flex min-h-[560px] items-center justify-center py-28 text-center md:min-h-[640px]">
-    <div className="mx-auto max-w-4xl">
-      <p className="text-xs font-semibold uppercase tracking-[0.35em] text-[#d4af37]">
-        Trailer Rentals
-      </p>
+            <h1 className="mt-5 text-4xl font-bold tracking-tight text-white md:text-6xl">
+              A growing premium fleet built for real work.
+            </h1>
 
-      <h1 className="mt-5 text-4xl font-bold tracking-tight text-white md:text-6xl">
-        A growing premium fleet built for real work.
-      </h1>
+            <p className="mt-5 text-lg text-zinc-200 md:text-xl">
+              Pricing starting at{" "}
+              <span className="font-semibold text-[#d4af37]">$115/day</span>
+            </p>
 
-      <p className="mt-5 text-lg text-zinc-200 md:text-xl">
-        Pricing starting at{" "}
-        <span className="font-semibold text-[#d4af37]">$115/day</span>
-      </p>
+            <p className="mx-auto mt-6 max-w-3xl text-base leading-8 text-zinc-200 md:text-xl">
+              Explore the Tow-N-Go Trailers lineup, from secure enclosed hauling
+              to heavy-duty dump and dovetail options. Built for real jobs,
+              presented cleanly, and backed by flexible rental support.
+            </p>
+          </div>
+        </Container>
+      </section>
 
-      <p className="mx-auto mt-6 max-w-3xl text-base leading-8 text-zinc-200 md:text-xl">
-        Explore the Tow-N-Go Trailers lineup, from secure enclosed hauling to
-        heavy-duty dump and dovetail options. Built for real jobs, presented
-        cleanly, and backed by flexible rental support.
-      </p>
-    </div>
-  </Container>
-</section>
       <section className="relative overflow-hidden bg-[#050505] py-24 md:py-28">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(212,175,55,0.10),transparent_24%),radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.04),transparent_20%)]" />
         <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.20),rgba(0,0,0,0.70))]" />

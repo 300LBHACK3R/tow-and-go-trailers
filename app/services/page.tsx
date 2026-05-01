@@ -32,11 +32,13 @@ export default function ServicesPage() {
             priority
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-black/60" />
-          <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.72),rgba(0,0,0,0.42),rgba(0,0,0,0.88))]" />
+
+          <div className="absolute inset-0 bg-black/25" />
+          <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.48),rgba(0,0,0,0.20),rgba(0,0,0,0.62))]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.05),rgba(0,0,0,0.38))]" />
         </div>
 
-        <Container className="relative flex min-h-[520px] items-center justify-center py-28 text-center md:min-h-[600px]">
+        <Container className="relative z-10 flex min-h-[520px] items-center justify-center py-28 text-center md:min-h-[600px]">
           <div className="mx-auto max-w-4xl">
             <p className="text-xs font-semibold uppercase tracking-[0.35em] text-[#d4af37]">
               Services / Add-Ons

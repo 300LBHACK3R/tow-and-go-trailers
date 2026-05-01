@@ -16,9 +16,9 @@ export default function ContactPage() {
             className="object-cover"
           />
 
-          <div className="absolute inset-0 bg-black/55" />
-          <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.78),rgba(0,0,0,0.42),rgba(0,0,0,0.92))]" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.18),rgba(0,0,0,0.72))]" />
+          <div className="absolute inset-0 bg-black/25" />
+          <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.48),rgba(0,0,0,0.20),rgba(0,0,0,0.62))]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.05),rgba(0,0,0,0.38))]" />
         </div>
 
         <Container className="relative z-10">
