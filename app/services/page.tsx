@@ -26,7 +26,7 @@ export default function ServicesPage() {
       <section className="relative overflow-hidden border-b border-white/10">
         <div className="absolute inset-0">
           <Image
-            src="/images/services-add-ons-premium-trailer-banner.jpg"
+            src="/images/services-add-ons-premium-trailer-banner.png"
             alt="Premium Tow-N-Go trailer services and add-ons in the Okanagan"
             fill
             priority
