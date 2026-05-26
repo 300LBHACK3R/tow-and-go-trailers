@@ -23,10 +23,10 @@ export const siteConfig = {
     "Serving Kelowna, West Kelowna, Vernon, Penticton, Armstrong, Lake Country, the Okanagan, BC, Alberta, and beyond.",
 
   facebookName: "Tow-N-Go Trailers",
-  facebookUrl: "https://www.facebook.com/TowNGoTrailers",
+  facebookUrl: "https://www.facebook.com/profile.php?id=61581311484780",
 
   social: {
-    facebook: "https://www.facebook.com/TowNGoTrailers",
+    facebook: "https://www.facebook.com/profile.php?id=61581311484780",
   },
 
   logo: "/icon.png",
