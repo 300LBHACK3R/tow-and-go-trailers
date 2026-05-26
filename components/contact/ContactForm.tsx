@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useEffect, useMemo, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { siteConfig } from "@/lib/site";
 
@@ -20,20 +20,23 @@ type PaymentPreference =
   | "Credit Card"
   | "Not Sure Yet";
 
+type SubmitStatus = "idle" | "submitting" | "success" | "error";
+
 type ContactFormState = {
   name: string;
   email: string;
   phone: string;
+  city: string;
   trailer: string;
   rentalType: RentalType;
   rentalDate: string;
   returnDate: string;
-  city: string;
   pickupPreference: PickupPreference;
   paymentPreference: PaymentPreference;
   addOns: string[];
   haulingDetails: string;
   message: string;
+  website: string;
 };
 
 const addOnOptions = [
@@ -50,16 +53,17 @@ function createInitialFormState(prefilledTrailer: string): ContactFormState {
     name: "",
     email: "",
     phone: "",
+    city: "",
     trailer: prefilledTrailer,
     rentalType: "",
     rentalDate: "",
     returnDate: "",
-    city: "",
     pickupPreference: "",
     paymentPreference: "",
     addOns: [],
     haulingDetails: "",
     message: "",
+    website: "",
   };
 }
 
@@ -71,7 +75,10 @@ export function ContactForm() {
     createInitialFormState(prefilledTrailer)
   );
 
-  const [submitted, setSubmitted] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<SubmitStatus>("idle");
+  const [submitMessage, setSubmitMessage] = useState("");
+
+  const isSubmitting = submitStatus === "submitting";
 
   useEffect(() => {
     if (!prefilledTrailer) return;
@@ -86,51 +93,15 @@ export function ContactForm() {
     });
   }, [prefilledTrailer]);
 
-  const mailtoHref = useMemo(() => {
-    const subject = encodeURIComponent(
-      `Trailer Rental Inquiry from ${form.name || "Website Visitor"}`
-    );
-
-    const body = encodeURIComponent(
-      [
-        "New trailer rental inquiry from the Tow-N-Go Trailers website:",
-        "",
-        `Name: ${form.name}`,
-        `Email: ${form.email}`,
-        `Phone: ${form.phone || "Not provided"}`,
-        `City / Area: ${form.city || "Not provided"}`,
-        "",
-        `Specific Trailer: ${form.trailer || "Not specified"}`,
-        `Rental Type: ${form.rentalType || "Not specified"}`,
-        `Preferred Start Date: ${form.rentalDate || "Not provided"}`,
-        `Preferred Return Date: ${form.returnDate || "Not provided"}`,
-        `Pickup / Delivery Preference: ${
-          form.pickupPreference || "Not specified"
-        }`,
-        `Payment Preference: ${form.paymentPreference || "Not specified"}`,
-        "",
-        `Requested Add-Ons: ${
-          form.addOns.length > 0 ? form.addOns.join(", ") : "None selected"
-        }`,
-        "",
-        "What they are hauling:",
-        form.haulingDetails || "Not provided",
-        "",
-        "Additional message:",
-        form.message || "Not provided",
-        "",
-        "---",
-        "Sent from the Tow-N-Go Trailers website contact form.",
-      ].join("\n")
-    );
-
-    return `${siteConfig.emailHref}?subject=${subject}&body=${body}`;
-  }, [form]);
-
   function updateField<K extends keyof ContactFormState>(
     field: K,
     value: ContactFormState[K]
   ) {
+    if (submitStatus !== "idle") {
+      setSubmitStatus("idle");
+      setSubmitMessage("");
+    }
+
     setForm((current) => ({
       ...current,
       [field]: value,
@@ -138,6 +109,11 @@ export function ContactForm() {
   }
 
   function toggleAddOn(addOn: string) {
+    if (submitStatus !== "idle") {
+      setSubmitStatus("idle");
+      setSubmitMessage("");
+    }
+
     setForm((current) => {
       const exists = current.addOns.includes(addOn);
 
@@ -150,10 +126,49 @@ export function ContactForm() {
     });
   }
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setSubmitted(true);
-    window.location.href = mailtoHref;
+
+    setSubmitStatus("submitting");
+    setSubmitMessage("");
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
+
+      const data = (await response.json()) as {
+        success?: boolean;
+        message?: string;
+      };
+
+      if (!response.ok || !data.success) {
+        throw new Error(
+          data.message ||
+            "The rental inquiry could not be sent right now. Please try again shortly."
+        );
+      }
+
+      setSubmitStatus("success");
+      setSubmitMessage(
+        data.message ||
+          "Your rental inquiry has been sent. Tow-N-Go Trailers will follow up with availability and next steps."
+      );
+
+      setForm(createInitialFormState(prefilledTrailer));
+    } catch (error) {
+      setSubmitStatus("error");
+      setSubmitMessage(
+        error instanceof Error
+          ? error.message
+          : "The rental inquiry could not be sent right now. Please try again shortly."
+      );
+    }
   }
 
   return (
@@ -174,6 +189,17 @@ export function ContactForm() {
         </p>
       </div>
 
+      <input
+        type="text"
+        name="website"
+        tabIndex={-1}
+        autoComplete="off"
+        value={form.website}
+        onChange={(event) => updateField("website", event.target.value)}
+        className="hidden"
+        aria-hidden="true"
+      />
+
       <div className="mt-8 grid gap-5">
         <div className="grid gap-5 md:grid-cols-2">
           <label className="block">
@@ -181,6 +207,8 @@ export function ContactForm() {
             <input
               required
               type="text"
+              name="name"
+              autoComplete="name"
               value={form.name}
               onChange={(event) => updateField("name", event.target.value)}
               className="mt-2 w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-white outline-none transition placeholder:text-zinc-600 focus:border-[#d4af37]/70"
@@ -193,6 +221,8 @@ export function ContactForm() {
             <input
               required
               type="email"
+              name="email"
+              autoComplete="email"
               value={form.email}
               onChange={(event) => updateField("email", event.target.value)}
               className="mt-2 w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-white outline-none transition placeholder:text-zinc-600 focus:border-[#d4af37]/70"
@@ -206,6 +236,8 @@ export function ContactForm() {
             <span className="text-sm font-medium text-zinc-300">Phone</span>
             <input
               type="tel"
+              name="phone"
+              autoComplete="tel"
               value={form.phone}
               onChange={(event) => updateField("phone", event.target.value)}
               className="mt-2 w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-white outline-none transition placeholder:text-zinc-600 focus:border-[#d4af37]/70"
@@ -219,6 +251,8 @@ export function ContactForm() {
             </span>
             <input
               type="text"
+              name="city"
+              autoComplete="address-level2"
               value={form.city}
               onChange={(event) => updateField("city", event.target.value)}
               className="mt-2 w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-white outline-none transition placeholder:text-zinc-600 focus:border-[#d4af37]/70"
@@ -234,6 +268,7 @@ export function ContactForm() {
             </span>
             <input
               type="text"
+              name="trailer"
               value={form.trailer}
               onChange={(event) => updateField("trailer", event.target.value)}
               className="mt-2 w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-white outline-none transition placeholder:text-zinc-600 focus:border-[#d4af37]/70"
@@ -246,6 +281,7 @@ export function ContactForm() {
               Rental Type
             </span>
             <select
+              name="rentalType"
               value={form.rentalType}
               onChange={(event) =>
                 updateField("rentalType", event.target.value as RentalType)
@@ -270,6 +306,7 @@ export function ContactForm() {
             </span>
             <input
               type="date"
+              name="rentalDate"
               value={form.rentalDate}
               onChange={(event) =>
                 updateField("rentalDate", event.target.value)
@@ -284,6 +321,7 @@ export function ContactForm() {
             </span>
             <input
               type="date"
+              name="returnDate"
               value={form.returnDate}
               onChange={(event) => updateField("returnDate", event.target.value)}
               className="mt-2 w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-white outline-none transition focus:border-[#d4af37]/70"
@@ -297,6 +335,7 @@ export function ContactForm() {
               Pickup / Delivery
             </span>
             <select
+              name="pickupPreference"
               value={form.pickupPreference}
               onChange={(event) =>
                 updateField(
@@ -323,6 +362,7 @@ export function ContactForm() {
               Payment Preference
             </span>
             <select
+              name="paymentPreference"
               value={form.paymentPreference}
               onChange={(event) =>
                 updateField(
@@ -374,6 +414,7 @@ export function ContactForm() {
             What are you hauling?
           </span>
           <textarea
+            name="haulingDetails"
             value={form.haulingDetails}
             onChange={(event) =>
               updateField("haulingDetails", event.target.value)
@@ -390,6 +431,7 @@ export function ContactForm() {
           </span>
           <textarea
             required
+            name="message"
             value={form.message}
             onChange={(event) => updateField("message", event.target.value)}
             rows={5}
@@ -399,12 +441,25 @@ export function ContactForm() {
         </label>
       </div>
 
+      {submitMessage && (
+        <div
+          className={`mt-6 rounded-2xl border px-4 py-3 text-sm leading-6 ${
+            submitStatus === "success"
+              ? "border-emerald-400/30 bg-emerald-400/10 text-emerald-200"
+              : "border-red-400/30 bg-red-400/10 text-red-200"
+          }`}
+        >
+          {submitMessage}
+        </div>
+      )}
+
       <div className="mt-7 flex flex-col gap-3 sm:flex-row">
         <button
           type="submit"
-          className="inline-flex items-center justify-center rounded-2xl bg-[#d4af37] px-6 py-3.5 text-sm font-bold text-black transition hover:-translate-y-[1px] hover:bg-[#f0ce63]"
+          disabled={isSubmitting}
+          className="inline-flex items-center justify-center rounded-2xl bg-[#d4af37] px-6 py-3.5 text-sm font-bold text-black transition hover:-translate-y-[1px] hover:bg-[#f0ce63] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0"
         >
-          Send Inquiry
+          {isSubmitting ? "Sending..." : "Send Inquiry"}
         </button>
 
         <a
@@ -416,13 +471,6 @@ export function ContactForm() {
           Message on Facebook
         </a>
       </div>
-
-      {submitted && (
-        <p className="mt-4 text-sm leading-6 text-zinc-400">
-          Your email app should open with the rental inquiry filled in. If it
-          does not open, message Tow-N-Go Trailers through Facebook.
-        </p>
-      )}
     </form>
   );
 }
