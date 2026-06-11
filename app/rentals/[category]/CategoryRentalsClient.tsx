@@ -4,7 +4,6 @@ import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
-import { Button } from "@/components/ui/Button";
 import { TrailerCategorySeoSection } from "@/components/sections/TrailerCategorySeoSection";
 import {
   trackContactOptionClick,
@@ -211,15 +210,15 @@ function TrailerGalleryCard({ trailer }: TrailerGalleryCardProps) {
             </div>
 
             <div className="mt-10 flex flex-wrap gap-4">
-              <Button
+              <Link
                 href={`/contact?trailer=${encodeURIComponent(trailer.name)}`}
-                className="min-w-[200px]"
                 onClick={() => {
                   trackTrailerInquiryClick(trailer.id, trailer.name);
                 }}
+                className="inline-flex min-w-[200px] items-center justify-center rounded-2xl bg-[#d4af37] px-6 py-3.5 text-sm font-semibold text-black shadow-[0_18px_55px_rgba(212,175,55,0.24)] transition-all duration-200 hover:-translate-y-[1px] hover:bg-[#f0c94a]"
               >
                 Request This Trailer
-              </Button>
+              </Link>
 
               <a
                 href="tel:+17782156486"
@@ -231,7 +230,7 @@ function TrailerGalleryCard({ trailer }: TrailerGalleryCardProps) {
             </div>
 
             <p className="mt-5 text-xs text-zinc-500">
-              Commercial-grade trailers â€¢ Clean, maintained, and ready for real
+              Commercial-grade trailers Ã¢â‚¬Â¢ Clean, maintained, and ready for real
               jobs
             </p>
           </div>
