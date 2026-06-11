@@ -231,7 +231,7 @@ function TrailerGalleryCard({ trailer }: TrailerGalleryCardProps) {
             </div>
 
             <p className="mt-5 text-xs text-zinc-500">
-              Commercial-grade trailers � Clean, maintained, and ready for real
+              Commercial-grade trailers â€¢ Clean, maintained, and ready for real
               jobs
             </p>
           </div>
