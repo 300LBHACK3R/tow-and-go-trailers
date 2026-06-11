@@ -5,6 +5,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
+import { TrailerCategorySeoSection } from "@/components/sections/TrailerCategorySeoSection";
+import {
+  trackContactOptionClick,
+  trackPageView,
+  trackTrailerInquiryClick,
+} from "@/lib/analytics";
 import type { Trailer } from "@/data/trailers";
 import type { TrailerCategory } from "@/data/trailerCategories";
 
@@ -208,12 +214,16 @@ function TrailerGalleryCard({ trailer }: TrailerGalleryCardProps) {
               <Button
                 href={`/contact?trailer=${encodeURIComponent(trailer.name)}`}
                 className="min-w-[200px]"
+                onClick={() => {
+                  trackTrailerInquiryClick(trailer.id, trailer.name);
+                }}
               >
                 Request This Trailer
               </Button>
 
               <a
                 href="tel:+17782156486"
+                onClick={() => trackContactOptionClick("phone")}
                 className="inline-flex min-w-[200px] items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-6 py-3.5 text-sm font-semibold text-white backdrop-blur transition-all duration-200 hover:-translate-y-[1px] hover:bg-white/10"
               >
                 Call Now
@@ -221,7 +231,7 @@ function TrailerGalleryCard({ trailer }: TrailerGalleryCardProps) {
             </div>
 
             <p className="mt-5 text-xs text-zinc-500">
-              Commercial-grade trailers • Clean, maintained, and ready for real
+              Commercial-grade trailers � Clean, maintained, and ready for real
               jobs
             </p>
           </div>
@@ -240,7 +250,7 @@ function TrailerGalleryCard({ trailer }: TrailerGalleryCardProps) {
             onClick={() => setIsLightboxOpen(false)}
             className="absolute right-6 top-6 z-[110] rounded-full border border-white/20 bg-black/60 px-4 py-2 text-sm font-semibold text-white backdrop-blur hover:bg-white/10"
           >
-            ✕ Close
+            Close
           </button>
 
           {totalImages > 1 && (
@@ -251,7 +261,7 @@ function TrailerGalleryCard({ trailer }: TrailerGalleryCardProps) {
                 className="absolute left-4 top-1/2 z-[110] -translate-y-1/2 rounded-full border border-white/20 bg-black/60 px-4 py-3 text-xl font-semibold text-white backdrop-blur hover:bg-white/10 md:left-6"
                 aria-label="Previous image"
               >
-                ←
+                Prev
               </button>
 
               <button
@@ -260,7 +270,7 @@ function TrailerGalleryCard({ trailer }: TrailerGalleryCardProps) {
                 className="absolute right-4 top-1/2 z-[110] -translate-y-1/2 rounded-full border border-white/20 bg-black/60 px-4 py-3 text-xl font-semibold text-white backdrop-blur hover:bg-white/10 md:right-6"
                 aria-label="Next image"
               >
-                →
+                Next
               </button>
 
               <div className="absolute left-1/2 top-6 z-[110] -translate-x-1/2 rounded-full border border-white/20 bg-black/60 px-4 py-2 text-sm font-semibold text-white backdrop-blur">
@@ -291,6 +301,10 @@ export function CategoryRentalsClient({
   category,
   trailers,
 }: CategoryRentalsClientProps) {
+  useEffect(() => {
+    trackPageView(`/rentals/${category.id}`, category.title);
+  }, [category.id, category.title]);
+
   return (
     <>
       <section className="relative overflow-hidden border-b border-white/10">
@@ -327,12 +341,14 @@ export function CategoryRentalsClient({
                 href="/rentals"
                 className="rounded-full border border-white/15 bg-black/45 px-5 py-2.5 text-sm font-semibold text-white backdrop-blur transition hover:-translate-y-[1px] hover:border-[#d4af37]/60 hover:text-[#d4af37]"
               >
-                ← Back to Trailer Categories
+                Back to Trailer Categories
               </Link>
             </div>
           </div>
         </Container>
       </section>
+
+      <TrailerCategorySeoSection category={category} />
 
       <section className="relative overflow-hidden bg-[#050505] py-24 md:py-28">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(212,175,55,0.10),transparent_24%),radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.04),transparent_20%)]" />
