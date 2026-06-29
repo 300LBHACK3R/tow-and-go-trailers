@@ -1,24 +1,33 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
+import { type FormEvent, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { siteConfig } from "@/lib/site";
+import {
+  trackContactFormSubmission,
+  trackContactOptionClick,
+} from "@/lib/analytics";
 
 type RentalType =
   | ""
-  | "Enclosed Trailer"
-  | "Dump Trailer"
-  | "Flatdeck / Equipment Trailer"
-  | "Not Sure Yet";
+  | "Enclosed trailer"
+  | "Dump trailer"
+  | "Dovetail / equipment trailer"
+  | "Not sure yet";
 
-type PickupPreference = "" | "Pickup" | "Delivery" | "Either / Flexible";
+type PickupPreference =
+  | ""
+  | "Customer pickup"
+  | "Delivery requested"
+  | "Pickup and delivery requested"
+  | "Not sure yet";
 
 type PaymentPreference =
   | ""
   | "Cash"
   | "E-transfer"
-  | "Credit Card"
-  | "Not Sure Yet";
+  | "Credit card"
+  | "Not sure yet";
 
 type SubmitStatus = "idle" | "submitting" | "success" | "error";
 
@@ -36,19 +45,29 @@ type ContactFormState = {
   addOns: string[];
   haulingDetails: string;
   message: string;
+
+  sourcePage: string;
+  referrer: string;
+  utmSource: string;
+  utmMedium: string;
+  utmCampaign: string;
+  utmTerm: string;
+  utmContent: string;
+  deviceType: string;
+
   website: string;
 };
 
 const addOnOptions = [
   "Hitch",
   "Ratchet straps",
-  "Cargo nets",
+  "Cargo net",
   "Boxes",
   "Moving blankets",
-  "Pickup / delivery",
+  "Other support items",
 ];
 
-function createInitialFormState(prefilledTrailer: string): ContactFormState {
+function createInitialFormState(prefilledTrailer = ""): ContactFormState {
   return {
     name: "",
     email: "",
@@ -63,8 +82,29 @@ function createInitialFormState(prefilledTrailer: string): ContactFormState {
     addOns: [],
     haulingDetails: "",
     message: "",
+
+    sourcePage: "",
+    referrer: "",
+    utmSource: "",
+    utmMedium: "",
+    utmCampaign: "",
+    utmTerm: "",
+    utmContent: "",
+    deviceType: "",
+
     website: "",
   };
+}
+
+function getDeviceType() {
+  if (typeof navigator === "undefined") return "Unknown";
+
+  const userAgent = navigator.userAgent.toLowerCase();
+
+  if (/mobile|iphone|android|ipod/.test(userAgent)) return "Mobile";
+  if (/ipad|tablet/.test(userAgent)) return "Tablet";
+
+  return "Desktop";
 }
 
 export function ContactForm() {
@@ -74,56 +114,59 @@ export function ContactForm() {
   const [form, setForm] = useState<ContactFormState>(() =>
     createInitialFormState(prefilledTrailer)
   );
-
   const [submitStatus, setSubmitStatus] = useState<SubmitStatus>("idle");
-  const [submitMessage, setSubmitMessage] = useState("");
+  const [submitMessage, setSubmitMessage] = useState<string>("");
 
   const isSubmitting = submitStatus === "submitting";
 
   useEffect(() => {
-    if (!prefilledTrailer) return;
+    const params = new URLSearchParams(window.location.search);
 
-    setForm((current) => {
-      if (current.trailer === prefilledTrailer) return current;
-
-      return {
-        ...current,
-        trailer: prefilledTrailer,
-      };
-    });
+    setForm((currentForm) => ({
+      ...currentForm,
+      trailer: currentForm.trailer || prefilledTrailer,
+      sourcePage: `${window.location.pathname}${window.location.search}`,
+      referrer: document.referrer || "Direct / unknown",
+      utmSource: params.get("utm_source") || "",
+      utmMedium: params.get("utm_medium") || "",
+      utmCampaign: params.get("utm_campaign") || "",
+      utmTerm: params.get("utm_term") || "",
+      utmContent: params.get("utm_content") || "",
+      deviceType: getDeviceType(),
+    }));
   }, [prefilledTrailer]);
 
-  function updateField<K extends keyof ContactFormState>(
-    field: K,
-    value: ContactFormState[K]
+  function updateField<Field extends keyof ContactFormState>(
+    field: Field,
+    value: ContactFormState[Field]
   ) {
+    setForm((currentForm) => ({
+      ...currentForm,
+      [field]: value,
+    }));
+
     if (submitStatus !== "idle") {
       setSubmitStatus("idle");
       setSubmitMessage("");
     }
-
-    setForm((current) => ({
-      ...current,
-      [field]: value,
-    }));
   }
 
   function toggleAddOn(addOn: string) {
+    setForm((currentForm) => {
+      const hasAddOn = currentForm.addOns.includes(addOn);
+
+      return {
+        ...currentForm,
+        addOns: hasAddOn
+          ? currentForm.addOns.filter((item) => item !== addOn)
+          : [...currentForm.addOns, addOn],
+      };
+    });
+
     if (submitStatus !== "idle") {
       setSubmitStatus("idle");
       setSubmitMessage("");
     }
-
-    setForm((current) => {
-      const exists = current.addOns.includes(addOn);
-
-      return {
-        ...current,
-        addOns: exists
-          ? current.addOns.filter((item) => item !== addOn)
-          : [...current.addOns, addOn],
-      };
-    });
   }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -150,9 +193,11 @@ export function ContactForm() {
       if (!response.ok || !data.success) {
         throw new Error(
           data.message ||
-            "The rental inquiry could not be sent right now. Please try again shortly."
+            "The inquiry could not be sent right now. Please try again shortly."
         );
       }
+
+      trackContactFormSubmission("contact_page");
 
       setSubmitStatus("success");
       setSubmitMessage(
@@ -166,307 +211,259 @@ export function ContactForm() {
       setSubmitMessage(
         error instanceof Error
           ? error.message
-          : "The rental inquiry could not be sent right now. Please try again shortly."
+          : "The inquiry could not be sent right now. Please try again shortly."
       );
     }
   }
 
   return (
-    <form onSubmit={handleSubmit} className="surface p-6 md:p-8">
-      <div>
-        <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[#d4af37]">
-          Rental Inquiry
-        </p>
-
-        <h2 className="mt-3 text-2xl font-semibold text-white">
-          Tell us what you need.
-        </h2>
-
-        <p className="mt-3 text-sm leading-7 text-zinc-400">
-          Send the key details and Tow-N-Go Trailers will follow up with
-          availability, rental options, pickup or delivery details, and next
-          steps.
-        </p>
-      </div>
-
+    <form
+      onSubmit={handleSubmit}
+      className="rounded-[2rem] border border-white/10 bg-white/[0.04] p-5 shadow-[0_25px_90px_rgba(0,0,0,0.42)] backdrop-blur md:p-8"
+    >
       <input
         type="text"
         name="website"
-        tabIndex={-1}
-        autoComplete="off"
         value={form.website}
         onChange={(event) => updateField("website", event.target.value)}
         className="hidden"
-        aria-hidden="true"
+        tabIndex={-1}
+        autoComplete="off"
       />
 
-      <div className="mt-8 grid gap-5">
-        <div className="grid gap-5 md:grid-cols-2">
-          <label className="block">
-            <span className="text-sm font-medium text-zinc-300">Name</span>
-            <input
-              required
-              type="text"
-              name="name"
-              autoComplete="name"
-              value={form.name}
-              onChange={(event) => updateField("name", event.target.value)}
-              className="mt-2 w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-white outline-none transition placeholder:text-zinc-600 focus:border-[#d4af37]/70"
-              placeholder="Your name"
-            />
-          </label>
+      <div className="mb-8">
+        <p className="text-xs font-semibold uppercase tracking-[0.32em] text-[#d4af37]">
+          Rental Inquiry
+        </p>
 
-          <label className="block">
-            <span className="text-sm font-medium text-zinc-300">Email</span>
-            <input
-              required
-              type="email"
-              name="email"
-              autoComplete="email"
-              value={form.email}
-              onChange={(event) => updateField("email", event.target.value)}
-              className="mt-2 w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-white outline-none transition placeholder:text-zinc-600 focus:border-[#d4af37]/70"
-              placeholder="you@example.com"
-            />
-          </label>
-        </div>
+        <h2 className="mt-3 text-3xl font-bold tracking-tight text-white">
+          Tell us what you need.
+        </h2>
 
-        <div className="grid gap-5 md:grid-cols-2">
-          <label className="block">
-            <span className="text-sm font-medium text-zinc-300">Phone</span>
-            <input
-              type="tel"
-              name="phone"
-              autoComplete="tel"
-              value={form.phone}
-              onChange={(event) => updateField("phone", event.target.value)}
-              className="mt-2 w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-white outline-none transition placeholder:text-zinc-600 focus:border-[#d4af37]/70"
-              placeholder="Best number to reach you"
-            />
-          </label>
+        <p className="mt-4 text-sm leading-7 text-zinc-400">
+          Send the key details and Tow-N-Go Trailers will follow up with
+          availability, rental options, pickup or delivery details, and next
+          steps. A confirmation email will also be sent to the address provided.
+        </p>
+      </div>
 
-          <label className="block">
-            <span className="text-sm font-medium text-zinc-300">
-              City / Area
-            </span>
-            <input
-              type="text"
-              name="city"
-              autoComplete="address-level2"
-              value={form.city}
-              onChange={(event) => updateField("city", event.target.value)}
-              className="mt-2 w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-white outline-none transition placeholder:text-zinc-600 focus:border-[#d4af37]/70"
-              placeholder="Kelowna, West Kelowna, Vernon..."
-            />
-          </label>
-        </div>
-
-        <div className="grid gap-5 md:grid-cols-2">
-          <label className="block">
-            <span className="text-sm font-medium text-zinc-300">
-              Specific Trailer
-            </span>
-            <input
-              type="text"
-              name="trailer"
-              value={form.trailer}
-              onChange={(event) => updateField("trailer", event.target.value)}
-              className="mt-2 w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-white outline-none transition placeholder:text-zinc-600 focus:border-[#d4af37]/70"
-              placeholder="Trailer name if you know it"
-            />
-          </label>
-
-          <label className="block">
-            <span className="text-sm font-medium text-zinc-300">
-              Rental Type
-            </span>
-            <select
-              name="rentalType"
-              value={form.rentalType}
-              onChange={(event) =>
-                updateField("rentalType", event.target.value as RentalType)
-              }
-              className="mt-2 w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-white outline-none transition focus:border-[#d4af37]/70"
-            >
-              <option value="">Select trailer type</option>
-              <option value="Enclosed Trailer">Enclosed Trailer</option>
-              <option value="Dump Trailer">Dump Trailer</option>
-              <option value="Flatdeck / Equipment Trailer">
-                Flatdeck / Equipment Trailer
-              </option>
-              <option value="Not Sure Yet">Not Sure Yet</option>
-            </select>
-          </label>
-        </div>
-
-        <div className="grid gap-5 md:grid-cols-2">
-          <label className="block">
-            <span className="text-sm font-medium text-zinc-300">
-              Preferred Start Date
-            </span>
-            <input
-              type="date"
-              name="rentalDate"
-              value={form.rentalDate}
-              onChange={(event) =>
-                updateField("rentalDate", event.target.value)
-              }
-              className="mt-2 w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-white outline-none transition focus:border-[#d4af37]/70"
-            />
-          </label>
-
-          <label className="block">
-            <span className="text-sm font-medium text-zinc-300">
-              Preferred Return Date
-            </span>
-            <input
-              type="date"
-              name="returnDate"
-              value={form.returnDate}
-              onChange={(event) => updateField("returnDate", event.target.value)}
-              className="mt-2 w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-white outline-none transition focus:border-[#d4af37]/70"
-            />
-          </label>
-        </div>
-
-        <div className="grid gap-5 md:grid-cols-2">
-          <label className="block">
-            <span className="text-sm font-medium text-zinc-300">
-              Pickup / Delivery
-            </span>
-            <select
-              name="pickupPreference"
-              value={form.pickupPreference}
-              onChange={(event) =>
-                updateField(
-                  "pickupPreference",
-                  event.target.value as PickupPreference
-                )
-              }
-              className="mt-2 w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-white outline-none transition focus:border-[#d4af37]/70"
-            >
-              <option value="">Select preference</option>
-              <option value="Pickup">Pickup</option>
-              <option value="Delivery">Delivery</option>
-              <option value="Either / Flexible">Either / Flexible</option>
-            </select>
-
-            <p className="mt-2 text-xs leading-5 text-zinc-500">
-              Pickup and delivery may be available for a fee depending on
-              location and scheduling.
-            </p>
-          </label>
-
-          <label className="block">
-            <span className="text-sm font-medium text-zinc-300">
-              Payment Preference
-            </span>
-            <select
-              name="paymentPreference"
-              value={form.paymentPreference}
-              onChange={(event) =>
-                updateField(
-                  "paymentPreference",
-                  event.target.value as PaymentPreference
-                )
-              }
-              className="mt-2 w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-white outline-none transition focus:border-[#d4af37]/70"
-            >
-              <option value="">Select payment method</option>
-              <option value="Cash">Cash</option>
-              <option value="E-transfer">E-transfer</option>
-              <option value="Credit Card">Credit Card</option>
-              <option value="Not Sure Yet">Not Sure Yet</option>
-            </select>
-          </label>
-        </div>
-
-        <div>
-          <span className="text-sm font-medium text-zinc-300">
-            Add-ons / Support Items
-          </span>
-
-          <div className="mt-3 grid gap-3 sm:grid-cols-2">
-            {addOnOptions.map((addOn) => {
-              const isSelected = form.addOns.includes(addOn);
-
-              return (
-                <button
-                  key={addOn}
-                  type="button"
-                  onClick={() => toggleAddOn(addOn)}
-                  className={`rounded-2xl border px-4 py-3 text-left text-sm transition ${
-                    isSelected
-                      ? "border-[#d4af37]/70 bg-[#d4af37]/15 text-white"
-                      : "border-white/10 bg-black/40 text-zinc-400 hover:border-white/20 hover:text-white"
-                  }`}
-                >
-                  {isSelected ? "✓ " : ""}
-                  {addOn}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        <label className="block">
-          <span className="text-sm font-medium text-zinc-300">
-            What are you hauling?
-          </span>
-          <textarea
-            name="haulingDetails"
-            value={form.haulingDetails}
-            onChange={(event) =>
-              updateField("haulingDetails", event.target.value)
-            }
-            rows={4}
-            className="mt-2 w-full resize-none rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-white outline-none transition placeholder:text-zinc-600 focus:border-[#d4af37]/70"
-            placeholder="Furniture, branches, equipment, boxes, landscaping material, dump run, contractor work..."
+      <div className="grid gap-5 md:grid-cols-2">
+        <label className="grid gap-2 text-sm font-semibold text-white">
+          Name *
+          <input
+            required
+            type="text"
+            value={form.name}
+            onChange={(event) => updateField("name", event.target.value)}
+            className="rounded-2xl border border-white/10 bg-black/45 px-4 py-3 text-sm text-white outline-none transition placeholder:text-zinc-600 focus:border-[#d4af37]/70"
+            placeholder="Your name"
+            autoComplete="name"
           />
         </label>
 
-        <label className="block">
-          <span className="text-sm font-medium text-zinc-300">
-            Extra Details
-          </span>
-          <textarea
+        <label className="grid gap-2 text-sm font-semibold text-white">
+          Email *
+          <input
             required
-            name="message"
-            value={form.message}
-            onChange={(event) => updateField("message", event.target.value)}
-            rows={5}
-            className="mt-2 w-full resize-none rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-white outline-none transition placeholder:text-zinc-600 focus:border-[#d4af37]/70"
-            placeholder="Tell us anything else that would help with availability, timing, location, or trailer needs."
+            type="email"
+            value={form.email}
+            onChange={(event) => updateField("email", event.target.value)}
+            className="rounded-2xl border border-white/10 bg-black/45 px-4 py-3 text-sm text-white outline-none transition placeholder:text-zinc-600 focus:border-[#d4af37]/70"
+            placeholder="you@example.com"
+            autoComplete="email"
           />
+        </label>
+
+        <label className="grid gap-2 text-sm font-semibold text-white">
+          Phone
+          <input
+            type="tel"
+            value={form.phone}
+            onChange={(event) => updateField("phone", event.target.value)}
+            className="rounded-2xl border border-white/10 bg-black/45 px-4 py-3 text-sm text-white outline-none transition placeholder:text-zinc-600 focus:border-[#d4af37]/70"
+            placeholder="Best number to reach you"
+            autoComplete="tel"
+          />
+        </label>
+
+        <label className="grid gap-2 text-sm font-semibold text-white">
+          City / Area
+          <input
+            type="text"
+            value={form.city}
+            onChange={(event) => updateField("city", event.target.value)}
+            className="rounded-2xl border border-white/10 bg-black/45 px-4 py-3 text-sm text-white outline-none transition placeholder:text-zinc-600 focus:border-[#d4af37]/70"
+            placeholder="Kelowna, West Kelowna, Vernon..."
+            autoComplete="address-level2"
+          />
+        </label>
+
+        <label className="grid gap-2 text-sm font-semibold text-white">
+          Specific Trailer
+          <input
+            type="text"
+            value={form.trailer}
+            onChange={(event) => updateField("trailer", event.target.value)}
+            className="rounded-2xl border border-white/10 bg-black/45 px-4 py-3 text-sm text-white outline-none transition placeholder:text-zinc-600 focus:border-[#d4af37]/70"
+            placeholder="Trailer name if you know it"
+          />
+        </label>
+
+        <label className="grid gap-2 text-sm font-semibold text-white">
+          Rental Type
+          <select
+            value={form.rentalType}
+            onChange={(event) =>
+              updateField("rentalType", event.target.value as RentalType)
+            }
+            className="rounded-2xl border border-white/10 bg-black/45 px-4 py-3 text-sm text-white outline-none transition focus:border-[#d4af37]/70"
+          >
+            <option value="">Select trailer type</option>
+            <option value="Enclosed trailer">Enclosed trailer</option>
+            <option value="Dump trailer">Dump trailer</option>
+            <option value="Dovetail / equipment trailer">
+              Dovetail / equipment trailer
+            </option>
+            <option value="Not sure yet">Not sure yet</option>
+          </select>
+        </label>
+
+        <label className="grid gap-2 text-sm font-semibold text-white">
+          Preferred Start Date
+          <input
+            type="date"
+            value={form.rentalDate}
+            onChange={(event) => updateField("rentalDate", event.target.value)}
+            className="rounded-2xl border border-white/10 bg-black/45 px-4 py-3 text-sm text-white outline-none transition focus:border-[#d4af37]/70"
+          />
+        </label>
+
+        <label className="grid gap-2 text-sm font-semibold text-white">
+          Preferred Return Date
+          <input
+            type="date"
+            value={form.returnDate}
+            onChange={(event) => updateField("returnDate", event.target.value)}
+            className="rounded-2xl border border-white/10 bg-black/45 px-4 py-3 text-sm text-white outline-none transition focus:border-[#d4af37]/70"
+          />
+        </label>
+
+        <label className="grid gap-2 text-sm font-semibold text-white">
+          Pickup / Delivery
+          <select
+            value={form.pickupPreference}
+            onChange={(event) =>
+              updateField(
+                "pickupPreference",
+                event.target.value as PickupPreference
+              )
+            }
+            className="rounded-2xl border border-white/10 bg-black/45 px-4 py-3 text-sm text-white outline-none transition focus:border-[#d4af37]/70"
+          >
+            <option value="">Select preference</option>
+            <option value="Customer pickup">Customer pickup</option>
+            <option value="Delivery requested">Delivery requested</option>
+            <option value="Pickup and delivery requested">
+              Pickup and delivery requested
+            </option>
+            <option value="Not sure yet">Not sure yet</option>
+          </select>
+        </label>
+
+        <label className="grid gap-2 text-sm font-semibold text-white">
+          Payment Preference
+          <select
+            value={form.paymentPreference}
+            onChange={(event) =>
+              updateField(
+                "paymentPreference",
+                event.target.value as PaymentPreference
+              )
+            }
+            className="rounded-2xl border border-white/10 bg-black/45 px-4 py-3 text-sm text-white outline-none transition focus:border-[#d4af37]/70"
+          >
+            <option value="">Select payment method</option>
+            <option value="Cash">Cash</option>
+            <option value="E-transfer">E-transfer</option>
+            <option value="Credit card">Credit card</option>
+            <option value="Not sure yet">Not sure yet</option>
+          </select>
         </label>
       </div>
 
+      <div className="mt-6">
+        <p className="text-sm font-semibold text-white">Add-ons / Support Items</p>
+
+        <div className="mt-3 grid gap-3 sm:grid-cols-2">
+          {addOnOptions.map((option) => (
+            <label
+              key={option}
+              className="flex cursor-pointer items-center gap-3 rounded-2xl border border-white/10 bg-black/35 px-4 py-3 text-sm text-zinc-300 transition hover:border-[#d4af37]/45"
+            >
+              <input
+                type="checkbox"
+                checked={form.addOns.includes(option)}
+                onChange={() => toggleAddOn(option)}
+                className="h-4 w-4 accent-[#d4af37]"
+              />
+              {option}
+            </label>
+          ))}
+        </div>
+      </div>
+
+      <label className="mt-6 grid gap-2 text-sm font-semibold text-white">
+        What are you hauling?
+        <textarea
+          value={form.haulingDetails}
+          onChange={(event) => updateField("haulingDetails", event.target.value)}
+          className="min-h-28 rounded-2xl border border-white/10 bg-black/45 px-4 py-3 text-sm text-white outline-none transition placeholder:text-zinc-600 focus:border-[#d4af37]/70"
+          placeholder="Furniture, branches, equipment, boxes, debris, landscaping material..."
+        />
+      </label>
+
+      <label className="mt-6 grid gap-2 text-sm font-semibold text-white">
+        Message *
+        <textarea
+          required
+          value={form.message}
+          onChange={(event) => updateField("message", event.target.value)}
+          className="min-h-32 rounded-2xl border border-white/10 bg-black/45 px-4 py-3 text-sm text-white outline-none transition placeholder:text-zinc-600 focus:border-[#d4af37]/70"
+          placeholder="Tell us anything else that would help with the rental."
+        />
+      </label>
+
       {submitMessage && (
         <div
-          className={`mt-6 rounded-2xl border px-4 py-3 text-sm leading-6 ${
+          className={`mt-6 rounded-2xl border px-4 py-3 text-sm leading-7 ${
             submitStatus === "success"
-              ? "border-emerald-400/30 bg-emerald-400/10 text-emerald-200"
-              : "border-red-400/30 bg-red-400/10 text-red-200"
+              ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-200"
+              : "border-red-500/30 bg-red-500/10 text-red-200"
           }`}
         >
           {submitMessage}
         </div>
       )}
 
-      <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+      <div className="mt-8 flex flex-col gap-3 sm:flex-row">
         <button
           type="submit"
           disabled={isSubmitting}
-          className="inline-flex items-center justify-center rounded-2xl bg-[#d4af37] px-6 py-3.5 text-sm font-bold text-black transition hover:-translate-y-[1px] hover:bg-[#f0ce63] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0"
+          className="inline-flex flex-1 items-center justify-center rounded-2xl bg-[#d4af37] px-6 py-3.5 text-sm font-bold text-black shadow-[0_18px_55px_rgba(212,175,55,0.22)] transition hover:-translate-y-[1px] hover:bg-[#f0c94a] disabled:cursor-not-allowed disabled:opacity-65"
         >
-          {isSubmitting ? "Sending..." : "Send Inquiry"}
+          {isSubmitting
+            ? "Sending..."
+            : submitStatus === "success"
+              ? "Inquiry Sent"
+              : "Send Inquiry"}
         </button>
 
         <a
           href={siteConfig.social.facebook}
           target="_blank"
           rel="noreferrer"
-          className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-6 py-3.5 text-sm font-semibold text-white transition hover:-translate-y-[1px] hover:bg-white/10"
+          onClick={() => trackContactOptionClick("facebook")}
+          className="inline-flex flex-1 items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-6 py-3.5 text-sm font-bold text-white transition hover:-translate-y-[1px] hover:border-[#d4af37]/55 hover:text-[#d4af37]"
         >
           Message on Facebook
         </a>

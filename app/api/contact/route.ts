@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
+export const runtime = "nodejs";
+
 type ContactRequestBody = {
   name?: unknown;
   email?: unknown;
@@ -15,7 +17,18 @@ type ContactRequestBody = {
   addOns?: unknown;
   haulingDetails?: unknown;
   message?: unknown;
+
+  sourcePage?: unknown;
+  referrer?: unknown;
+  utmSource?: unknown;
+  utmMedium?: unknown;
+  utmCampaign?: unknown;
+  utmTerm?: unknown;
+  utmContent?: unknown;
+  deviceType?: unknown;
+
   website?: unknown;
+  company?: unknown;
 };
 
 type NormalizedContactRequest = {
@@ -32,20 +45,35 @@ type NormalizedContactRequest = {
   addOns: string[];
   haulingDetails: string;
   message: string;
-  website: string;
+
+  sourcePage: string;
+  referrer: string;
+  utmSource: string;
+  utmMedium: string;
+  utmCampaign: string;
+  utmTerm: string;
+  utmContent: string;
+  deviceType: string;
 };
 
-function sanitizeText(value: unknown, maxLength = 1600): string {
+function sanitizeText(value: unknown, maxLength = 1200): string {
   if (typeof value !== "string") return "";
 
   return value
     .replace(/\0/g, "")
+    .replace(/\s+/g, " ")
     .trim()
     .slice(0, maxLength);
 }
 
+function sanitizeLongText(value: unknown, maxLength = 3000): string {
+  if (typeof value !== "string") return "";
+
+  return value.replace(/\0/g, "").trim().slice(0, maxLength);
+}
+
 function sanitizeEmail(value: unknown): string {
-  const email = sanitizeText(value, 254).toLowerCase();
+  const email = sanitizeText(value, 320).toLowerCase();
 
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return "";
@@ -58,7 +86,6 @@ function normalizeAddOns(value: unknown): string[] {
   if (!Array.isArray(value)) return [];
 
   return value
-    .filter((item): item is string => typeof item === "string")
     .map((item) => sanitizeText(item, 80))
     .filter(Boolean)
     .slice(0, 12);
@@ -70,16 +97,24 @@ function normalizePayload(body: ContactRequestBody): NormalizedContactRequest {
     email: sanitizeEmail(body.email),
     phone: sanitizeText(body.phone, 80),
     city: sanitizeText(body.city, 120),
-    trailer: sanitizeText(body.trailer, 160),
-    rentalType: sanitizeText(body.rentalType, 80),
-    rentalDate: sanitizeText(body.rentalDate, 40),
-    returnDate: sanitizeText(body.returnDate, 40),
-    pickupPreference: sanitizeText(body.pickupPreference, 80),
-    paymentPreference: sanitizeText(body.paymentPreference, 80),
+    trailer: sanitizeText(body.trailer, 180),
+    rentalType: sanitizeText(body.rentalType, 120),
+    rentalDate: sanitizeText(body.rentalDate, 80),
+    returnDate: sanitizeText(body.returnDate, 80),
+    pickupPreference: sanitizeText(body.pickupPreference, 120),
+    paymentPreference: sanitizeText(body.paymentPreference, 120),
     addOns: normalizeAddOns(body.addOns),
-    haulingDetails: sanitizeText(body.haulingDetails, 1600),
-    message: sanitizeText(body.message, 2200),
-    website: sanitizeText(body.website, 200),
+    haulingDetails: sanitizeLongText(body.haulingDetails, 3000),
+    message: sanitizeLongText(body.message, 3000),
+
+    sourcePage: sanitizeText(body.sourcePage, 500),
+    referrer: sanitizeText(body.referrer, 500),
+    utmSource: sanitizeText(body.utmSource, 160),
+    utmMedium: sanitizeText(body.utmMedium, 160),
+    utmCampaign: sanitizeText(body.utmCampaign, 220),
+    utmTerm: sanitizeText(body.utmTerm, 220),
+    utmContent: sanitizeText(body.utmContent, 220),
+    deviceType: sanitizeText(body.deviceType, 80),
   };
 }
 
@@ -92,106 +127,194 @@ function escapeHtml(value: string): string {
     .replaceAll("'", "&#039;");
 }
 
-function emailRow(label: string, value: string) {
+function formatValue(value: string | string[]): string {
+  if (Array.isArray(value)) {
+    return value.length > 0 ? value.join(", ") : "Not specified";
+  }
+
+  return value || "Not specified";
+}
+
+function emailRow(label: string, value: string | string[]) {
   return `
     <tr>
-      <td style="padding:12px 14px;border-bottom:1px solid #e5e7eb;font-weight:700;color:#111827;width:230px;vertical-align:top;">
+      <td style="padding:10px 12px;border-bottom:1px solid #242424;color:#d4af37;font-weight:700;width:190px;vertical-align:top;">
         ${escapeHtml(label)}
       </td>
-      <td style="padding:12px 14px;border-bottom:1px solid #e5e7eb;color:#374151;vertical-align:top;">
-        ${escapeHtml(value || "Not provided")}
+      <td style="padding:10px 12px;border-bottom:1px solid #242424;color:#f4f4f5;vertical-align:top;">
+        ${escapeHtml(formatValue(value))}
       </td>
     </tr>
   `;
 }
 
-function buildTextEmail(payload: NormalizedContactRequest): string {
+function getLeadSourceLabel(payload: NormalizedContactRequest): string {
+  if (payload.utmSource || payload.utmMedium || payload.utmCampaign) {
+    return [payload.utmSource, payload.utmMedium, payload.utmCampaign]
+      .filter(Boolean)
+      .join(" / ");
+  }
+
+  if (payload.referrer && !payload.referrer.toLowerCase().includes("towandgotrailers.ca")) {
+    return payload.referrer;
+  }
+
+  if (payload.sourcePage) {
+    return "Website direct";
+  }
+
+  return "Unknown / direct";
+}
+
+function buildAdminTextEmail(payload: NormalizedContactRequest) {
   return [
-    "New trailer rental inquiry from the Tow-N-Go Trailers website",
+    "New Tow-N-Go rental inquiry",
     "",
     `Name: ${payload.name}`,
     `Email: ${payload.email}`,
-    `Phone: ${payload.phone || "Not provided"}`,
-    `City / Area: ${payload.city || "Not provided"}`,
+    `Phone: ${payload.phone || "Not specified"}`,
+    `City / Area: ${payload.city || "Not specified"}`,
     "",
-    `Specific Trailer: ${payload.trailer || "Not specified"}`,
+    `Trailer: ${payload.trailer || "Not specified"}`,
     `Rental Type: ${payload.rentalType || "Not specified"}`,
-    `Preferred Start Date: ${payload.rentalDate || "Not provided"}`,
-    `Preferred Return Date: ${payload.returnDate || "Not provided"}`,
-    `Pickup / Delivery Preference: ${payload.pickupPreference || "Not specified"}`,
+    `Start Date: ${payload.rentalDate || "Not specified"}`,
+    `Return Date: ${payload.returnDate || "Not specified"}`,
+    `Pickup / Delivery: ${payload.pickupPreference || "Not specified"}`,
     `Payment Preference: ${payload.paymentPreference || "Not specified"}`,
-    `Requested Add-Ons: ${
-      payload.addOns.length > 0 ? payload.addOns.join(", ") : "None selected"
-    }`,
+    `Add-ons: ${payload.addOns.length ? payload.addOns.join(", ") : "Not specified"}`,
     "",
-    "What they are hauling:",
-    payload.haulingDetails || "Not provided",
+    `Hauling Details: ${payload.haulingDetails || "Not specified"}`,
     "",
-    "Extra Details:",
-    payload.message || "Not provided",
+    `Message: ${payload.message}`,
     "",
-    "---",
-    "Sent automatically from the Tow-N-Go Trailers website contact form.",
+    "Lead Source",
+    `Lead Source Summary: ${getLeadSourceLabel(payload)}`,
+    `Submitted From: ${payload.sourcePage || "Not specified"}`,
+    `Referrer: ${payload.referrer || "Not specified"}`,
+    `UTM Source: ${payload.utmSource || "Not specified"}`,
+    `UTM Medium: ${payload.utmMedium || "Not specified"}`,
+    `UTM Campaign: ${payload.utmCampaign || "Not specified"}`,
+    `Device Type: ${payload.deviceType || "Not specified"}`,
   ].join("\n");
 }
 
-function buildHtmlEmail(payload: NormalizedContactRequest): string {
-  const addOns =
-    payload.addOns.length > 0 ? payload.addOns.join(", ") : "None selected";
-
+function buildAdminHtmlEmail(payload: NormalizedContactRequest) {
   return `
-    <div style="margin:0;padding:0;background:#f3f4f6;font-family:Arial,Helvetica,sans-serif;">
-      <div style="max-width:780px;margin:0 auto;padding:28px 16px;">
-        <div style="background:#050505;color:#ffffff;border-radius:18px 18px 0 0;padding:26px 28px;border-bottom:4px solid #d4af37;">
-          <p style="margin:0 0 8px;font-size:12px;letter-spacing:4px;text-transform:uppercase;color:#d4af37;font-weight:700;">
-            Tow-N-Go Trailers
-          </p>
-          <h1 style="margin:0;font-size:28px;line-height:1.25;">
-            New Trailer Rental Inquiry
-          </h1>
-          <p style="margin:12px 0 0;color:#d1d5db;font-size:15px;line-height:1.6;">
-            A customer submitted a rental inquiry from the website contact form.
-          </p>
-        </div>
+    <div style="margin:0;padding:0;background:#050505;color:#f4f4f5;font-family:Arial,Helvetica,sans-serif;">
+      <div style="max-width:760px;margin:0 auto;padding:28px;">
+        <div style="border:1px solid #2d2d2d;border-radius:22px;overflow:hidden;background:#0b0b0b;">
+          <div style="padding:26px 28px;background:linear-gradient(135deg,#000000,#17130a);border-bottom:1px solid #2d2d2d;">
+            <p style="margin:0 0 8px;color:#d4af37;font-size:12px;letter-spacing:3px;text-transform:uppercase;font-weight:700;">
+              New Rental Inquiry
+            </p>
+            <h1 style="margin:0;color:#ffffff;font-size:28px;line-height:1.2;">
+              Tow-N-Go Trailers
+            </h1>
+            <p style="margin:10px 0 0;color:#d4d4d8;font-size:15px;line-height:1.6;">
+              A new customer submitted the website rental inquiry form.
+            </p>
+          </div>
 
-        <div style="background:#ffffff;border:1px solid #e5e7eb;border-top:0;">
-          <table style="width:100%;border-collapse:collapse;font-size:15px;">
-            <tbody>
+          <div style="padding:22px 28px;">
+            <h2 style="margin:0 0 12px;color:#ffffff;font-size:20px;">Customer Details</h2>
+            <table role="presentation" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;background:#090909;border:1px solid #242424;border-radius:14px;overflow:hidden;">
               ${emailRow("Name", payload.name)}
               ${emailRow("Email", payload.email)}
-              ${emailRow("Phone", payload.phone || "Not provided")}
-              ${emailRow("City / Area", payload.city || "Not provided")}
-              ${emailRow("Specific Trailer", payload.trailer || "Not specified")}
-              ${emailRow("Rental Type", payload.rentalType || "Not specified")}
-              ${emailRow("Preferred Start Date", payload.rentalDate || "Not provided")}
-              ${emailRow("Preferred Return Date", payload.returnDate || "Not provided")}
-              ${emailRow("Pickup / Delivery", payload.pickupPreference || "Not specified")}
-              ${emailRow("Payment Preference", payload.paymentPreference || "Not specified")}
-              ${emailRow("Requested Add-Ons", addOns)}
-            </tbody>
-          </table>
+              ${emailRow("Phone", payload.phone)}
+              ${emailRow("City / Area", payload.city)}
+            </table>
 
-          <div style="padding:24px 28px;border-top:1px solid #e5e7eb;">
-            <h2 style="margin:0 0 10px;font-size:16px;color:#111827;">
-              What they are hauling
-            </h2>
-            <p style="margin:0;color:#374151;line-height:1.7;white-space:pre-wrap;">
-              ${escapeHtml(payload.haulingDetails || "Not provided")}
-            </p>
-          </div>
+            <h2 style="margin:28px 0 12px;color:#ffffff;font-size:20px;">Rental Details</h2>
+            <table role="presentation" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;background:#090909;border:1px solid #242424;border-radius:14px;overflow:hidden;">
+              ${emailRow("Trailer", payload.trailer)}
+              ${emailRow("Rental Type", payload.rentalType)}
+              ${emailRow("Preferred Start", payload.rentalDate)}
+              ${emailRow("Preferred Return", payload.returnDate)}
+              ${emailRow("Pickup / Delivery", payload.pickupPreference)}
+              ${emailRow("Payment Preference", payload.paymentPreference)}
+              ${emailRow("Add-ons", payload.addOns)}
+              ${emailRow("Hauling Details", payload.haulingDetails)}
+              ${emailRow("Message", payload.message)}
+            </table>
 
-          <div style="padding:24px 28px;border-top:1px solid #e5e7eb;">
-            <h2 style="margin:0 0 10px;font-size:16px;color:#111827;">
-              Extra Details
-            </h2>
-            <p style="margin:0;color:#374151;line-height:1.7;white-space:pre-wrap;">
-              ${escapeHtml(payload.message || "Not provided")}
+            <h2 style="margin:28px 0 12px;color:#ffffff;font-size:20px;">Lead Source Tracking</h2>
+            <table role="presentation" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;background:#090909;border:1px solid #242424;border-radius:14px;overflow:hidden;">
+              ${emailRow("Lead Source", getLeadSourceLabel(payload))}
+              ${emailRow("Submitted From", payload.sourcePage)}
+              ${emailRow("Referrer", payload.referrer)}
+              ${emailRow("UTM Source", payload.utmSource)}
+              ${emailRow("UTM Medium", payload.utmMedium)}
+              ${emailRow("UTM Campaign", payload.utmCampaign)}
+              ${emailRow("UTM Term", payload.utmTerm)}
+              ${emailRow("UTM Content", payload.utmContent)}
+              ${emailRow("Device Type", payload.deviceType)}
+            </table>
+
+            <p style="margin:22px 0 0;color:#a1a1aa;font-size:13px;line-height:1.7;">
+              Reply directly to this email to respond to the customer.
             </p>
           </div>
         </div>
+      </div>
+    </div>
+  `;
+}
 
-        <div style="background:#111827;color:#d1d5db;border-radius:0 0 18px 18px;padding:18px 28px;font-size:13px;line-height:1.6;">
-          Sent automatically from the Tow-N-Go Trailers website.
+function buildCustomerTextEmail(payload: NormalizedContactRequest) {
+  return [
+    `Hi ${payload.name},`,
+    "",
+    "Thanks for contacting Tow-N-Go Trailers. We received your rental inquiry and will follow up with availability, pickup or delivery options, payment details, and next steps.",
+    "",
+    "Inquiry summary:",
+    `Trailer: ${payload.trailer || "Not specified"}`,
+    `Rental Type: ${payload.rentalType || "Not specified"}`,
+    `Preferred Start: ${payload.rentalDate || "Not specified"}`,
+    `Preferred Return: ${payload.returnDate || "Not specified"}`,
+    `Pickup / Delivery: ${payload.pickupPreference || "Not specified"}`,
+    `Add-ons: ${payload.addOns.length ? payload.addOns.join(", ") : "Not specified"}`,
+    "",
+    "Tow-N-Go Trailers",
+    "Clean trailers. Reliable service. Ready when you need us.",
+  ].join("\n");
+}
+
+function buildCustomerHtmlEmail(payload: NormalizedContactRequest) {
+  return `
+    <div style="margin:0;padding:0;background:#050505;color:#f4f4f5;font-family:Arial,Helvetica,sans-serif;">
+      <div style="max-width:680px;margin:0 auto;padding:28px;">
+        <div style="border:1px solid #2d2d2d;border-radius:22px;overflow:hidden;background:#0b0b0b;">
+          <div style="padding:26px 28px;background:linear-gradient(135deg,#000000,#17130a);border-bottom:1px solid #2d2d2d;">
+            <p style="margin:0 0 8px;color:#d4af37;font-size:12px;letter-spacing:3px;text-transform:uppercase;font-weight:700;">
+              Inquiry Received
+            </p>
+            <h1 style="margin:0;color:#ffffff;font-size:28px;line-height:1.2;">
+              Thanks for contacting Tow-N-Go Trailers
+            </h1>
+            <p style="margin:12px 0 0;color:#d4d4d8;font-size:15px;line-height:1.7;">
+              Hi ${escapeHtml(payload.name)}, we received your rental inquiry and will follow up with availability, pickup or delivery options, payment details, and next steps.
+            </p>
+          </div>
+
+          <div style="padding:22px 28px;">
+            <h2 style="margin:0 0 12px;color:#ffffff;font-size:20px;">Your Inquiry Summary</h2>
+            <table role="presentation" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;background:#090909;border:1px solid #242424;border-radius:14px;overflow:hidden;">
+              ${emailRow("Trailer", payload.trailer)}
+              ${emailRow("Rental Type", payload.rentalType)}
+              ${emailRow("Preferred Start", payload.rentalDate)}
+              ${emailRow("Preferred Return", payload.returnDate)}
+              ${emailRow("Pickup / Delivery", payload.pickupPreference)}
+              ${emailRow("Add-ons", payload.addOns)}
+            </table>
+
+            <p style="margin:22px 0 0;color:#d4d4d8;font-size:14px;line-height:1.7;">
+              This confirmation means your inquiry was received. It does not guarantee availability until Tow-N-Go confirms the rental details with you.
+            </p>
+
+            <p style="margin:18px 0 0;color:#d4af37;font-size:15px;font-weight:700;">
+              Tow-N-Go Trailers — clean trailers, reliable service, ready when you need us.
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -199,7 +322,13 @@ function buildHtmlEmail(payload: NormalizedContactRequest): string {
 }
 
 function getRequiredEnv(name: string): string {
-  return process.env[name]?.trim() || "";
+  const value = process.env[name];
+
+  if (!value) {
+    throw new Error(`Missing required environment variable: ${name}`);
+  }
+
+  return value;
 }
 
 export async function POST(request: Request) {
@@ -208,35 +337,11 @@ export async function POST(request: Request) {
     const contactToEmail = getRequiredEnv("CONTACT_TO_EMAIL");
     const contactFromEmail = getRequiredEnv("CONTACT_FROM_EMAIL");
 
-    if (!resendApiKey || !contactToEmail || !contactFromEmail) {
-      return NextResponse.json(
-        {
-          success: false,
-          message:
-            "Contact form email settings are missing. Please check RESEND_API_KEY, CONTACT_TO_EMAIL, and CONTACT_FROM_EMAIL.",
-        },
-        { status: 500 }
-      );
-    }
+    const body = (await request.json()) as ContactRequestBody;
 
-    let body: ContactRequestBody;
+    const honeypot = sanitizeText(body.website) || sanitizeText(body.company);
 
-    try {
-      body = (await request.json()) as ContactRequestBody;
-    } catch {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Invalid form submission. Please refresh and try again.",
-        },
-        { status: 400 }
-      );
-    }
-
-    const payload = normalizePayload(body);
-
-    // Honeypot spam protection. Real customers should never fill this.
-    if (payload.website) {
+    if (honeypot) {
       return NextResponse.json({
         success: true,
         message:
@@ -244,59 +349,81 @@ export async function POST(request: Request) {
       });
     }
 
+    const payload = normalizePayload(body);
+
     if (!payload.name || !payload.email || !payload.message) {
       return NextResponse.json(
         {
           success: false,
-          message: "Please include your name, email, and extra details.",
+          message: "Please include your name, email, and message.",
         },
         { status: 400 }
       );
     }
 
     const resend = new Resend(resendApiKey);
-    const subject = `New Tow-N-Go Rental Inquiry — ${payload.name}`;
 
-    const result = await resend.emails.send({
+    const adminResult = await resend.emails.send({
       from: contactFromEmail,
       to: [contactToEmail],
       replyTo: payload.email,
-      subject,
-      html: buildHtmlEmail(payload),
-      text: buildTextEmail(payload),
+      subject: `New Tow-N-Go Rental Inquiry — ${payload.name}`,
+      html: buildAdminHtmlEmail(payload),
+      text: buildAdminTextEmail(payload),
     });
 
-    if (result.error) {
-      console.error("RESEND ERROR:", result.error);
+    if (adminResult.error) {
+      console.error("Tow-N-Go contact email failed:", adminResult.error);
 
       return NextResponse.json(
         {
           success: false,
           message:
-            typeof result.error.message === "string"
-              ? result.error.message
-              : "The rental inquiry could not be sent right now. Please try again shortly.",
+            "The inquiry could not be sent right now. Please try again shortly.",
         },
         { status: 500 }
       );
+    }
+
+    let customerConfirmationSent = false;
+
+    try {
+      const customerResult = await resend.emails.send({
+        from: contactFromEmail,
+        to: [payload.email],
+        replyTo: contactToEmail,
+        subject: "Tow-N-Go Trailers — We received your rental inquiry",
+        html: buildCustomerHtmlEmail(payload),
+        text: buildCustomerTextEmail(payload),
+      });
+
+      customerConfirmationSent = !customerResult.error;
+
+      if (customerResult.error) {
+        console.error(
+          "Tow-N-Go customer confirmation email failed:",
+          customerResult.error
+        );
+      }
+    } catch (error) {
+      console.error("Tow-N-Go customer confirmation exception:", error);
     }
 
     return NextResponse.json({
       success: true,
       message:
         "Your rental inquiry has been sent. Tow-N-Go Trailers will follow up with availability and next steps.",
-      id: result.data?.id || null,
+      id: adminResult.data?.id || null,
+      customerConfirmationSent,
     });
   } catch (error) {
-    console.error("CONTACT ROUTE ERROR:", error);
+    console.error("Tow-N-Go contact route error:", error);
 
     return NextResponse.json(
       {
         success: false,
         message:
-          error instanceof Error
-            ? error.message
-            : "The rental inquiry could not be sent right now. Please try again shortly.",
+          "The inquiry could not be sent right now. Please try again shortly.",
       },
       { status: 500 }
     );

@@ -1,0 +1,178 @@
+import Image from "next/image";
+import Link from "next/link";
+import { Container } from "@/components/ui/Container";
+import { trailers } from "@/data/trailers";
+import { siteConfig } from "@/lib/site";
+
+const featuredTrailers = trailers.slice(0, 3);
+
+const trustItems = [
+  "Locally owned & operated",
+  "Flexible rental options",
+  "Delivery may be available",
+  "Serving the Okanagan & beyond",
+];
+
+export function Hero() {
+  return (
+    <section className="relative isolate overflow-hidden border-b border-white/10 bg-black">
+      <div className="absolute inset-0 -z-20 bg-[radial-gradient(circle_at_25%_15%,rgba(212,175,55,0.16),transparent_30%),radial-gradient(circle_at_78%_20%,rgba(255,255,255,0.08),transparent_24%),linear-gradient(120deg,#000000,#090806_46%,#000000)]" />
+      <div className="absolute left-1/2 top-0 -z-10 h-[700px] w-[700px] -translate-x-1/2 rounded-full bg-[#d4af37]/10 blur-[150px]" />
+      <div className="absolute inset-x-0 top-0 z-0 h-px bg-gradient-to-r from-transparent via-[#d4af37]/70 to-transparent" />
+
+      <Container className="relative z-10 grid min-h-[calc(100vh-86px)] gap-12 py-20 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:py-24">
+        <div>
+          <div className="inline-flex items-center gap-3 rounded-full border border-[#d4af37]/30 bg-[#d4af37]/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-[#d4af37] shadow-[0_12px_40px_rgba(212,175,55,0.10)]">
+            Premium trailer rentals in the Okanagan
+          </div>
+
+          <h1 className="mt-7 max-w-4xl text-5xl font-black tracking-[-0.06em] text-white md:text-7xl lg:text-8xl">
+            Trailer Rentals
+            <span className="block bg-gradient-to-r from-white via-zinc-300 to-zinc-500 bg-clip-text text-transparent">
+              That Look Premium
+            </span>
+            <span className="block text-white">and Work Hard.</span>
+          </h1>
+
+          <div className="mt-7 max-w-2xl">
+            <p className="text-xl font-semibold text-white md:text-2xl">
+              Trailer rentals starting at{" "}
+              <span className="text-[#d4af37]">$115/day</span>
+            </p>
+
+            <p className="mt-3 text-base leading-8 text-zinc-400 md:text-lg">
+              Daily, weekly, and monthly options • No hidden fees • Flexible
+              pickup & delivery • Discounts for longer rentals
+            </p>
+          </div>
+
+          <div className="mt-9 flex flex-col gap-4 sm:flex-row">
+            <Link
+              href="/rentals"
+              className="inline-flex items-center justify-center rounded-2xl bg-[#d4af37] px-7 py-4 text-sm font-black text-black shadow-[0_18px_70px_rgba(212,175,55,0.24)] transition hover:-translate-y-[2px] hover:bg-[#f0c94a]"
+            >
+              Browse Available Trailers
+            </Link>
+
+            <Link
+              href="/contact"
+              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/[0.05] px-7 py-4 text-sm font-black text-white backdrop-blur transition hover:-translate-y-[2px] hover:border-[#d4af37]/50 hover:text-[#d4af37]"
+            >
+              Request a Rental
+            </Link>
+          </div>
+
+          <div className="mt-8 flex flex-wrap items-center gap-x-3 gap-y-2 text-xs font-semibold uppercase tracking-[0.22em] text-zinc-500">
+            <span>Fully insured</span>
+            <span className="text-[#d4af37]">•</span>
+            <span>Commercial-grade trailers</span>
+            <span className="text-[#d4af37]">•</span>
+            <span>Ready for real jobs</span>
+          </div>
+
+          <div className="mt-10 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            {trustItems.map((item) => (
+              <div
+                key={item}
+                className="group rounded-2xl border border-white/10 bg-white/[0.04] p-5 shadow-[0_20px_70px_rgba(0,0,0,0.24)] transition hover:-translate-y-1 hover:border-[#d4af37]/40 hover:bg-white/[0.06]"
+              >
+                <div className="mb-4 h-px w-12 bg-gradient-to-r from-[#d4af37] to-transparent opacity-70 transition group-hover:w-20" />
+                <p className="text-sm font-semibold leading-6 text-zinc-300">
+                  {item}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="relative">
+          <div className="absolute -inset-6 -z-10 rounded-[3rem] bg-[#d4af37]/10 blur-3xl" />
+
+          <div className="overflow-hidden rounded-[2.25rem] border border-white/10 bg-white/[0.04] p-4 shadow-[0_30px_120px_rgba(0,0,0,0.55)] backdrop-blur">
+            <div className="rounded-[1.75rem] border border-white/10 bg-black/55 p-5 md:p-7">
+              <div className="mb-6 flex items-center justify-between gap-4">
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.32em] text-[#d4af37]">
+                    Featured Fleet
+                  </p>
+                  <h2 className="mt-2 text-2xl font-bold text-white">
+                    Available Fleet
+                  </h2>
+                </div>
+
+                <div className="rounded-full border border-white/10 bg-white/[0.06] px-3 py-1 text-xs font-bold text-zinc-300">
+                  Tow-N-Go
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                {featuredTrailers.map((trailer) => (
+                  <Link
+                    key={trailer.id}
+                    href="/rentals"
+                    className="group grid grid-cols-[112px_1fr] overflow-hidden rounded-2xl border border-white/10 bg-black/45 transition hover:-translate-y-1 hover:border-[#d4af37]/45 hover:bg-white/[0.04]"
+                  >
+                    <div className="relative min-h-32 overflow-hidden bg-zinc-950">
+                      <Image
+                        src={trailer.image}
+                        alt={trailer.name}
+                        fill
+                        sizes="112px"
+                        className="object-cover transition duration-500 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-black/10" />
+                    </div>
+
+                    <div className="p-4">
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.32em] text-zinc-500">
+                        {trailer.status}
+                      </p>
+
+                      <h3 className="mt-2 text-lg font-bold text-white">
+                        {trailer.name}
+                      </h3>
+
+                      <p className="mt-2 line-clamp-2 text-sm leading-6 text-zinc-400">
+                        {trailer.description}
+                      </p>
+
+                      <div className="mt-3 flex flex-wrap gap-2 text-xs text-zinc-500">
+                        {trailer.specs.slice(0, 3).map((spec) => (
+                          <span key={spec}>{spec}</span>
+                        ))}
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+
+              <div className="mt-6 rounded-2xl border border-[#d4af37]/25 bg-[#d4af37]/10 p-5">
+                <p className="text-sm font-semibold leading-7 text-zinc-200">
+                  Need a specific trailer, add-ons, or pickup/delivery support?
+                  Send the details and Tow-N-Go will follow up with availability
+                  and next steps.
+                </p>
+
+                <div className="mt-4 flex flex-col gap-3 sm:flex-row">
+                  <Link
+                    href="/contact"
+                    className="inline-flex flex-1 items-center justify-center rounded-xl bg-[#d4af37] px-4 py-3 text-sm font-black text-black transition hover:bg-[#f0c94a]"
+                  >
+                    Send Inquiry
+                  </Link>
+
+                  <a
+                    href={siteConfig.phoneHref}
+                    className="inline-flex flex-1 items-center justify-center rounded-xl border border-white/15 bg-black/35 px-4 py-3 text-sm font-black text-white transition hover:border-[#d4af37]/50 hover:text-[#d4af37]"
+                  >
+                    {siteConfig.phone}
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Container>
+    </section>
+  );
+}

@@ -7,10 +7,10 @@ import { siteConfig } from "@/lib/site";
 const featuredTrailers = trailers.slice(0, 3);
 
 const trustItems = [
-  "Clean trailers",
-  "Flexible rentals",
-  "Pickup / delivery may be available",
-  "Accessories available",
+  "Clean, maintained trailers",
+  "Flexible rental options",
+  "Pickup & delivery may be available",
+  "Cash, e-transfer & credit card accepted",
 ];
 
 function getHomepageTrailerName(trailerName: string) {
@@ -70,17 +70,17 @@ function getHomepageTrailerDescription(trailerName: string) {
 export function Hero() {
   return (
     <section className="relative isolate overflow-hidden border-b border-white/10 bg-black">
-      <div className="absolute inset-0 -z-20 bg-[radial-gradient(circle_at_20%_12%,rgba(212,175,55,0.15),transparent_28%),radial-gradient(circle_at_82%_18%,rgba(255,255,255,0.07),transparent_22%),linear-gradient(120deg,#000000,#090806_48%,#000000)]" />
-      <div className="absolute left-1/2 top-0 -z-10 h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-[#d4af37]/10 blur-[120px] md:h-[620px] md:w-[620px]" />
+      <div className="absolute inset-0 -z-20 bg-[radial-gradient(circle_at_25%_15%,rgba(212,175,55,0.16),transparent_30%),radial-gradient(circle_at_78%_20%,rgba(255,255,255,0.08),transparent_24%),linear-gradient(120deg,#000000,#090806_46%,#000000)]" />
+      <div className="absolute left-1/2 top-0 -z-10 h-[620px] w-[620px] -translate-x-1/2 rounded-full bg-[#d4af37]/10 blur-[150px]" />
       <div className="absolute inset-x-0 top-0 z-0 h-px bg-gradient-to-r from-transparent via-[#d4af37]/70 to-transparent" />
 
-      <Container className="relative z-10 grid gap-10 py-10 sm:py-12 lg:min-h-[calc(100svh-86px)] lg:grid-cols-[1.02fr_0.98fr] lg:items-center lg:gap-12 lg:py-20">
-        <div className="mx-auto max-w-3xl text-center lg:mx-0 lg:text-left">
-          <div className="inline-flex max-w-full items-center justify-center rounded-full border border-[#d4af37]/30 bg-[#d4af37]/10 px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.20em] text-[#d4af37] shadow-[0_12px_40px_rgba(212,175,55,0.10)] sm:px-4 sm:text-xs sm:tracking-[0.28em]">
+      <Container className="relative z-10 grid min-h-[calc(100svh-86px)] gap-12 py-16 lg:grid-cols-[1.02fr_0.98fr] lg:items-center lg:py-20">
+        <div>
+          <div className="inline-flex items-center gap-3 rounded-full border border-[#d4af37]/30 bg-[#d4af37]/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-[#d4af37] shadow-[0_12px_40px_rgba(212,175,55,0.10)]">
             Premium trailer rentals in the Okanagan
           </div>
 
-          <h1 className="mt-6 text-[3rem] font-black leading-[0.92] tracking-[-0.065em] text-white sm:text-6xl md:text-7xl lg:text-7xl">
+          <h1 className="mt-7 max-w-4xl text-5xl font-black leading-[0.94] tracking-[-0.065em] text-white md:text-6xl xl:text-7xl">
             Trailer Rentals
             <span className="block bg-gradient-to-r from-white via-zinc-300 to-zinc-500 bg-clip-text text-transparent">
               That Look Premium
@@ -88,35 +88,35 @@ export function Hero() {
             <span className="block text-white">and Work Hard.</span>
           </h1>
 
-          <div className="mx-auto mt-6 max-w-2xl lg:mx-0">
-            <p className="text-lg font-semibold text-white sm:text-xl md:text-2xl">
+          <div className="mt-7 max-w-2xl">
+            <p className="text-xl font-semibold text-white md:text-2xl">
               Trailer rentals starting at{" "}
               <span className="text-[#d4af37]">$115/day</span>
             </p>
 
-            <p className="mt-3 text-sm leading-7 text-zinc-400 sm:text-base md:text-lg md:leading-8">
+            <p className="mt-3 text-base leading-8 text-zinc-400 md:text-lg">
               Daily, weekly, and monthly options • Flexible pickup & delivery •
               Discounts for longer rentals
             </p>
           </div>
 
-          <div className="mt-7 grid gap-3 sm:mx-auto sm:max-w-xl sm:grid-cols-2 lg:mx-0">
+          <div className="mt-9 flex flex-col gap-4 sm:flex-row">
             <Link
               href="/rentals"
-              className="inline-flex items-center justify-center rounded-2xl bg-[#d4af37] px-6 py-3.5 text-sm font-black text-black shadow-[0_18px_70px_rgba(212,175,55,0.24)] transition hover:-translate-y-[2px] hover:bg-[#f0c94a]"
+              className="inline-flex items-center justify-center rounded-2xl bg-[#d4af37] px-7 py-4 text-sm font-black text-black shadow-[0_18px_70px_rgba(212,175,55,0.24)] transition hover:-translate-y-[2px] hover:bg-[#f0c94a]"
             >
-              Browse Trailers
+              Browse Available Trailers
             </Link>
 
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/[0.05] px-6 py-3.5 text-sm font-black text-white backdrop-blur transition hover:-translate-y-[2px] hover:border-[#d4af37]/50 hover:text-[#d4af37]"
+              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/[0.05] px-7 py-4 text-sm font-black text-white backdrop-blur transition hover:-translate-y-[2px] hover:border-[#d4af37]/50 hover:text-[#d4af37]"
             >
-              Request Rental
+              Request a Rental
             </Link>
           </div>
 
-          <div className="mt-6 flex flex-wrap justify-center gap-x-3 gap-y-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-zinc-500 sm:text-xs sm:tracking-[0.22em] lg:justify-start">
+          <div className="mt-8 flex flex-wrap items-center gap-x-3 gap-y-2 text-xs font-semibold uppercase tracking-[0.22em] text-zinc-500">
             <span>Commercial-grade trailers</span>
             <span className="text-[#d4af37]">•</span>
             <span>Clean rental options</span>
@@ -125,35 +125,35 @@ export function Hero() {
           </div>
         </div>
 
-        <div className="relative mx-auto w-full max-w-2xl lg:max-w-none">
-          <div className="absolute -inset-4 -z-10 rounded-[2rem] bg-[#d4af37]/10 blur-3xl md:-inset-6 md:rounded-[3rem]" />
+        <div className="relative">
+          <div className="absolute -inset-6 -z-10 rounded-[3rem] bg-[#d4af37]/10 blur-3xl" />
 
-          <div className="overflow-hidden rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-3 shadow-[0_30px_120px_rgba(0,0,0,0.55)] backdrop-blur md:rounded-[2.25rem] md:p-4">
-            <div className="rounded-[1.35rem] border border-white/10 bg-black/55 p-4 md:rounded-[1.75rem] md:p-7">
-              <div className="mb-4 flex items-center justify-between gap-4 md:mb-6">
+          <div className="overflow-hidden rounded-[2.25rem] border border-white/10 bg-white/[0.04] p-4 shadow-[0_30px_120px_rgba(0,0,0,0.55)] backdrop-blur">
+            <div className="rounded-[1.75rem] border border-white/10 bg-black/55 p-5 md:p-7">
+              <div className="mb-6 flex items-center justify-between gap-4">
                 <div>
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#d4af37] md:text-xs md:tracking-[0.32em]">
+                  <p className="text-xs font-semibold uppercase tracking-[0.32em] text-[#d4af37]">
                     Featured Fleet
                   </p>
 
-                  <h2 className="mt-2 text-xl font-bold text-white md:text-2xl">
+                  <h2 className="mt-2 text-2xl font-bold text-white">
                     Available Fleet
                   </h2>
                 </div>
 
-                <div className="rounded-full border border-white/10 bg-white/[0.06] px-3 py-1 text-[11px] font-bold text-zinc-300 md:text-xs">
+                <div className="rounded-full border border-white/10 bg-white/[0.06] px-3 py-1 text-xs font-bold text-zinc-300">
                   Tow-N-Go
                 </div>
               </div>
 
-              <div className="space-y-3 md:space-y-4">
+              <div className="space-y-4">
                 {featuredTrailers.map((trailer) => (
                   <Link
                     key={trailer.id}
                     href="/rentals"
-                    className="group grid grid-cols-[88px_1fr] overflow-hidden rounded-2xl border border-white/10 bg-black/45 transition hover:-translate-y-1 hover:border-[#d4af37]/45 hover:bg-white/[0.04] sm:grid-cols-[104px_1fr] md:grid-cols-[118px_1fr]"
+                    className="group grid grid-cols-[118px_1fr] overflow-hidden rounded-2xl border border-white/10 bg-black/45 transition hover:-translate-y-1 hover:border-[#d4af37]/45 hover:bg-white/[0.04]"
                   >
-                    <div className="relative min-h-24 overflow-hidden bg-zinc-950 sm:min-h-28 md:min-h-32">
+                    <div className="relative min-h-32 overflow-hidden bg-zinc-950">
                       <Image
                         src={trailer.image}
                         alt={getHomepageTrailerName(trailer.name)}
@@ -166,20 +166,20 @@ export function Hero() {
                       <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/60 to-transparent" />
                     </div>
 
-                    <div className="p-3 md:p-4">
-                      <p className="text-[9px] font-semibold uppercase tracking-[0.26em] text-zinc-500 md:text-[11px] md:tracking-[0.32em]">
+                    <div className="p-4">
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.32em] text-zinc-500">
                         {trailer.status}
                       </p>
 
-                      <h3 className="mt-1.5 text-base font-bold text-white md:mt-2 md:text-lg">
+                      <h3 className="mt-2 text-lg font-bold text-white">
                         {getHomepageTrailerName(trailer.name)}
                       </h3>
 
-                      <p className="mt-1.5 line-clamp-2 text-xs leading-5 text-zinc-400 sm:text-sm md:mt-2 md:leading-6">
+                      <p className="mt-2 line-clamp-2 text-sm leading-6 text-zinc-400">
                         {getHomepageTrailerDescription(trailer.name)}
                       </p>
 
-                      <div className="mt-2 hidden flex-wrap gap-x-3 gap-y-1 text-xs text-zinc-500 sm:flex md:mt-3">
+                      <div className="mt-3 flex flex-wrap gap-x-3 gap-y-1 text-xs text-zinc-500">
                         {trailer.specs.slice(0, 2).map((spec) => (
                           <span key={spec}>{spec}</span>
                         ))}
@@ -189,23 +189,24 @@ export function Hero() {
                 ))}
               </div>
 
-              <div className="mt-4 rounded-2xl border border-[#d4af37]/25 bg-[#d4af37]/10 p-4 md:mt-6 md:p-5">
+              <div className="mt-6 rounded-2xl border border-[#d4af37]/25 bg-[#d4af37]/10 p-5">
                 <p className="text-sm font-semibold leading-7 text-zinc-200">
                   Need a specific trailer, add-ons, or pickup/delivery support?
-                  Send the details and Tow-N-Go will follow up.
+                  Send the details and Tow-N-Go will follow up with availability
+                  and next steps.
                 </p>
 
-                <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                <div className="mt-4 flex flex-col gap-3 sm:flex-row">
                   <Link
                     href="/contact"
-                    className="inline-flex items-center justify-center rounded-xl bg-[#d4af37] px-4 py-3 text-sm font-black text-black transition hover:bg-[#f0c94a]"
+                    className="inline-flex flex-1 items-center justify-center rounded-xl bg-[#d4af37] px-4 py-3 text-sm font-black text-black transition hover:bg-[#f0c94a]"
                   >
                     Send Inquiry
                   </Link>
 
                   <a
                     href={siteConfig.phoneHref}
-                    className="inline-flex items-center justify-center rounded-xl border border-white/15 bg-black/35 px-4 py-3 text-sm font-black text-white transition hover:border-[#d4af37]/50 hover:text-[#d4af37]"
+                    className="inline-flex flex-1 items-center justify-center rounded-xl border border-white/15 bg-black/35 px-4 py-3 text-sm font-black text-white transition hover:border-[#d4af37]/50 hover:text-[#d4af37]"
                   >
                     {siteConfig.phone}
                   </a>
@@ -216,18 +217,17 @@ export function Hero() {
         </div>
 
         <div className="lg:col-span-2">
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.04] shadow-[0_22px_90px_rgba(0,0,0,0.35)] backdrop-blur sm:grid-cols-2 lg:grid-cols-4">
             {trustItems.map((item) => (
               <div
                 key={item}
-                className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-4 shadow-[0_18px_60px_rgba(0,0,0,0.25)] backdrop-blur transition hover:border-[#d4af37]/35 hover:bg-white/[0.06]"
+                className="group border-b border-white/10 p-5 transition hover:bg-white/[0.04] sm:[&:nth-child(2n)]:border-l lg:border-b-0 lg:border-l lg:first:border-l-0"
               >
-                <div className="flex items-center gap-3">
-                  <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#d4af37]" />
-                  <p className="text-sm font-semibold leading-6 text-zinc-300">
-                    {item}
-                  </p>
-                </div>
+                <div className="mb-4 h-px w-12 bg-gradient-to-r from-[#d4af37] to-transparent opacity-80 transition group-hover:w-20" />
+
+                <p className="text-sm font-semibold leading-6 text-zinc-300">
+                  {item}
+                </p>
               </div>
             ))}
           </div>
