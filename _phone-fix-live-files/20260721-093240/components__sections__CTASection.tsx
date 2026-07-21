@@ -31,7 +31,7 @@ export function CTASection() {
             </Button>
 
             <a
-              href="tel:+17782153422"
+              href="tel:+17782156486"
               className="inline-flex min-w-[200px] items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-6 py-3.5 text-sm font-semibold text-white backdrop-blur transition-all duration-200 hover:-translate-y-[1px] hover:bg-white/10"
             >
               Call Now

@@ -8,8 +8,8 @@ export const siteConfig = {
   shortDescription:
     "Premium trailer rentals across Kelowna and the Okanagan for moving, hauling, cleanup jobs, equipment, and contractor work.",
 
-  phone: "778-215-3422",
-  phoneHref: "tel:+17782153422",
+  phone: "778-215-6486",
+  phoneHref: "tel:+17782156486",
 
   email: "info@towandgotrailers.ca",
   emailHref: "mailto:info@towandgotrailers.ca",

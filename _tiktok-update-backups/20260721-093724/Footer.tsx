@@ -1,4 +1,3 @@
-import { TikTokFooterButton } from "@/components/social/TikTokSocial";
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { siteConfig } from "@/lib/site";
@@ -70,7 +69,7 @@ export function Footer() {
         {/* BOTTOM BAR */}
         <div className="mt-10 border-t border-white/10 pt-6 text-center text-xs text-zinc-500">
           <p>
-            Â© {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
+            © {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
           </p>
 
           <p className="mt-2">
@@ -86,14 +85,6 @@ export function Footer() {
           </p>
         </div>
       </Container>
-          {/* TNG_TIKTOK_FOOTER_START */}
-      <div className="mt-8 flex flex-wrap items-center gap-3 border-t border-white/10 pt-6">
-        <span className="text-xs font-black uppercase tracking-[0.25em] text-zinc-500">
-          Follow Tow-N-Go
-        </span>
-        <TikTokFooterButton />
-      </div>
-      {/* TNG_TIKTOK_FOOTER_END */}
     </footer>
   );
 }

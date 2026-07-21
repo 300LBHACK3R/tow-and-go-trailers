@@ -47,7 +47,7 @@ export function Navbar() {
           ))}
 
           <a
-            href="tel:+17782153422"
+            href="tel:+17782156486"
             className="rounded-2xl bg-[#d4af37] px-6 py-3 text-sm font-semibold text-black transition hover:bg-yellow-400"
           >
             Call or Text
@@ -57,8 +57,8 @@ export function Navbar() {
         {/* Mobile nav */}
         <details className="group relative xl:hidden">
           <summary className="list-none cursor-pointer select-none rounded-xl p-2 text-white">
-            <span className="text-2xl leading-none group-open:hidden">â˜°</span>
-            <span className="hidden text-2xl leading-none group-open:inline">âœ•</span>
+            <span className="text-2xl leading-none group-open:hidden">☰</span>
+            <span className="hidden text-2xl leading-none group-open:inline">✕</span>
           </summary>
 
           <div className="absolute right-0 top-[52px] w-[280px] overflow-hidden rounded-2xl border border-white/10 bg-black/95 p-5 shadow-[0_20px_60px_rgba(0,0,0,0.5)]">
@@ -74,7 +74,7 @@ export function Navbar() {
               ))}
 
               <a
-                href="tel:+17782153422"
+                href="tel:+17782156486"
                 className="mt-2 rounded-xl bg-[#d4af37] px-5 py-3 text-center font-semibold text-black"
               >
                 Call or Text

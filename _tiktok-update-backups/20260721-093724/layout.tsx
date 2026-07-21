@@ -1,4 +1,3 @@
-import { TikTokSocialStrip } from "@/components/social/TikTokSocial";
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -97,10 +96,7 @@ export default function RootLayout({
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_35%)]" />
           <Navbar />
           <main>{children}</main>
-                  {/* TNG_TIKTOK_STRIP_START */}
-        <TikTokSocialStrip />
-        {/* TNG_TIKTOK_STRIP_END */}
-        <Footer />
+          <Footer />
         </div>
       </body>
     </html>

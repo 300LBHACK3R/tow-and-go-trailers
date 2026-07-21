@@ -163,7 +163,7 @@ function CategoryOverviewCard({ category }: { category: TrailerCategory }) {
           </span>
 
           <span className="text-sm font-semibold text-[#d4af37] transition group-hover:translate-x-1">
-            View â†’
+            View →
           </span>
         </div>
       </div>
@@ -367,7 +367,7 @@ function TrailerGalleryCard({ trailer }: TrailerGalleryCardProps) {
               </Button>
 
               <a
-                href="tel:+17782153422"
+                href="tel:+17782156486"
                 className="inline-flex min-w-[200px] items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-6 py-3.5 text-sm font-semibold text-white backdrop-blur transition-all duration-200 hover:-translate-y-[1px] hover:bg-white/10"
               >
                 Call Now
@@ -375,7 +375,7 @@ function TrailerGalleryCard({ trailer }: TrailerGalleryCardProps) {
             </div>
 
             <p className="mt-5 text-xs text-zinc-500">
-              Commercial-grade trailers â€¢ Clean, maintained, and ready for real
+              Commercial-grade trailers • Clean, maintained, and ready for real
               jobs
             </p>
           </div>
@@ -394,7 +394,7 @@ function TrailerGalleryCard({ trailer }: TrailerGalleryCardProps) {
             onClick={() => setIsLightboxOpen(false)}
             className="absolute right-6 top-6 z-[110] rounded-full border border-white/20 bg-black/60 px-4 py-2 text-sm font-semibold text-white backdrop-blur hover:bg-white/10"
           >
-            âœ• Close
+            ✕ Close
           </button>
 
           {totalImages > 1 && (
@@ -405,7 +405,7 @@ function TrailerGalleryCard({ trailer }: TrailerGalleryCardProps) {
                 className="absolute left-4 top-1/2 z-[110] -translate-y-1/2 rounded-full border border-white/20 bg-black/60 px-4 py-3 text-xl font-semibold text-white backdrop-blur hover:bg-white/10 md:left-6"
                 aria-label="Previous image"
               >
-                â†
+                ←
               </button>
 
               <button
@@ -414,7 +414,7 @@ function TrailerGalleryCard({ trailer }: TrailerGalleryCardProps) {
                 className="absolute right-4 top-1/2 z-[110] -translate-y-1/2 rounded-full border border-white/20 bg-black/60 px-4 py-3 text-xl font-semibold text-white backdrop-blur hover:bg-white/10 md:right-6"
                 aria-label="Next image"
               >
-                â†’
+                →
               </button>
 
               <div className="absolute left-1/2 top-6 z-[110] -translate-x-1/2 rounded-full border border-white/20 bg-black/60 px-4 py-2 text-sm font-semibold text-white backdrop-blur">
