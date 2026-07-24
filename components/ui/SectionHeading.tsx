@@ -1,154 +1,50 @@
-"use client";
+import { cn } from "@/utils/cn";
 
-type AnalyticsValue = string | number | boolean | null;
-
-export type AnalyticsEventProperties = Record<
-  string,
-  AnalyticsValue | undefined
->;
-
-type CleanAnalyticsEventProperties = Record<
-  string,
-  AnalyticsValue
->;
-
-type GtagFunction = {
-  (
-    command: "event",
-    eventName: string,
-    params?: Record<string, unknown>
-  ): void;
-
-  (
-    command: "config",
-    measurementId: string,
-    params?: Record<string, unknown>
-  ): void;
-
-  (command: "js", date: Date): void;
+type SectionHeadingProps = {
+  eyebrow?: string;
+  title: string;
+  description?: string;
+  align?: "left" | "center";
+  className?: string;
 };
 
-declare global {
-  interface Window {
-    dataLayer?: unknown[];
-    gtag?: GtagFunction;
-  }
-}
+export function SectionHeading({
+  eyebrow,
+  title,
+  description,
+  align = "left",
+  className,
+}: SectionHeadingProps) {
+  const isCentered = align === "center";
 
-function cleanEventProperties(
-  properties: AnalyticsEventProperties
-): CleanAnalyticsEventProperties {
-  const cleanedProperties: CleanAnalyticsEventProperties = {};
+  return (
+    <div
+      className={cn(
+        "max-w-4xl",
+        isCentered && "mx-auto text-center",
+        className
+      )}
+    >
+      {eyebrow && (
+        <p className="text-xs font-semibold uppercase tracking-[0.32em] text-[#d4af37]">
+          {eyebrow}
+        </p>
+      )}
 
-  for (const [key, value] of Object.entries(properties)) {
-    if (value !== undefined) {
-      cleanedProperties[key] = value;
-    }
-  }
+      <h2 className="mt-4 text-[clamp(2.25rem,4.5vw,4rem)] font-bold leading-[1.02] tracking-[-0.04em] text-white [text-wrap:balance]">
+        {title}
+      </h2>
 
-  return cleanedProperties;
-}
-
-export function trackEvent(
-  eventName: string,
-  properties: AnalyticsEventProperties = {}
-): void {
-  if (typeof window === "undefined") {
-    return;
-  }
-
-  const normalizedEventName = eventName.trim();
-
-  if (!normalizedEventName) {
-    return;
-  }
-
-  const cleanProperties = cleanEventProperties(properties);
-
-  /*
-   * Use one delivery path only.
-   *
-   * When Google Analytics has initialized, gtag sends the event through
-   * dataLayer internally. Pushing manually as well would duplicate it.
-   *
-   * The direct dataLayer fallback allows events to queue before gtag has
-   * initialized or when another tag manager is handling the data layer.
-   */
-  if (typeof window.gtag === "function") {
-    window.gtag(
-      "event",
-      normalizedEventName,
-      cleanProperties
-    );
-  } else {
-    window.dataLayer = window.dataLayer ?? [];
-
-    window.dataLayer.push({
-      event: normalizedEventName,
-      ...cleanProperties,
-    });
-  }
-
-  /*
-   * Internal event for optional debugging or future integrations.
-   * This does not send another Google Analytics event.
-   */
-  window.dispatchEvent(
-    new CustomEvent("towngo:analytics", {
-      detail: {
-        eventName: normalizedEventName,
-        properties: cleanProperties,
-      },
-    })
+      {description && (
+        <p
+          className={cn(
+            "mt-5 max-w-3xl text-base leading-8 text-zinc-400 sm:text-lg",
+            isCentered && "mx-auto"
+          )}
+        >
+          {description}
+        </p>
+      )}
+    </div>
   );
-}
-
-export function trackPageView(
-  path: string,
-  title?: string
-): void {
-  trackEvent("page_view", {
-    page_path: path,
-    page_title: title,
-    page_location:
-      typeof window !== "undefined"
-        ? window.location.href
-        : undefined,
-  });
-}
-
-export function trackRentalCategoryClick(
-  categoryId: string,
-  categoryTitle: string
-): void {
-  trackEvent("rental_category_click", {
-    category_id: categoryId,
-    category_title: categoryTitle,
-  });
-}
-
-export function trackTrailerInquiryClick(
-  trailerId: string,
-  trailerName: string
-): void {
-  trackEvent("request_this_trailer_click", {
-    trailer_id: trailerId,
-    trailer_name: trailerName,
-  });
-}
-
-export function trackContactFormSubmission(
-  source: string
-): void {
-  trackEvent("contact_form_submit_success", {
-    source,
-  });
-}
-
-export function trackContactOptionClick(
-  option: "phone" | "facebook" | "email"
-): void {
-  trackEvent("contact_option_click", {
-    option,
-  });
 }
