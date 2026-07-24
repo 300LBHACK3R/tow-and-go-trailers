@@ -20,9 +20,9 @@ export const trailers: Trailer[] = [
     shortName: "Enclosed Trailer",
     status: "Available Now",
     image:
-      "/images/tow-and-go-royal-cargo-enclosed-trailer-kelowna-rear-view-01.jpg",
+      "/images/tow-and-go-royal-cargo-enclosed-trailer-kelowna-rear-view-.jpg",
     images: [
-      "/images/tow-and-go-royal-cargo-enclosed-trailer-kelowna-rear-view-01.jpg",
+      "/images/tow-and-go-royal-cargo-enclosed-trailer-kelowna-rear-view-.jpg",
       "/images/tow-and-go-royal-cargo-enclosed-trailer-okanagan-interior-empty-02.jpg",
       "/images/tow-and-go-royal-cargo-enclosed-trailer-kelowna-rear-door-closed-03.jpg",
       "/images/tow-and-go-royal-cargo-enclosed-trailer-vernon-rear-door-open-04.jpg",
@@ -58,9 +58,9 @@ export const trailers: Trailer[] = [
     name: "2025 SureTrac 6x10 Dump Trailer",
     shortName: "Dump Trailer",
     status: "Available Now",
-    image: "/images/suretrac-6x10-dump-trailer-okanagan-1.jpg",
+    image: "/images/suretrac-6x10-dump-trailer-okanagan-1.png",
     images: [
-      "/images/suretrac-6x10-dump-trailer-okanagan-1.jpg",
+      "/images/suretrac-6x10-dump-trailer-okanagan-1.png",
       "/images/suretrac-6x10-dump-trailer-okanagan-2.jpg",
       "/images/suretrac-6x10-dump-trailer-okanagan-3.jpg",
       "/images/suretrac-6x10-dump-trailer-okanagan-4.jpg",
@@ -99,9 +99,9 @@ export const trailers: Trailer[] = [
     shortName: "Dovetail Trailer",
     status: "Available Now",
     image:
-      "/images/tow-and-go-southland-dovetail-deckover-trailer-kelowna-side-view-01.jpg",
+      "/images/tow-and-go-southland-dovetail-deckover-trailer-kelowna-side-view-01.png",
     images: [
-      "/images/tow-and-go-southland-dovetail-deckover-trailer-kelowna-side-view-01.jpg",
+      "/images/tow-and-go-southland-dovetail-deckover-trailer-kelowna-side-view-01.png",
       "/images/tow-and-go-southland-dovetail-deckover-trailer-kelowna-ramp-view-02.jpg",
       "/images/tow-and-go-southland-dovetail-deckover-trailer-kelowna-angled-view-03.jpg",
       "/images/tow-and-go-southland-dovetail-deckover-trailer-kelowna-hitch-view-04.jpg",
