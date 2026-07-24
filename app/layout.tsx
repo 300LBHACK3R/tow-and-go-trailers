@@ -1,10 +1,11 @@
-import { TikTokSocialStrip } from "@/components/social/TikTokSocial";
 import type { Metadata, Viewport } from "next";
+import type { ReactNode } from "react";
 import { Inter } from "next/font/google";
-import "./globals.css";
-import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { Navbar } from "@/components/layout/Navbar";
+import { TikTokSocialStrip } from "@/components/social/TikTokSocial";
 import { siteConfig } from "@/lib/site";
+import "./globals.css";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -85,22 +86,29 @@ export const viewport: Viewport = {
   themeColor: "#050505",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+type RootLayoutProps = Readonly<{
+  children: ReactNode;
+}>;
+
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <div className="relative min-h-screen overflow-x-hidden bg-zinc-950">
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_35%)]" />
+      <body className={`${inter.className} bg-[#050505] text-white`}>
+        <div className="relative isolate flex min-h-screen flex-col overflow-x-clip bg-[#050505]">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[42rem] bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.075),transparent_62%)]"
+          />
+
           <Navbar />
-          <main>{children}</main>
-                  {/* TNG_TIKTOK_STRIP_START */}
-        <TikTokSocialStrip />
-        {/* TNG_TIKTOK_STRIP_END */}
-        <Footer />
+
+          <div className="relative flex-1">{children}</div>
+
+          {/* TNG_TIKTOK_STRIP_START */}
+          <TikTokSocialStrip />
+          {/* TNG_TIKTOK_STRIP_END */}
+
+          <Footer />
         </div>
       </body>
     </html>

@@ -1,39 +1,51 @@
 import type { MetadataRoute } from "next";
+import { trailerCategories } from "@/data/trailerCategories";
 import { siteConfig } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date();
+  const lastModified = new Date();
+  const baseUrl = siteConfig.url.replace(/\/$/, "");
 
-  return [
+  const staticPages: MetadataRoute.Sitemap = [
     {
-      url: siteConfig.url,
-      lastModified: now,
+      url: baseUrl,
+      lastModified,
       changeFrequency: "weekly",
       priority: 1,
     },
     {
-      url: `${siteConfig.url}/rentals`,
-      lastModified: now,
+      url: `${baseUrl}/rentals`,
+      lastModified,
       changeFrequency: "weekly",
       priority: 0.95,
     },
     {
-      url: `${siteConfig.url}/services`,
-      lastModified: now,
+      url: `${baseUrl}/services`,
+      lastModified,
       changeFrequency: "monthly",
       priority: 0.85,
     },
     {
-      url: `${siteConfig.url}/about`,
-      lastModified: now,
+      url: `${baseUrl}/about`,
+      lastModified,
       changeFrequency: "monthly",
       priority: 0.75,
     },
     {
-      url: `${siteConfig.url}/contact`,
-      lastModified: now,
+      url: `${baseUrl}/contact`,
+      lastModified,
       changeFrequency: "monthly",
       priority: 0.8,
     },
   ];
+
+  const rentalCategoryPages: MetadataRoute.Sitemap =
+    trailerCategories.map((category) => ({
+      url: `${baseUrl}/rentals/${category.id}`,
+      lastModified,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    }));
+
+  return [...staticPages, ...rentalCategoryPages];
 }

@@ -1,56 +1,86 @@
-import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
+import { Container } from "@/components/ui/Container";
+import { siteConfig } from "@/lib/site";
+
+const trustItems = [
+  "Flexible rental options",
+  "Delivery available",
+  "Okanagan-based service",
+] as const;
 
 export function CTASection() {
   return (
-    <section className="relative overflow-hidden bg-[#050505] py-24 md:py-28">
-      {/* premium background */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(212,175,55,0.14),transparent_24%),radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.04),transparent_20%)]" />
-      <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.20),rgba(0,0,0,0.70))]" />
+    <section className="relative isolate overflow-hidden bg-[#050505] py-14 sm:py-16 lg:py-20">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,rgba(212,175,55,0.13),transparent_34%),radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.04),transparent_28%)]"
+      />
 
-      <Container className="relative">
-        <div className="overflow-hidden rounded-[2.25rem] border border-white/10 bg-black/45 p-8 text-center backdrop-blur-xl shadow-[0_30px_120px_rgba(0,0,0,0.60)] md:p-12">
-          
-          <p className="text-xs font-semibold uppercase tracking-[0.32em] text-[#d4af37]">
-            Rental Inquiry
-          </p>
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.16),rgba(0,0,0,0.72))]"
+      />
 
-          <h2 className="mt-4 text-4xl font-bold tracking-tight text-white md:text-5xl">
-            Need a trailer for your next job?
-          </h2>
+      <Container className="max-w-[1500px]">
+        <div className="relative mx-auto max-w-[1240px] overflow-hidden rounded-[1.75rem] border border-white/10 bg-[linear-gradient(145deg,rgba(255,255,255,0.055),rgba(0,0,0,0.42))] px-6 py-10 text-center shadow-[0_30px_110px_rgba(0,0,0,0.52)] backdrop-blur-xl sm:px-8 sm:py-12 lg:px-12 lg:py-14">
+          <div
+            aria-hidden="true"
+            className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#d4af37]/85 to-transparent"
+          />
 
-          <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-zinc-300">
-            Send a quick inquiry with your dates, trailer needs, and any delivery
-            details. Tow-N-Go Trailers will review it and get back to you directly
-            with availability, pricing, and the best setup for your job.
-          </p>
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -left-24 -top-24 h-64 w-64 rounded-full bg-[#d4af37]/[0.055] blur-3xl"
+          />
 
-          <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <Button href="/contact" className="min-w-[200px]">
-              Request a Rental
-            </Button>
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -bottom-28 -right-20 h-72 w-72 rounded-full bg-white/[0.025] blur-3xl"
+          />
 
-            <a
-              href="tel:+17782153422"
-              className="inline-flex min-w-[200px] items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-6 py-3.5 text-sm font-semibold text-white backdrop-blur transition-all duration-200 hover:-translate-y-[1px] hover:bg-white/10"
-            >
-              Call Now
-            </a>
+          <div className="relative">
+            <p className="text-xs font-semibold uppercase tracking-[0.32em] text-[#d4af37]">
+              Rental Inquiry
+            </p>
+
+            <h2 className="mx-auto mt-4 max-w-4xl text-[clamp(2.25rem,4.5vw,4rem)] font-bold leading-[1.02] tracking-[-0.04em] text-white [text-wrap:balance]">
+              Need a trailer for your next job?
+            </h2>
+
+            <p className="mx-auto mt-5 max-w-3xl text-base leading-8 text-zinc-300 sm:text-lg">
+              Send a quick inquiry with your dates, trailer needs, and any
+              delivery details. Tow-N-Go Trailers will review it and get back to
+              you directly with availability, pricing, and the best setup for
+              your job.
+            </p>
+
+            <div className="mx-auto mt-8 grid max-w-xl gap-3 sm:grid-cols-2">
+              <Button
+                href="/contact"
+                className="min-h-12 w-full justify-center"
+              >
+                Request a Rental
+              </Button>
+
+              <a
+                href={siteConfig.phoneHref}
+                className="inline-flex min-h-12 w-full items-center justify-center rounded-2xl border border-white/15 bg-white/[0.045] px-6 py-3.5 text-center text-sm font-semibold text-white shadow-[0_14px_38px_rgba(0,0,0,0.2)] backdrop-blur transition duration-200 hover:-translate-y-0.5 hover:border-[#d4af37]/45 hover:bg-[#d4af37]/10 hover:text-[#e6c354] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37]/70 focus-visible:ring-offset-4 focus-visible:ring-offset-[#080808]"
+              >
+                Call Now
+              </a>
+            </div>
+
+            <div className="mt-9 grid gap-3 sm:grid-cols-3">
+              {trustItems.map((item) => (
+                <div
+                  key={item}
+                  className="flex min-h-14 items-center justify-center rounded-2xl border border-white/10 bg-black/25 px-4 py-3 text-sm font-medium text-zinc-300 shadow-[0_12px_30px_rgba(0,0,0,0.16)]"
+                >
+                  {item}
+                </div>
+              ))}
+            </div>
           </div>
-
-          {/* trust strip */}
-          <div className="mt-10 grid gap-4 text-sm text-zinc-300 sm:grid-cols-3">
-            <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-4">
-              Flexible rental options
-            </div>
-            <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-4">
-              Delivery available
-            </div>
-            <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-4">
-              Okanagan-based service
-            </div>
-          </div>
-
         </div>
       </Container>
     </section>

@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { Suspense } from "react";
-import { Container } from "@/components/ui/Container";
 import { ContactForm } from "@/components/contact/ContactForm";
 import { FaqSection } from "@/components/sections/FaqSection";
+import { Container } from "@/components/ui/Container";
 import { contactFaqs } from "@/data/faqs";
 import { siteConfig } from "@/lib/site";
 
@@ -40,12 +40,21 @@ export const metadata: Metadata = {
 
 function ContactFormFallback() {
   return (
-    <div className="surface p-6 md:p-8">
+    <div
+      className="relative overflow-hidden rounded-[1.5rem] border border-white/10 bg-[linear-gradient(145deg,rgba(255,255,255,0.055),rgba(255,255,255,0.018))] p-6 shadow-[0_24px_80px_rgba(0,0,0,0.28)] sm:p-8"
+      aria-live="polite"
+      aria-busy="true"
+    >
+      <div
+        aria-hidden="true"
+        className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#d4af37]/70 to-transparent"
+      />
+
       <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[#d4af37]">
         Rental Inquiry
       </p>
 
-      <h2 className="mt-3 text-2xl font-semibold text-white">
+      <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white">
         Loading inquiry form...
       </h2>
 
@@ -53,10 +62,10 @@ function ContactFormFallback() {
         Preparing the trailer rental request form.
       </p>
 
-      <div className="mt-8 grid gap-5">
-        <div className="h-12 animate-pulse rounded-2xl bg-white/5" />
-        <div className="h-12 animate-pulse rounded-2xl bg-white/5" />
-        <div className="h-32 animate-pulse rounded-2xl bg-white/5" />
+      <div className="mt-8 grid gap-5" aria-hidden="true">
+        <div className="h-12 animate-pulse rounded-2xl border border-white/5 bg-white/[0.04]" />
+        <div className="h-12 animate-pulse rounded-2xl border border-white/5 bg-white/[0.04]" />
+        <div className="h-32 animate-pulse rounded-2xl border border-white/5 bg-white/[0.04]" />
       </div>
     </div>
   );
@@ -64,79 +73,102 @@ function ContactFormFallback() {
 
 function ContactInfoPanel() {
   return (
-    <aside className="surface h-fit self-start p-6 md:p-8 lg:sticky lg:top-28">
-      <h2 className="text-2xl font-semibold text-white">Get in touch</h2>
+    <aside className="relative h-fit min-w-0 overflow-hidden rounded-[1.5rem] border border-white/10 bg-[linear-gradient(145deg,rgba(255,255,255,0.055),rgba(255,255,255,0.018))] p-6 shadow-[0_24px_80px_rgba(0,0,0,0.3)] sm:p-7 xl:p-8">
+      <div
+        aria-hidden="true"
+        className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#d4af37]/75 to-transparent"
+      />
 
-      <p className="mt-3 text-sm leading-7 text-zinc-400">
-        Quick response times. Direct communication. Clear rental details before
-        the job starts.
-      </p>
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-28 -top-28 h-64 w-64 rounded-full bg-[#d4af37]/[0.05] blur-3xl"
+      />
 
-      <div className="mt-8 space-y-6">
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#d4af37]">
-            Phone
-          </p>
+      <div className="relative">
+        <div className="flex items-center gap-4">
+          <span
+            aria-hidden="true"
+            className="h-px w-8 shrink-0 bg-[#d4af37]"
+          />
 
-          <a
-            href={siteConfig.phoneHref}
-            className="mt-2 block text-lg text-white transition hover:text-[#d4af37]"
-          >
-            {siteConfig.phone}
-          </a>
+          <h2 className="text-2xl font-semibold tracking-tight text-white sm:text-3xl">
+            Get in touch
+          </h2>
         </div>
 
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#d4af37]">
-            Email
-          </p>
+        <p className="mt-4 max-w-xl text-sm leading-7 text-zinc-400">
+          Quick response times. Direct communication. Clear rental details
+          before the job starts.
+        </p>
 
-          <a
-            href={siteConfig.emailHref}
-            className="mt-2 block break-words text-lg text-white transition hover:text-[#d4af37]"
-          >
-            {siteConfig.email}
-          </a>
-        </div>
+        <div className="mt-7 divide-y divide-white/10">
+          <div className="pb-5">
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#d4af37]">
+              Phone
+            </p>
 
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#d4af37]">
-            Service Area
-          </p>
+            <a
+              href={siteConfig.phoneHref}
+              className="mt-2 inline-flex text-lg font-medium text-white transition-colors duration-200 hover:text-[#e4c456] focus-visible:rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37]/70 focus-visible:ring-offset-4 focus-visible:ring-offset-[#0b0b0b]"
+            >
+              {siteConfig.phone}
+            </a>
+          </div>
 
-          <p className="mt-2 text-zinc-300">{siteConfig.serviceArea}</p>
-        </div>
+          <div className="py-5">
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#d4af37]">
+              Email
+            </p>
 
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#d4af37]">
-            Payment Methods
-          </p>
+            <a
+              href={siteConfig.emailHref}
+              className="mt-2 inline-flex max-w-full break-all text-lg font-medium text-white transition-colors duration-200 hover:text-[#e4c456] focus-visible:rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37]/70 focus-visible:ring-offset-4 focus-visible:ring-offset-[#0b0b0b] sm:break-words"
+            >
+              {siteConfig.email}
+            </a>
+          </div>
 
-          <p className="mt-2 text-zinc-300">
-            Cash, e-transfer, and credit card payments accepted.
-          </p>
-        </div>
+          <div className="py-5">
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#d4af37]">
+              Service Area
+            </p>
 
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#d4af37]">
-            Pickup & Delivery
-          </p>
+            <p className="mt-2 max-w-xl leading-7 text-zinc-300">
+              {siteConfig.serviceArea}
+            </p>
+          </div>
 
-          <p className="mt-2 text-zinc-300">
-            Flexible pickup and delivery options may be available. Pickup and
-            delivery can be arranged for a fee as a convenience to renters.
-          </p>
-        </div>
+          <div className="py-5">
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#d4af37]">
+              Payment Methods
+            </p>
 
-        <div className="border-t border-white/10 pt-6">
-          <a
-            href={siteConfig.social.facebook}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex w-full items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-[1px] hover:border-[#d4af37]/50 hover:bg-white/10"
-          >
-            Message on Facebook
-          </a>
+            <p className="mt-2 max-w-xl leading-7 text-zinc-300">
+              Cash, e-transfer, and credit card payments accepted.
+            </p>
+          </div>
+
+          <div className="py-5">
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#d4af37]">
+              Pickup &amp; Delivery
+            </p>
+
+            <p className="mt-2 max-w-xl leading-7 text-zinc-300">
+              Flexible pickup and delivery options may be available. Pickup and
+              delivery can be arranged for a fee as a convenience to renters.
+            </p>
+          </div>
+
+          <div className="pt-5">
+            <a
+              href={siteConfig.social.facebook}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-12 w-full items-center justify-center rounded-2xl border border-white/15 bg-white/[0.045] px-5 py-3 text-center text-sm font-semibold text-white shadow-[0_12px_35px_rgba(0,0,0,0.18)] transition duration-200 hover:-translate-y-0.5 hover:border-[#d4af37]/55 hover:bg-[#d4af37]/10 hover:text-[#f0d36e] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37]/70 focus-visible:ring-offset-4 focus-visible:ring-offset-[#0b0b0b]"
+            >
+              Message on Facebook
+            </a>
+          </div>
         </div>
       </div>
     </aside>
@@ -145,33 +177,50 @@ function ContactInfoPanel() {
 
 export default function ContactPage() {
   return (
-    <>
-      <section className="relative overflow-hidden border-b border-white/10">
-        <div className="absolute inset-0">
+    <main className="overflow-x-clip bg-[#050505]">
+      <section className="relative isolate overflow-hidden border-b border-white/10 bg-black">
+        <div className="absolute inset-0 -z-20">
           <Image
             src="/images/industrial-trailers-under-dramatic-skies.png"
             alt="Premium Tow-N-Go trailer rentals in the Okanagan"
             fill
             priority
-            className="object-cover"
+            sizes="100vw"
+            className="object-cover object-center"
           />
-
-          <div className="absolute inset-0 bg-black/25" />
-          <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.48),rgba(0,0,0,0.20),rgba(0,0,0,0.62))]" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.05),rgba(0,0,0,0.38))]" />
         </div>
 
-        <Container className="relative z-10">
-          <div className="flex min-h-[430px] flex-col items-center justify-center px-4 py-24 text-center md:min-h-[500px]">
-            <p className="text-xs font-semibold uppercase tracking-[0.42em] text-[#d4af37]">
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 -z-10 bg-black/30"
+        />
+
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 -z-10 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.64)_0%,rgba(0,0,0,0.26)_43%,rgba(0,0,0,0.76)_100%)]"
+        />
+
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_50%_42%,rgba(212,175,55,0.10),transparent_44%)]"
+        />
+
+        <div
+          aria-hidden="true"
+          className="absolute inset-x-0 bottom-0 -z-10 h-32 bg-gradient-to-t from-[#050505] to-transparent"
+        />
+
+        <Container className="relative">
+          <div className="mx-auto flex min-h-[390px] max-w-5xl flex-col items-center justify-center py-16 text-center sm:min-h-[430px] sm:py-20 lg:min-h-[470px]">
+            <p className="rounded-full border border-[#d4af37]/35 bg-black/35 px-5 py-2 text-[0.68rem] font-semibold uppercase tracking-[0.3em] text-[#e4c456] shadow-[0_10px_40px_rgba(0,0,0,0.28)] backdrop-blur-md sm:text-xs sm:tracking-[0.42em]">
               Contact / Booking Inquiry
             </p>
 
-            <h1 className="mt-5 max-w-4xl text-4xl font-bold tracking-tight text-white md:text-6xl">
+            <h1 className="mt-6 max-w-4xl text-[clamp(2.65rem,5vw,4.85rem)] font-bold leading-[0.98] tracking-[-0.045em] text-white [text-wrap:balance]">
               Send a rental inquiry.
             </h1>
 
-            <p className="mt-6 max-w-3xl text-base leading-8 text-zinc-200 md:text-xl">
+            <p className="mt-6 max-w-3xl text-base leading-8 text-zinc-200 [text-wrap:balance] sm:text-lg lg:text-xl lg:leading-9">
               Tell us what you need, your timing, pickup or delivery
               preference, and any details about the job. We’ll review your
               request and get back to you with availability and next steps.
@@ -180,16 +229,28 @@ export default function ContactPage() {
         </Container>
       </section>
 
-      <section className="relative overflow-hidden bg-[#050505] py-20 md:py-24">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(212,175,55,0.08),transparent_28%),radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.04),transparent_24%)]" />
+      <section className="relative isolate overflow-hidden py-10 sm:py-12 lg:py-14 xl:py-16">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,rgba(212,175,55,0.09),transparent_34%),radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.035),transparent_29%)]"
+        />
 
-        <Container className="relative">
-          <div className="grid items-start gap-8 lg:grid-cols-[0.88fr_1.22fr]">
-            <ContactInfoPanel />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent"
+        />
 
-            <Suspense fallback={<ContactFormFallback />}>
-              <ContactForm />
-            </Suspense>
+        <Container className="max-w-[1500px]">
+          <div className="grid items-start gap-6 lg:grid-cols-[minmax(320px,0.78fr)_minmax(0,1.32fr)] lg:gap-8 xl:gap-10">
+            <div className="min-w-0">
+              <ContactInfoPanel />
+            </div>
+
+            <div className="min-w-0">
+              <Suspense fallback={<ContactFormFallback />}>
+                <ContactForm />
+              </Suspense>
+            </div>
           </div>
         </Container>
       </section>
@@ -200,6 +261,6 @@ export default function ContactPage() {
         title="Before you send your request."
         description="These answers help customers understand what information to include, how pickup and delivery works, payment options, and what to expect when asking about trailer availability."
       />
-    </>
+    </main>
   );
 }

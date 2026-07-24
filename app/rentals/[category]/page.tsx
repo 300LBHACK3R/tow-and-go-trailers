@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { siteConfig } from "@/lib/site";
 import {
   getTrailerCategoryById,
   getTrailersForCategory,
   trailerCategories,
   type TrailerCategoryId,
 } from "@/data/trailerCategories";
+import { siteConfig } from "@/lib/site";
 import { CategoryRentalsClient } from "./CategoryRentalsClient";
 
 type CategoryPageProps = {
@@ -31,20 +31,28 @@ export async function generateMetadata({
   if (!category) {
     return {
       title: "Trailer Rentals",
+      robots: {
+        index: false,
+        follow: false,
+      },
     };
   }
+
+  const categoryUrl = `${siteConfig.url}/rentals/${category.id}`;
+  const socialTitle = `${category.seoTitle} | Tow-N-Go Trailers`;
 
   return {
     title: category.seoTitle,
     description: category.seoDescription,
     alternates: {
-      canonical: `${siteConfig.url}/rentals/${category.id}`,
+      canonical: categoryUrl,
     },
     openGraph: {
-      title: `${category.seoTitle} | Tow-N-Go Trailers`,
+      title: socialTitle,
       description: category.seoDescription,
-      url: `${siteConfig.url}/rentals/${category.id}`,
+      url: categoryUrl,
       siteName: siteConfig.name,
+      type: "website",
       images: [
         {
           url: "/opengraph-image.png",
@@ -56,7 +64,7 @@ export async function generateMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title: `${category.seoTitle} | Tow-N-Go Trailers`,
+      title: socialTitle,
       description: category.seoDescription,
       images: ["/twitter-image.png"],
     },
@@ -73,6 +81,8 @@ export default async function TrailerCategoryPage({
     notFound();
   }
 
+  const categoryUrl = `${siteConfig.url}/rentals/${category.id}`;
+
   const categoryTrailers = getTrailersForCategory(
     category.id as TrailerCategoryId
   );
@@ -80,10 +90,10 @@ export default async function TrailerCategoryPage({
   const categoryJsonLd = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    "@id": `${siteConfig.url}/rentals/${category.id}`,
+    "@id": categoryUrl,
     name: `${category.title} | Tow-N-Go Trailers`,
     description: category.seoDescription,
-    url: `${siteConfig.url}/rentals/${category.id}`,
+    url: categoryUrl,
     isPartOf: {
       "@type": "WebSite",
       "@id": `${siteConfig.url}/#website`,
@@ -98,15 +108,19 @@ export default async function TrailerCategoryPage({
         "@type": "LocalBusiness",
         "@id": `${siteConfig.url}/#business`,
         name: siteConfig.name,
+        url: siteConfig.url,
       },
     },
     mainEntity: {
       "@type": "ItemList",
+      name: `${category.title} available from Tow-N-Go Trailers`,
+      numberOfItems: categoryTrailers.length,
+      itemListOrder: "https://schema.org/ItemListOrderAscending",
       itemListElement: categoryTrailers.map((trailer, index) => ({
         "@type": "ListItem",
         position: index + 1,
         name: trailer.name,
-        url: `${siteConfig.url}/rentals/${category.id}#${trailer.id}`,
+        url: `${categoryUrl}#${trailer.id}`,
       })),
     },
   };
@@ -114,7 +128,11 @@ export default async function TrailerCategoryPage({
   return (
     <>
       <JsonLd data={categoryJsonLd} />
-      <CategoryRentalsClient category={category} trailers={categoryTrailers} />
+
+      <CategoryRentalsClient
+        category={category}
+        trailers={categoryTrailers}
+      />
     </>
   );
 }

@@ -1,3 +1,17 @@
+const websiteUrl = "https://www.towandgotrailers.ca";
+
+const phone = "778-215-3422";
+const phoneHref = "tel:+17782153422";
+
+const email = "info@towandgotrailers.ca";
+const emailHref = "mailto:info@towandgotrailers.ca";
+
+const facebookUrl =
+  "https://www.facebook.com/profile.php?id=61581311484780";
+
+const tiktokUrl =
+  "https://www.tiktok.com/@towngotrailers?is_from_webapp=1&sender_device=pc";
+
 export const siteConfig = {
   name: "Tow-N-Go Trailers Ltd.",
   shortName: "Tow-N-Go Trailers",
@@ -8,14 +22,14 @@ export const siteConfig = {
   shortDescription:
     "Premium trailer rentals across Kelowna and the Okanagan for moving, hauling, cleanup jobs, equipment, and contractor work.",
 
-  phone: "778-215-3422",
-  phoneHref: "tel:+17782153422",
+  phone,
+  phoneHref,
 
-  email: "info@towandgotrailers.ca",
-  emailHref: "mailto:info@towandgotrailers.ca",
+  email,
+  emailHref,
 
-  domain: "https://www.towandgotrailers.ca",
-  url: "https://www.towandgotrailers.ca",
+  domain: websiteUrl,
+  url: websiteUrl,
 
   location: "Kelowna, British Columbia",
 
@@ -23,10 +37,11 @@ export const siteConfig = {
     "Serving Kelowna, West Kelowna, Vernon, Penticton, Armstrong, Lake Country, the Okanagan, BC, Alberta, and beyond.",
 
   facebookName: "Tow-N-Go Trailers",
-  facebookUrl: "https://www.facebook.com/profile.php?id=61581311484780",
+  facebookUrl,
 
   social: {
-    facebook: "https://www.facebook.com/profile.php?id=61581311484780",
+    facebook: facebookUrl,
+    tiktok: tiktokUrl,
   },
 
   logo: "/icon.png",
@@ -62,7 +77,7 @@ export const siteConfig = {
     "contractor trailer rental",
     "equipment hauling Okanagan",
   ],
-};
+} as const;
 
 export const navigationLinks = [
   {
@@ -85,4 +100,6 @@ export const navigationLinks = [
     label: "Contact",
     href: "/contact",
   },
-];
+] as const;
+
+export type NavigationLink = (typeof navigationLinks)[number];

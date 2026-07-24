@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
-import { trailers } from "@/data/trailers";
+import { trailers, type Trailer } from "@/data/trailers";
 import { siteConfig } from "@/lib/site";
 
 const featuredTrailers = trailers.slice(0, 3);
@@ -11,13 +11,24 @@ const trustItems = [
   "Flexible rentals",
   "Pickup / delivery may be available",
   "Accessories available",
-];
+] as const;
 
-function getHomepageTrailerName(trailerName: string) {
-  const normalizedName = trailerName.toLowerCase();
+type HomepageTrailerContent = {
+  name: string;
+  description: string;
+};
+
+function getHomepageTrailerContent(
+  trailer: Trailer
+): HomepageTrailerContent {
+  const normalizedName = trailer.name.toLowerCase();
 
   if (normalizedName.includes("dump")) {
-    return "Dump Trailer";
+    return {
+      name: "Dump Trailer",
+      description:
+        "Built for dump runs, yard cleanups, debris, landscaping, and heavier cleanup jobs.",
+    };
   }
 
   if (
@@ -26,7 +37,11 @@ function getHomepageTrailerName(trailerName: string) {
     normalizedName.includes("flat deck") ||
     normalizedName.includes("equipment")
   ) {
-    return "Dovetail Equipment Trailer";
+    return {
+      name: "Dovetail Equipment Trailer",
+      description:
+        "Ready for equipment hauling, contractor jobs, machines, materials, and open-deck loads.",
+    };
   }
 
   if (
@@ -34,203 +49,233 @@ function getHomepageTrailerName(trailerName: string) {
     normalizedName.includes("cargo") ||
     normalizedName.includes("v-nose")
   ) {
-    return "Enclosed Trailer";
+    return {
+      name: "Enclosed Trailer",
+      description:
+        "Ideal for moving, furniture, tools, boxes, and cargo that should stay protected.",
+    };
   }
 
-  return trailerName;
-}
-
-function getHomepageTrailerDescription(trailerName: string) {
-  const normalizedName = trailerName.toLowerCase();
-
-  if (normalizedName.includes("dump")) {
-    return "Built for dump runs, yard cleanups, debris, landscaping, and heavier cleanup jobs.";
-  }
-
-  if (
-    normalizedName.includes("dovetail") ||
-    normalizedName.includes("flatdeck") ||
-    normalizedName.includes("flat deck") ||
-    normalizedName.includes("equipment")
-  ) {
-    return "Ready for equipment hauling, contractor jobs, machines, materials, and open-deck loads.";
-  }
-
-  if (
-    normalizedName.includes("enclosed") ||
-    normalizedName.includes("cargo") ||
-    normalizedName.includes("v-nose")
-  ) {
-    return "Ideal for moving, furniture, tools, boxes, and cargo that should stay protected.";
-  }
-
-  return "Clean, dependable trailer rental option ready for real hauling jobs.";
+  return {
+    name: trailer.name,
+    description:
+      "Clean, dependable trailer rental option ready for real hauling jobs.",
+  };
 }
 
 export function Hero() {
   return (
     <section className="relative isolate overflow-hidden border-b border-white/10 bg-black">
-      <div className="absolute inset-0 -z-20 bg-[radial-gradient(circle_at_20%_12%,rgba(212,175,55,0.15),transparent_28%),radial-gradient(circle_at_82%_18%,rgba(255,255,255,0.07),transparent_22%),linear-gradient(120deg,#000000,#090806_48%,#000000)]" />
-      <div className="absolute left-1/2 top-0 -z-10 h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-[#d4af37]/10 blur-[120px] md:h-[620px] md:w-[620px]" />
-      <div className="absolute inset-x-0 top-0 z-0 h-px bg-gradient-to-r from-transparent via-[#d4af37]/70 to-transparent" />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-30 bg-[linear-gradient(120deg,#000000_0%,#090806_48%,#000000_100%)]"
+      />
 
-      <Container className="relative z-10 grid gap-10 py-10 sm:py-12 lg:min-h-[calc(100svh-86px)] lg:grid-cols-[1.02fr_0.98fr] lg:items-center lg:gap-12 lg:py-20">
-        <div className="mx-auto max-w-3xl text-center lg:mx-0 lg:text-left">
-          <div className="inline-flex max-w-full items-center justify-center rounded-full border border-[#d4af37]/30 bg-[#d4af37]/10 px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.20em] text-[#d4af37] shadow-[0_12px_40px_rgba(212,175,55,0.10)] sm:px-4 sm:text-xs sm:tracking-[0.28em]">
-            Premium trailer rentals in the Okanagan
-          </div>
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-20 bg-[radial-gradient(circle_at_18%_14%,rgba(212,175,55,0.16),transparent_31%),radial-gradient(circle_at_82%_16%,rgba(255,255,255,0.07),transparent_25%)]"
+      />
 
-          <h1 className="mt-6 text-[3rem] font-black leading-[0.92] tracking-[-0.065em] text-white sm:text-6xl md:text-7xl lg:text-7xl">
-            Trailer Rentals
-            <span className="block bg-gradient-to-r from-white via-zinc-300 to-zinc-500 bg-clip-text text-transparent">
-              That Look Premium
-            </span>
-            <span className="block text-white">and Work Hard.</span>
-          </h1>
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute left-1/2 top-0 -z-20 h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-[#d4af37]/10 blur-[120px] sm:h-[520px] sm:w-[520px] lg:h-[620px] lg:w-[620px]"
+      />
 
-          <div className="mx-auto mt-6 max-w-2xl lg:mx-0">
-            <p className="text-lg font-semibold text-white sm:text-xl md:text-2xl">
-              Trailer rentals starting at{" "}
-              <span className="text-[#d4af37]">$115/day</span>
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-px bg-gradient-to-r from-transparent via-[#d4af37]/70 to-transparent"
+      />
+
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-40 bg-gradient-to-t from-[#050505] to-transparent"
+      />
+
+      <Container className="relative z-10 max-w-[1500px] py-12 sm:py-14 lg:py-16 xl:py-20">
+        <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,0.94fr)_minmax(500px,1.06fr)] lg:gap-12 xl:gap-16">
+          <div className="mx-auto w-full max-w-3xl text-center lg:mx-0 lg:max-w-none lg:text-left">
+            <p className="inline-flex max-w-full items-center justify-center rounded-full border border-[#d4af37]/35 bg-[#d4af37]/10 px-4 py-2 text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-[#e2c052] shadow-[0_12px_40px_rgba(212,175,55,0.1)] backdrop-blur-sm sm:px-5 sm:text-xs sm:tracking-[0.28em]">
+              Premium trailer rentals in the Okanagan
             </p>
 
-            <p className="mt-3 text-sm leading-7 text-zinc-400 sm:text-base md:text-lg md:leading-8">
-              Daily, weekly, and monthly options • Flexible pickup & delivery •
-              Discounts for longer rentals
-            </p>
+            <h1 className="mt-6 text-[clamp(3rem,5.2vw,5.75rem)] font-black leading-[0.92] tracking-[-0.06em] text-white [text-wrap:balance]">
+              Trailer Rentals
+              <span className="block bg-gradient-to-r from-white via-zinc-200 to-zinc-500 bg-clip-text text-transparent">
+                That Look Premium
+              </span>
+              <span className="block text-white">
+                and Work Hard.
+              </span>
+            </h1>
+
+            <div className="mx-auto mt-6 max-w-2xl lg:mx-0">
+              <p className="text-lg font-semibold text-white sm:text-xl lg:text-2xl">
+                Trailer rentals starting at{" "}
+                <span className="text-[#d4af37]">$115/day</span>
+              </p>
+
+              <p className="mt-3 text-sm leading-7 text-zinc-400 sm:text-base lg:text-lg lg:leading-8">
+                Daily, weekly, and monthly options • Flexible pickup &amp;
+                delivery • Discounts for longer rentals
+              </p>
+            </div>
+
+            <div className="mx-auto mt-7 grid max-w-xl gap-3 sm:grid-cols-2 lg:mx-0">
+              <Link
+                href="/rentals"
+                className="inline-flex min-h-12 items-center justify-center rounded-2xl bg-[#d4af37] px-6 py-3.5 text-center text-sm font-black text-black shadow-[0_18px_60px_rgba(212,175,55,0.23)] transition duration-200 hover:-translate-y-0.5 hover:bg-[#edca52] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#f0d36e] focus-visible:ring-offset-4 focus-visible:ring-offset-black"
+              >
+                Browse Trailers
+              </Link>
+
+              <Link
+                href="/contact"
+                className="inline-flex min-h-12 items-center justify-center rounded-2xl border border-white/15 bg-white/[0.05] px-6 py-3.5 text-center text-sm font-black text-white shadow-[0_14px_38px_rgba(0,0,0,0.18)] backdrop-blur transition duration-200 hover:-translate-y-0.5 hover:border-[#d4af37]/50 hover:bg-[#d4af37]/10 hover:text-[#e4c456] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37]/70 focus-visible:ring-offset-4 focus-visible:ring-offset-black"
+              >
+                Request Rental
+              </Link>
+            </div>
+
+            <div className="mt-6 flex flex-wrap justify-center gap-x-3 gap-y-2 text-[0.64rem] font-semibold uppercase tracking-[0.17em] text-zinc-500 sm:text-xs sm:tracking-[0.21em] lg:justify-start">
+              <span>Commercial-grade trailers</span>
+              <span aria-hidden="true" className="text-[#d4af37]">
+                •
+              </span>
+              <span>Clean rental options</span>
+              <span aria-hidden="true" className="text-[#d4af37]">
+                •
+              </span>
+              <span>Ready for real jobs</span>
+            </div>
           </div>
 
-          <div className="mt-7 grid gap-3 sm:mx-auto sm:max-w-xl sm:grid-cols-2 lg:mx-0">
-            <Link
-              href="/rentals"
-              className="inline-flex items-center justify-center rounded-2xl bg-[#d4af37] px-6 py-3.5 text-sm font-black text-black shadow-[0_18px_70px_rgba(212,175,55,0.24)] transition hover:-translate-y-[2px] hover:bg-[#f0c94a]"
-            >
-              Browse Trailers
-            </Link>
+          <div className="relative mx-auto w-full max-w-3xl lg:max-w-none">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute -inset-4 -z-10 rounded-[2rem] bg-[#d4af37]/10 blur-3xl sm:-inset-6 sm:rounded-[3rem]"
+            />
 
-            <Link
-              href="/contact"
-              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/[0.05] px-6 py-3.5 text-sm font-black text-white backdrop-blur transition hover:-translate-y-[2px] hover:border-[#d4af37]/50 hover:text-[#d4af37]"
-            >
-              Request Rental
-            </Link>
-          </div>
+            <div className="overflow-hidden rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-2.5 shadow-[0_30px_110px_rgba(0,0,0,0.52)] backdrop-blur-xl sm:p-3.5">
+              <div className="rounded-[1.35rem] border border-white/10 bg-black/60 p-4 sm:p-5 lg:p-6">
+                <div className="mb-4 flex items-center justify-between gap-4 sm:mb-5">
+                  <div>
+                    <p className="text-[0.62rem] font-semibold uppercase tracking-[0.27em] text-[#d4af37] sm:text-xs sm:tracking-[0.32em]">
+                      Featured Fleet
+                    </p>
 
-          <div className="mt-6 flex flex-wrap justify-center gap-x-3 gap-y-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-zinc-500 sm:text-xs sm:tracking-[0.22em] lg:justify-start">
-            <span>Commercial-grade trailers</span>
-            <span className="text-[#d4af37]">•</span>
-            <span>Clean rental options</span>
-            <span className="text-[#d4af37]">•</span>
-            <span>Ready for real jobs</span>
-          </div>
-        </div>
+                    <h2 className="mt-2 text-xl font-bold tracking-tight text-white sm:text-2xl">
+                      Available Fleet
+                    </h2>
+                  </div>
 
-        <div className="relative mx-auto w-full max-w-2xl lg:max-w-none">
-          <div className="absolute -inset-4 -z-10 rounded-[2rem] bg-[#d4af37]/10 blur-3xl md:-inset-6 md:rounded-[3rem]" />
+                  <span className="shrink-0 rounded-full border border-white/10 bg-white/[0.06] px-3 py-1.5 text-[0.68rem] font-bold text-zinc-300 sm:text-xs">
+                    Tow-N-Go
+                  </span>
+                </div>
 
-          <div className="overflow-hidden rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-3 shadow-[0_30px_120px_rgba(0,0,0,0.55)] backdrop-blur md:rounded-[2.25rem] md:p-4">
-            <div className="rounded-[1.35rem] border border-white/10 bg-black/55 p-4 md:rounded-[1.75rem] md:p-7">
-              <div className="mb-4 flex items-center justify-between gap-4 md:mb-6">
-                <div>
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#d4af37] md:text-xs md:tracking-[0.32em]">
-                    Featured Fleet
+                <div className="space-y-3">
+                  {featuredTrailers.map((trailer) => {
+                    const content =
+                      getHomepageTrailerContent(trailer);
+
+                    return (
+                      <Link
+                        key={trailer.id}
+                        href="/rentals"
+                        aria-label={`View ${content.name}`}
+                        className="group grid min-w-0 grid-cols-[88px_minmax(0,1fr)] overflow-hidden rounded-2xl border border-white/10 bg-black/45 transition duration-250 hover:-translate-y-0.5 hover:border-[#d4af37]/45 hover:bg-white/[0.045] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37]/70 sm:grid-cols-[106px_minmax(0,1fr)] xl:grid-cols-[118px_minmax(0,1fr)]"
+                      >
+                        <div className="relative min-h-24 overflow-hidden bg-zinc-950 sm:min-h-28 xl:min-h-32">
+                          <Image
+                            src={trailer.image}
+                            alt={content.name}
+                            fill
+                            sizes="(max-width: 639px) 88px, (max-width: 1279px) 106px, 118px"
+                            className="object-cover transition-transform duration-500 group-hover:scale-[1.045]"
+                          />
+
+                          <div
+                            aria-hidden="true"
+                            className="absolute inset-0 bg-gradient-to-r from-black/5 via-transparent to-black/35"
+                          />
+
+                          <div
+                            aria-hidden="true"
+                            className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/60 to-transparent"
+                          />
+                        </div>
+
+                        <div className="min-w-0 p-3 sm:p-4">
+                          <p className="text-[0.58rem] font-semibold uppercase tracking-[0.22em] text-zinc-500 sm:text-[0.66rem] sm:tracking-[0.28em]">
+                            {trailer.status}
+                          </p>
+
+                          <h3 className="mt-1.5 truncate text-base font-bold text-white sm:text-lg">
+                            {content.name}
+                          </h3>
+
+                          <p className="mt-1.5 line-clamp-2 text-xs leading-5 text-zinc-400 sm:text-sm sm:leading-6">
+                            {content.description}
+                          </p>
+
+                          {trailer.specs.length > 0 && (
+                            <div className="mt-2 hidden flex-wrap gap-x-3 gap-y-1 text-xs text-zinc-500 sm:flex">
+                              {trailer.specs
+                                .slice(0, 2)
+                                .map((spec) => (
+                                  <span key={spec}>{spec}</span>
+                                ))}
+                            </div>
+                          )}
+                        </div>
+                      </Link>
+                    );
+                  })}
+                </div>
+
+                <div className="mt-4 rounded-2xl border border-[#d4af37]/25 bg-[#d4af37]/10 p-4 sm:p-5">
+                  <p className="text-sm font-semibold leading-7 text-zinc-200">
+                    Need a specific trailer, add-ons, or pickup/delivery
+                    support? Send the details and Tow-N-Go will follow up.
                   </p>
 
-                  <h2 className="mt-2 text-xl font-bold text-white md:text-2xl">
-                    Available Fleet
-                  </h2>
-                </div>
+                  <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                    <Link
+                      href="/contact"
+                      className="inline-flex min-h-11 items-center justify-center rounded-xl bg-[#d4af37] px-4 py-3 text-center text-sm font-black text-black transition duration-200 hover:bg-[#edca52] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#f0d36e] focus-visible:ring-offset-3 focus-visible:ring-offset-[#16130c]"
+                    >
+                      Send Inquiry
+                    </Link>
 
-                <div className="rounded-full border border-white/10 bg-white/[0.06] px-3 py-1 text-[11px] font-bold text-zinc-300 md:text-xs">
-                  Tow-N-Go
-                </div>
-              </div>
-
-              <div className="space-y-3 md:space-y-4">
-                {featuredTrailers.map((trailer) => (
-                  <Link
-                    key={trailer.id}
-                    href="/rentals"
-                    className="group grid grid-cols-[88px_1fr] overflow-hidden rounded-2xl border border-white/10 bg-black/45 transition hover:-translate-y-1 hover:border-[#d4af37]/45 hover:bg-white/[0.04] sm:grid-cols-[104px_1fr] md:grid-cols-[118px_1fr]"
-                  >
-                    <div className="relative min-h-24 overflow-hidden bg-zinc-950 sm:min-h-28 md:min-h-32">
-                      <Image
-                        src={trailer.image}
-                        alt={getHomepageTrailerName(trailer.name)}
-                        fill
-                        sizes="118px"
-                        className="object-cover transition duration-500 group-hover:scale-105"
-                      />
-
-                      <div className="absolute inset-0 bg-gradient-to-r from-black/5 via-transparent to-black/35" />
-                      <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/60 to-transparent" />
-                    </div>
-
-                    <div className="p-3 md:p-4">
-                      <p className="text-[9px] font-semibold uppercase tracking-[0.26em] text-zinc-500 md:text-[11px] md:tracking-[0.32em]">
-                        {trailer.status}
-                      </p>
-
-                      <h3 className="mt-1.5 text-base font-bold text-white md:mt-2 md:text-lg">
-                        {getHomepageTrailerName(trailer.name)}
-                      </h3>
-
-                      <p className="mt-1.5 line-clamp-2 text-xs leading-5 text-zinc-400 sm:text-sm md:mt-2 md:leading-6">
-                        {getHomepageTrailerDescription(trailer.name)}
-                      </p>
-
-                      <div className="mt-2 hidden flex-wrap gap-x-3 gap-y-1 text-xs text-zinc-500 sm:flex md:mt-3">
-                        {trailer.specs.slice(0, 2).map((spec) => (
-                          <span key={spec}>{spec}</span>
-                        ))}
-                      </div>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-
-              <div className="mt-4 rounded-2xl border border-[#d4af37]/25 bg-[#d4af37]/10 p-4 md:mt-6 md:p-5">
-                <p className="text-sm font-semibold leading-7 text-zinc-200">
-                  Need a specific trailer, add-ons, or pickup/delivery support?
-                  Send the details and Tow-N-Go will follow up.
-                </p>
-
-                <div className="mt-4 grid gap-3 sm:grid-cols-2">
-                  <Link
-                    href="/contact"
-                    className="inline-flex items-center justify-center rounded-xl bg-[#d4af37] px-4 py-3 text-sm font-black text-black transition hover:bg-[#f0c94a]"
-                  >
-                    Send Inquiry
-                  </Link>
-
-                  <a
-                    href={siteConfig.phoneHref}
-                    className="inline-flex items-center justify-center rounded-xl border border-white/15 bg-black/35 px-4 py-3 text-sm font-black text-white transition hover:border-[#d4af37]/50 hover:text-[#d4af37]"
-                  >
-                    {siteConfig.phone}
-                  </a>
+                    <a
+                      href={siteConfig.phoneHref}
+                      className="inline-flex min-h-11 items-center justify-center rounded-xl border border-white/15 bg-black/35 px-4 py-3 text-center text-sm font-black text-white transition duration-200 hover:border-[#d4af37]/50 hover:bg-black/55 hover:text-[#e4c456] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37]/70 focus-visible:ring-offset-3 focus-visible:ring-offset-[#16130c]"
+                    >
+                      {siteConfig.phone}
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="lg:col-span-2">
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {trustItems.map((item) => (
-              <div
-                key={item}
-                className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-4 shadow-[0_18px_60px_rgba(0,0,0,0.25)] backdrop-blur transition hover:border-[#d4af37]/35 hover:bg-white/[0.06]"
-              >
-                <div className="flex items-center gap-3">
-                  <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#d4af37]" />
-                  <p className="text-sm font-semibold leading-6 text-zinc-300">
-                    {item}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
+        <div className="mt-8 grid gap-3 sm:grid-cols-2 xl:mt-10 xl:grid-cols-4">
+          {trustItems.map((item) => (
+            <div
+              key={item}
+              className="flex min-h-14 items-center rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 shadow-[0_16px_48px_rgba(0,0,0,0.22)] backdrop-blur transition duration-200 hover:border-[#d4af37]/35 hover:bg-white/[0.06]"
+            >
+              <span
+                aria-hidden="true"
+                className="mr-3 h-1.5 w-1.5 shrink-0 rounded-full bg-[#d4af37]"
+              />
+
+              <p className="text-sm font-semibold leading-6 text-zinc-300">
+                {item}
+              </p>
+            </div>
+          ))}
         </div>
       </Container>
     </section>

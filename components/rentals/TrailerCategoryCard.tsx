@@ -2,11 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import {
-  trackRentalCategoryClick,
-  type AnalyticsEventProperties,
-} from "@/lib/analytics";
 import type { TrailerCategory } from "@/data/trailerCategories";
+import { trackRentalCategoryClick } from "@/lib/analytics";
 
 type TrailerCategoryCardProps = {
   category: TrailerCategory;
@@ -14,89 +11,122 @@ type TrailerCategoryCardProps = {
   trailerCount: number;
 };
 
+function ArrowIcon() {
+  return (
+    <svg
+      aria-hidden="true"
+      className="h-4 w-4 shrink-0 transition-transform duration-300 group-hover:translate-x-1"
+      viewBox="0 0 24 24"
+      fill="none"
+    >
+      <path
+        d="M5 12h14M13 6l6 6-6 6"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+      />
+    </svg>
+  );
+}
+
 export function TrailerCategoryCard({
   category,
   previewImage,
   trailerCount,
 }: TrailerCategoryCardProps) {
-  const analyticsProperties: AnalyticsEventProperties = {
-    category_id: category.id,
-    category_title: category.title,
-    trailer_count: trailerCount,
-  };
+  const categoryHref = `/rentals/${category.id}`;
+
+  const availabilityText =
+    trailerCount > 0
+      ? `${trailerCount} available option${trailerCount === 1 ? "" : "s"}`
+      : "Category ready for future fleet additions";
 
   return (
     <Link
-      href={`/rentals/${category.id}`}
+      href={categoryHref}
+      aria-label={`View ${category.title}`}
       onClick={() => {
         trackRentalCategoryClick(category.id, category.title);
       }}
-      className="group relative flex min-h-full overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.04] shadow-[0_22px_80px_rgba(0,0,0,0.42)] transition duration-300 hover:-translate-y-1 hover:border-[#d4af37]/55 hover:bg-white/[0.06]"
+      className="group relative flex h-full min-w-0 overflow-hidden rounded-[1.75rem] border border-white/10 bg-white/[0.04] shadow-[0_22px_80px_rgba(0,0,0,0.42)] transition duration-300 hover:-translate-y-1 hover:border-[#d4af37]/55 hover:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37]/75 focus-visible:ring-offset-4 focus-visible:ring-offset-[#050505]"
       data-analytics-event="rental_category_click"
-      data-analytics-category-id={String(analyticsProperties.category_id)}
-      data-analytics-category-title={String(analyticsProperties.category_title)}
+      data-analytics-category-id={category.id}
+      data-analytics-category-title={category.title}
+      data-analytics-trailer-count={trailerCount}
     >
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(212,175,55,0.13),transparent_34%)] opacity-80" />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(212,175,55,0.13),transparent_36%)] opacity-80"
+      />
 
-      <div className="relative flex w-full flex-col">
-        <div className="relative h-64 overflow-hidden border-b border-white/10 bg-black md:h-72">
+      <article className="relative flex w-full min-w-0 flex-col">
+        <div className="relative h-60 overflow-hidden border-b border-white/10 bg-black sm:h-64 md:h-72">
           <Image
             src={previewImage}
             alt={`${category.title} from Tow-N-Go Trailers`}
             fill
-            sizes="(max-width: 1024px) 100vw, 33vw"
-            className="object-cover transition duration-700 group-hover:scale-105"
+            sizes="(max-width: 767px) 100vw, (max-width: 1279px) 50vw, 33vw"
+            className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.045]"
           />
 
-          <div className="absolute inset-0 bg-black/20" />
-          <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.15),rgba(0,0,0,0.76))]" />
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-black/20"
+          />
 
-          <div className="absolute left-5 top-5 rounded-full border border-[#d4af37]/35 bg-black/65 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-[#d4af37] backdrop-blur">
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.12)_0%,rgba(0,0,0,0.22)_42%,rgba(0,0,0,0.82)_100%)]"
+          />
+
+          <div className="absolute left-4 top-4 max-w-[calc(100%-2rem)] rounded-full border border-[#d4af37]/35 bg-black/70 px-3 py-1.5 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-[#d4af37] shadow-lg backdrop-blur-md sm:left-5 sm:top-5 sm:text-xs sm:tracking-[0.18em]">
             {category.eyebrow}
           </div>
 
-          <div className="absolute bottom-5 left-5 right-5">
-            <h2 className="text-2xl font-bold tracking-tight text-white md:text-3xl">
+          <div className="absolute inset-x-5 bottom-5 sm:inset-x-6 sm:bottom-6">
+            <h2 className="text-2xl font-bold leading-tight tracking-tight text-white sm:text-3xl">
               {category.title}
             </h2>
 
-            <p className="mt-2 text-sm font-medium text-zinc-300">
-              {trailerCount > 0
-                ? `${trailerCount} available option${
-                    trailerCount === 1 ? "" : "s"
-                  }`
-                : "Category ready for future fleet additions"}
+            <p className="mt-2 text-sm font-medium leading-6 text-zinc-300">
+              {availabilityText}
             </p>
           </div>
         </div>
 
-        <div className="flex flex-1 flex-col p-6 md:p-7">
+        <div className="flex flex-1 flex-col p-5 sm:p-6 lg:p-7">
           <p className="text-base leading-8 text-zinc-300">
             {category.shortDescription}
           </p>
 
-          <div className="mt-6 flex flex-wrap gap-2">
-            {category.bestFor.map((item) => (
-              <span
-                key={item}
-                className="rounded-full border border-white/10 bg-black/40 px-3 py-1 text-xs text-zinc-300"
-              >
-                {item}
-              </span>
-            ))}
-          </div>
+          {category.bestFor.length > 0 && (
+            <div className="mt-6 flex flex-wrap gap-2">
+              {category.bestFor.map((item) => (
+                <span
+                  key={item}
+                  className="rounded-full border border-white/10 bg-black/40 px-3 py-1.5 text-xs leading-5 text-zinc-300"
+                >
+                  {item}
+                </span>
+              ))}
+            </div>
+          )}
 
           <div className="mt-auto pt-7">
-            <div className="flex items-center justify-between border-t border-white/10 pt-5">
-              <span className="text-sm text-zinc-400">View trailers</span>
+            <div className="flex items-center justify-between gap-4 border-t border-white/10 pt-5">
+              <span className="text-sm text-zinc-400">
+                View trailers
+              </span>
 
-              <span className="text-sm font-semibold text-[#d4af37] transition group-hover:translate-x-1">
-                Open category →
+              <span className="inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-[#d4af37]">
+                Open category
+                <ArrowIcon />
               </span>
             </div>
           </div>
         </div>
-      </div>
+      </article>
     </Link>
   );
 }
