@@ -43,3 +43,18 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Local recovery and backup artifacts
+_local-safety-before-restore/
+_phone-fix-live-files/
+towngo-before-premium-restore-*/
+towngo-safety-*/
+*.backup.*.tsx
+*.backup.*.css
+app/*.backup*.tsx
+app/*.backup*.css
+components/**/*.backup*.tsx
+.next/
+node_modules/
+.vercel/
+Thumbs.db
