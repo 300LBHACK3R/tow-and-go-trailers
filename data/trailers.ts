@@ -22,10 +22,10 @@ export const trailers: Trailer[] = [
     image:
       "/images/tow-and-go-royal-cargo-enclosed-trailer-kelowna-rear-view-.jpg",
     images: [
+      "/images/tow-and-go-royal-cargo-enclosed-trailer-okanagan-interior-empty-02.png",
       "/images/tow-and-go-royal-cargo-enclosed-trailer-kelowna-rear-view-.jpg",
-      "/images/tow-and-go-royal-cargo-enclosed-trailer-okanagan-interior-empty-02.jpg",
-      "/images/tow-and-go-royal-cargo-enclosed-trailer-kelowna-rear-door-closed-03.jpg",
-      "/images/tow-and-go-royal-cargo-enclosed-trailer-vernon-rear-door-open-04.jpg",
+      "/images/tow-and-go-royal-cargo-enclosed-trailer-kelowna-rear-door-closed-03.png",
+      "/images/tow-and-go-royal-cargo-enclosed-trailer-vernon-rear-door-open-04.png",
       "/images/tow-and-go-royal-cargo-enclosed-trailer-penticton-side-view-05.jpg",
     ],
     startingPrice: "$115/day",
@@ -60,10 +60,10 @@ export const trailers: Trailer[] = [
     status: "Available Now",
     image: "/images/suretrac-6x10-dump-trailer-okanagan-1.png",
     images: [
+      "/images/suretrac-6x10-dump-trailer-okanagan-2.png",
       "/images/suretrac-6x10-dump-trailer-okanagan-1.png",
-      "/images/suretrac-6x10-dump-trailer-okanagan-2.jpg",
-      "/images/suretrac-6x10-dump-trailer-okanagan-3.jpg",
-      "/images/suretrac-6x10-dump-trailer-okanagan-4.jpg",
+      "/images/suretrac-6x10-dump-trailer-okanagan-3.png",
+      "/images/suretrac-6x10-dump-trailer-okanagan-4.png",
       "/images/suretrac-6x10-dump-trailer-okanagan-5.jpg",
       "/images/suretrac-6x10-dump-trailer-okanagan-6.jpg",
     ],
