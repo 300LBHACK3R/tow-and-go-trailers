@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
-import { TikTokFooterButton } from "@/components/social/TikTokSocial";
+import {
+  FacebookFooterButton,
+  TikTokFooterButton,
+} from "@/components/social/TikTokSocial";
 import { siteConfig } from "@/lib/site";
 
 const footerLinks = [
@@ -89,32 +92,36 @@ export function Footer() {
           </div>
         </div>
 
-        {/* TNG_TIKTOK_FOOTER_START */}
-        <div className="mt-10 flex flex-col items-start justify-between gap-4 border-t border-white/10 pt-6 sm:flex-row sm:items-center">
+        {/* TNG_SOCIAL_FOOTER_START */}
+        <div className="mt-10 flex flex-col gap-5 border-t border-white/10 pt-7 sm:flex-row sm:items-center sm:justify-between">
           <span className="text-xs font-black uppercase tracking-[0.25em] text-zinc-500">
             Follow Tow-N-Go
           </span>
 
-          <TikTokFooterButton />
+          <div className="flex flex-wrap items-center gap-3">
+            <FacebookFooterButton />
+            <TikTokFooterButton />
+          </div>
         </div>
-        {/* TNG_TIKTOK_FOOTER_END */}
+        {/* TNG_SOCIAL_FOOTER_END */}
 
-        <div className="mt-6 flex flex-col gap-2 border-t border-white/10 pt-6 text-xs leading-6 text-zinc-500 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-7 flex flex-col gap-2 border-t border-white/10 pt-6 text-xs leading-6 text-zinc-500 sm:flex-row sm:items-center sm:justify-between">
           <p>
             © {currentYear} {siteConfig.name}. All rights reserved.
           </p>
 
           <p>
-            Website designed &amp; developed by{" "}
-            <a
-              href="https://lltechsolutions.ca"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-sm font-medium text-zinc-400 transition-colors duration-200 hover:text-[#d4af37] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37]/70 focus-visible:ring-offset-4 focus-visible:ring-offset-black"
-            >
-              L&amp;L Tech Solutions
-            </a>
-          </p>
+  Website designed &amp; developed by{" "}
+  <a
+    href="https://lltechsolutions.ca/"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Visit L&L Tech Solutions"
+    className="rounded-sm font-medium text-zinc-400 underline-offset-4 transition-colors duration-200 hover:text-[#d4af37] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37]/70 focus-visible:ring-offset-4 focus-visible:ring-offset-black"
+  >
+    L&amp;L Tech Solutions
+  </a>
+</p>
         </div>
       </Container>
     </footer>

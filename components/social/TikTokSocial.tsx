@@ -1,4 +1,5 @@
 ﻿import { Container } from "@/components/ui/Container";
+import { siteConfig } from "@/lib/site";
 
 const tiktokUrl =
   "https://www.tiktok.com/@towngotrailers?is_from_webapp=1&sender_device=pc";
@@ -33,6 +34,27 @@ function TikTokMark({
           strokeLinejoin="round"
           strokeWidth="2.2"
         />
+      </svg>
+    </span>
+  );
+}
+
+function FacebookMark({
+  className = "",
+}: {
+  className?: string;
+}) {
+  return (
+    <span
+      aria-hidden="true"
+      className={`inline-flex shrink-0 items-center justify-center ${className}`}
+    >
+      <svg
+        className="h-[55%] w-[55%]"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+      >
+        <path d="M13.75 21v-8h2.75l.42-3.12h-3.17V7.89c0-.9.25-1.52 1.6-1.52H17V3.58c-.29-.04-1.27-.12-2.42-.12-2.39 0-4.03 1.46-4.03 4.14v2.28H7.84V13h2.71v8h3.2Z" />
       </svg>
     </span>
   );
@@ -85,11 +107,6 @@ export function TikTokSocialStrip() {
             className="pointer-events-none absolute -right-28 -top-28 h-72 w-72 rounded-full bg-[#d4af37]/[0.055] blur-3xl transition duration-500 group-hover:bg-[#d4af37]/[0.085]"
           />
 
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 translate-x-[-120%] skew-x-[-18deg] bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.035),transparent)] transition-transform duration-1000 ease-out group-hover:translate-x-[120%] motion-reduce:hidden"
-          />
-
           <div className="relative grid items-center gap-7 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-10">
             <div className="min-w-0">
               <div className="flex items-center gap-4">
@@ -140,11 +157,29 @@ export function TikTokFooterButton() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Follow Tow-N-Go Trailers on TikTok"
-      className="group inline-flex min-h-10 items-center justify-center gap-2.5 rounded-full border border-[#d4af37]/30 bg-[#d4af37]/10 px-4 py-2 text-sm font-black uppercase tracking-wide text-[#d4af37] transition duration-200 hover:-translate-y-0.5 hover:border-[#d4af37]/60 hover:bg-[#d4af37] hover:text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37]/70 focus-visible:ring-offset-3 focus-visible:ring-offset-black"
+      className="group inline-flex min-h-11 items-center justify-center gap-2.5 rounded-full border border-[#d4af37]/30 bg-[#d4af37]/10 px-5 py-2.5 text-sm font-black uppercase tracking-wide text-white transition duration-200 hover:-translate-y-0.5 hover:border-[#d4af37]/60 hover:bg-[#d4af37] hover:text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37]/70 focus-visible:ring-offset-3 focus-visible:ring-offset-black"
     >
-      <TikTokMark className="h-6 w-6 rounded-full border border-current" />
+      <TikTokMark className="h-7 w-7 rounded-full border border-current" />
 
       TikTok
+
+      <ExternalArrowIcon />
+    </a>
+  );
+}
+
+export function FacebookFooterButton() {
+  return (
+    <a
+      href={siteConfig.social.facebook}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Follow Tow-N-Go Trailers on Facebook"
+      className="group inline-flex min-h-11 items-center justify-center gap-2.5 rounded-full border border-[#d4af37]/30 bg-[#d4af37]/10 px-5 py-2.5 text-sm font-black uppercase tracking-wide text-white transition duration-200 hover:-translate-y-0.5 hover:border-[#d4af37]/60 hover:bg-[#d4af37] hover:text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37]/70 focus-visible:ring-offset-3 focus-visible:ring-offset-black"
+    >
+      <FacebookMark className="h-7 w-7 rounded-full border border-current" />
+
+      Facebook
 
       <ExternalArrowIcon />
     </a>
