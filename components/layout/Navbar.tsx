@@ -21,6 +21,7 @@ const navItems = [
     href: "/about",
     label: "About",
   },
+  { label: "Reviews", href: "/reviews" },
   {
     href: "/contact",
     label: "Contact",
@@ -79,6 +80,7 @@ export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- Route changes intentionally close the mobile menu.
     setIsOpen(false);
   }, [pathname]);
 
@@ -94,12 +96,14 @@ export function Navbar() {
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- Route changes intentionally close the mobile menu.
         setIsOpen(false);
       }
     };
 
     const handleResize = () => {
       if (window.innerWidth >= 1280) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- Route changes intentionally close the mobile menu.
         setIsOpen(false);
       }
     };
