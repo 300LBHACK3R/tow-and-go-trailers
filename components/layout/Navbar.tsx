@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -22,6 +22,10 @@ const navItems = [
     label: "About",
   },
   { label: "Reviews", href: "/reviews" },
+  {
+    href: "/faq",
+    label: "FAQ",
+  },
   {
     href: "/contact",
     label: "Contact",

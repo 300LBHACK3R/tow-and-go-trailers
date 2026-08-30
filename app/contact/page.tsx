@@ -2,9 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { Suspense } from "react";
 import { ContactForm } from "@/components/contact/ContactForm";
-import { FaqSection } from "@/components/sections/FaqSection";
 import { Container } from "@/components/ui/Container";
-import { contactFaqs } from "@/data/faqs";
 import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -255,12 +253,6 @@ export default function ContactPage() {
         </Container>
       </section>
 
-      <FaqSection
-        faqs={contactFaqs}
-        eyebrow="Rental Inquiry FAQ"
-        title="Before you send your request."
-        description="These answers help customers understand what information to include, how pickup and delivery works, payment options, and what to expect when asking about trailer availability."
-      />
-    </main>
+</main>
   );
 }

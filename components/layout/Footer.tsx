@@ -20,6 +20,10 @@ const footerLinks = [
     label: "About Us",
   },
   {
+    href: "/faq",
+    label: "FAQ",
+  },
+  {
     href: "/contact",
     label: "Contact / Inquiry",
   },

@@ -1,4 +1,4 @@
-﻿import type { MetadataRoute } from "next";
+import type { MetadataRoute } from "next";
 
 import { trailerCategories } from "@/data/trailerCategories";
 
@@ -25,6 +25,11 @@ const staticRoutes: MetadataRoute.Sitemap = [
     url: `${SITE_URL}/reviews`,
     changeFrequency: "weekly",
     priority: 0.8,
+  },
+  {
+    url: `${SITE_URL}/faq`,
+    changeFrequency: "monthly",
+    priority: 0.75,
   },
   {
     url: `${SITE_URL}/about`,
