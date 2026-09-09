@@ -8,14 +8,14 @@ import { siteConfig } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Contact Tow-N-Go Trailers to check trailer rental availability, ask about pickup and delivery, or send a rental inquiry for moving, cleanup, equipment hauling, or contractor work across Kelowna and the Okanagan.",
+    "Contact Tow-N-Go Trailers to check trailer rental availability, arrange empty-trailer delivery and collection, or request loaded transport for moving, cleanup, equipment hauling, or contractor work across Kelowna and the Okanagan.",
   alternates: {
     canonical: `${siteConfig.url}/contact`,
   },
   openGraph: {
     title: "Contact Tow-N-Go Trailers",
     description:
-      "Send a trailer rental inquiry and check current availability across Kelowna and the Okanagan.",
+      "Ask about trailer rentals, empty-trailer delivery or loaded transport across Kelowna and the Okanagan.",
     url: `${siteConfig.url}/contact`,
     siteName: siteConfig.name,
     images: [
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Contact Tow-N-Go Trailers",
     description:
-      "Send a trailer rental inquiry and check current availability across Kelowna and the Okanagan.",
+      "Ask about trailer rentals, empty-trailer delivery or loaded transport across Kelowna and the Okanagan.",
     images: ["/twitter-image.png"],
   },
 };
@@ -49,7 +49,7 @@ function ContactFormFallback() {
       />
 
       <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[#d4af37]">
-        Rental Inquiry
+        Service Inquiry
       </p>
 
       <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white">
@@ -57,7 +57,7 @@ function ContactFormFallback() {
       </h2>
 
       <p className="mt-3 text-sm leading-7 text-zinc-400">
-        Preparing the trailer rental request form.
+        Preparing your service inquiry form.
       </p>
 
       <div className="mt-8 grid gap-5" aria-hidden="true">
@@ -148,12 +148,13 @@ function ContactInfoPanel() {
 
           <div className="py-5">
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#d4af37]">
-              Pickup &amp; Delivery
+              Delivery &amp; Transport
             </p>
 
             <p className="mt-2 max-w-xl leading-7 text-zinc-300">
-              Flexible pickup and delivery options may be available. Pickup and
-              delivery can be arranged for a fee as a convenience to renters.
+              Choose empty-trailer delivery and collection, or transport for
+              cargo you prepare and load. Availability and pricing depend on
+              your load, route, access and schedule.
             </p>
           </div>
 
@@ -215,12 +216,12 @@ export default function ContactPage() {
             </p>
 
             <h1 className="mt-6 max-w-4xl text-[clamp(2.65rem,5vw,4.85rem)] font-bold leading-[0.98] tracking-[-0.045em] text-white [text-wrap:balance]">
-              Send a rental inquiry.
+              Let’s plan your next job.
             </h1>
 
             <p className="mt-6 max-w-3xl text-base leading-8 text-zinc-200 [text-wrap:balance] sm:text-lg lg:text-xl lg:leading-9">
-              Tell us what you need, your timing, pickup or delivery
-              preference, and any details about the job. We’ll review your
+              Choose your service and share your timing, location
+              and details about the job. We’ll review your
               request and get back to you with availability and next steps.
             </p>
           </div>
@@ -244,7 +245,7 @@ export default function ContactPage() {
               <ContactInfoPanel />
             </div>
 
-            <div className="min-w-0">
+            <div id="inquiry" className="min-w-0 scroll-mt-28">
               <Suspense fallback={<ContactFormFallback />}>
                 <ContactForm />
               </Suspense>

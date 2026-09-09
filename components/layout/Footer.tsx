@@ -7,6 +7,7 @@ import {
 import { siteConfig } from "@/lib/site";
 
 const footerLinks = [
+  { href: "/recent-jobs", label: "Recent Jobs" },
   {
     href: "/rentals",
     label: "Trailer Rentals",
@@ -47,9 +48,9 @@ export function Footer() {
             </h2>
 
             <p className="mt-4 text-sm leading-7 text-zinc-400">
-              PREMIUM trailer rentals based in the Okanagan, offering flexible
-              rental options, delivery availability, and a growing modern fleet
-              built for real work.
+              Trailer rentals, empty-trailer delivery and collection, and
+              loaded transport across Kelowna and the Okanagan.
+              You load it. Tow-N-Go hauls it.
             </p>
           </div>
 

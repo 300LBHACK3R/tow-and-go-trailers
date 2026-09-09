@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { getServiceLabel, parseServiceType } from "@/data/servicePathways";
 import { Resend } from "resend";
 
 export const runtime = "nodejs";
@@ -12,6 +13,9 @@ type ContactRequestBody = {
   rentalType?: unknown;
   rentalDate?: unknown;
   returnDate?: unknown;
+  serviceType?: unknown;
+  pickupLocation?: unknown;
+  destination?: unknown;
   pickupPreference?: unknown;
   paymentPreference?: unknown;
   addOns?: unknown;
@@ -40,6 +44,9 @@ type NormalizedContactRequest = {
   rentalType: string;
   rentalDate: string;
   returnDate: string;
+  serviceType: string;
+  pickupLocation: string;
+  destination: string;
   pickupPreference: string;
   paymentPreference: string;
   addOns: string[];
@@ -57,7 +64,7 @@ type NormalizedContactRequest = {
 };
 
 const SUCCESS_MESSAGE =
-  "Your rental inquiry has been sent. Tow-N-Go Trailers will follow up with availability and next steps.";
+  "Your inquiry has been sent. Tow-N-Go Trailers will follow up with availability and next steps.";
 
 const FAILURE_MESSAGE =
   "The inquiry could not be sent right now. Please try again shortly.";
@@ -135,6 +142,7 @@ function normalizeAddOns(value: unknown): string[] {
 function normalizePayload(
   body: ContactRequestBody
 ): NormalizedContactRequest {
+  const service = parseServiceType(body.serviceType);
   return {
     name: sanitizeText(body.name, 120),
     email: sanitizeEmail(body.email),
@@ -143,7 +151,10 @@ function normalizePayload(
     trailer: sanitizeText(body.trailer, 180),
     rentalType: sanitizeText(body.rentalType, 120),
     rentalDate: sanitizeText(body.rentalDate, 80),
-    returnDate: sanitizeText(body.returnDate, 80),
+    returnDate: service === "transport" ? "" : sanitizeText(body.returnDate, 80),
+    serviceType: getServiceLabel(service),
+    pickupLocation: service === "delivery" || service === "transport" ? sanitizeText(body.pickupLocation, 240) : "",
+    destination: service === "transport" ? sanitizeText(body.destination, 240) : "",
     pickupPreference: sanitizeText(body.pickupPreference, 120),
     paymentPreference: sanitizeText(body.paymentPreference, 120),
     addOns: normalizeAddOns(body.addOns),
@@ -252,20 +263,21 @@ function buildAdminTextEmail(
   payload: NormalizedContactRequest
 ): string {
   return [
-    "New Tow-N-Go rental inquiry",
+    "New Tow-N-Go inquiry",
     "",
     `Name: ${payload.name}`,
     `Email: ${payload.email}`,
     `Phone: ${payload.phone || "Not specified"}`,
     `City / Area: ${payload.city || "Not specified"}`,
     "",
+    `Service: ${payload.serviceType || "Not specified / help me choose"}`,
+    ...(payload.pickupLocation ? [`Delivery / Pickup Location: ${payload.pickupLocation}`] : []),
+    ...(payload.destination ? [`Cargo Destination: ${payload.destination}`] : []),
     `Trailer: ${payload.trailer || "Not specified"}`,
-    `Rental Type: ${payload.rentalType || "Not specified"}`,
+    `Trailer Type: ${payload.rentalType || "Not specified"}`,
     `Start Date: ${payload.rentalDate || "Not specified"}`,
     `Return Date: ${payload.returnDate || "Not specified"}`,
-    `Pickup / Delivery: ${
-      payload.pickupPreference || "Not specified"
-    }`,
+    ...(payload.pickupPreference ? [`Pickup / Delivery: ${payload.pickupPreference}`] : []),
     `Payment Preference: ${
       payload.paymentPreference || "Not specified"
     }`,
@@ -308,7 +320,7 @@ function buildAdminHtmlEmail(
           name="viewport"
           content="width=device-width, initial-scale=1"
         />
-        <title>New Tow-N-Go Rental Inquiry</title>
+        <title>New Tow-N-Go Service Inquiry</title>
       </head>
 
       <body
@@ -365,7 +377,7 @@ function buildAdminHtmlEmail(
                     text-transform:uppercase;
                   "
                 >
-                  New Rental Inquiry
+                  New Service Inquiry
                 </p>
 
                 <h1
@@ -443,9 +455,12 @@ function buildAdminHtmlEmail(
                     background:#090909;
                   "
                 >
+                  ${emailRow("Service", payload.serviceType || "Not specified / help me choose")}
+                  ${payload.pickupLocation ? emailRow("Delivery / Pickup Location", payload.pickupLocation) : ""}
+                  ${payload.destination ? emailRow("Cargo Destination", payload.destination) : ""}
                   ${emailRow("Trailer", payload.trailer)}
                   ${emailRow(
-                    "Rental Type",
+                    "Trailer Type",
                     payload.rentalType
                   )}
                   ${emailRow(
@@ -456,10 +471,7 @@ function buildAdminHtmlEmail(
                     "Preferred Return",
                     payload.returnDate
                   )}
-                  ${emailRow(
-                    "Pickup / Delivery",
-                    payload.pickupPreference
-                  )}
+                  ${payload.pickupPreference ? emailRow("Pickup / Delivery", payload.pickupPreference) : ""}
                   ${emailRow(
                     "Payment Preference",
                     payload.paymentPreference
@@ -552,20 +564,21 @@ function buildCustomerTextEmail(
   return [
     `Hi ${payload.name},`,
     "",
-    "Thanks for contacting Tow-N-Go Trailers. We received your rental inquiry and will follow up with availability, pickup or delivery options, payment details, and next steps.",
+    "Thanks for contacting Tow-N-Go Trailers. We received your inquiry and will follow up with availability, service arrangements, pricing, and next steps.",
     "",
     "Inquiry summary:",
+    `Service: ${payload.serviceType || "Not specified / help me choose"}`,
+    ...(payload.pickupLocation ? [`Delivery / Pickup Location: ${payload.pickupLocation}`] : []),
+    ...(payload.destination ? [`Cargo Destination: ${payload.destination}`] : []),
     `Trailer: ${payload.trailer || "Not specified"}`,
-    `Rental Type: ${payload.rentalType || "Not specified"}`,
+    `Trailer Type: ${payload.rentalType || "Not specified"}`,
     `Preferred Start: ${
       payload.rentalDate || "Not specified"
     }`,
     `Preferred Return: ${
       payload.returnDate || "Not specified"
     }`,
-    `Pickup / Delivery: ${
-      payload.pickupPreference || "Not specified"
-    }`,
+    ...(payload.pickupPreference ? [`Pickup / Delivery: ${payload.pickupPreference}`] : []),
     `Add-ons: ${
       payload.addOns.length
         ? payload.addOns.join(", ")
@@ -669,9 +682,9 @@ function buildCustomerHtmlEmail(
                   "
                 >
                   Hi ${escapeHtml(payload.name)}, we received your
-                  rental inquiry and will follow up with
-                  availability, pickup or delivery options, payment
-                  details, and next steps.
+                  inquiry and will follow up with
+                  availability, service arrangements, pricing,
+                  and next steps.
                 </p>
               </div>
 
@@ -698,9 +711,12 @@ function buildCustomerHtmlEmail(
                     background:#090909;
                   "
                 >
+                  ${emailRow("Service", payload.serviceType || "Not specified / help me choose")}
+                  ${payload.pickupLocation ? emailRow("Delivery / Pickup Location", payload.pickupLocation) : ""}
+                  ${payload.destination ? emailRow("Cargo Destination", payload.destination) : ""}
                   ${emailRow("Trailer", payload.trailer)}
                   ${emailRow(
-                    "Rental Type",
+                    "Trailer Type",
                     payload.rentalType
                   )}
                   ${emailRow(
@@ -711,10 +727,7 @@ function buildCustomerHtmlEmail(
                     "Preferred Return",
                     payload.returnDate
                   )}
-                  ${emailRow(
-                    "Pickup / Delivery",
-                    payload.pickupPreference
-                  )}
+                  ${payload.pickupPreference ? emailRow("Pickup / Delivery", payload.pickupPreference) : ""}
                   ${emailRow("Add-ons", payload.addOns)}
                 </table>
 
@@ -827,7 +840,7 @@ export async function POST(request: Request) {
       from: contactFromEmail,
       to: [contactToEmail],
       replyTo: payload.email,
-      subject: `New Tow-N-Go Rental Inquiry — ${payload.name}`,
+      subject: `New Tow-N-Go Service Inquiry — ${payload.name}`,
       html: buildAdminHtmlEmail(payload),
       text: buildAdminTextEmail(payload),
     });
@@ -855,7 +868,7 @@ export async function POST(request: Request) {
         to: [payload.email],
         replyTo: contactToEmail,
         subject:
-          "Tow-N-Go Trailers — We received your rental inquiry",
+          "Tow-N-Go Trailers — We received your inquiry",
         html: buildCustomerHtmlEmail(payload),
         text: buildCustomerTextEmail(payload),
       });

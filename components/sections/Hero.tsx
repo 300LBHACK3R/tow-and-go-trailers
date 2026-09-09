@@ -172,8 +172,8 @@ export function Hero() {
               </p>
 
               <p className="mt-4 max-w-3xl text-base leading-8 text-zinc-300 sm:text-lg lg:text-xl lg:leading-9">
-                Daily, weekly, and monthly options • Flexible pickup &amp;
-                delivery • Discounts for longer rentals
+                Tow it yourself, have an empty trailer delivered, or let Tow-N-Go
+                transport your prepared load. Serving Kelowna and the Okanagan.
               </p>
             </div>
 
@@ -189,11 +189,11 @@ export function Hero() {
               </Button>
 
               <Button
-                href="/contact"
+                href="#service-options"
                 variant="secondary"
                 className="min-h-14 w-full justify-center border-white/20 bg-black/45 px-8 text-base"
               >
-                Request Rental
+                Choose Your Service
               </Button>
             </div>
 

@@ -6,6 +6,7 @@ import {
   trackContactFormSubmission,
   trackContactOptionClick,
 } from "@/lib/analytics";
+import { parseServiceType, serviceAvailabilityNote, servicePathways, type ServiceType } from "@/data/servicePathways";
 import { siteConfig } from "@/lib/site";
 
 type RentalType =
@@ -13,13 +14,6 @@ type RentalType =
   | "Enclosed trailer"
   | "Dump trailer"
   | "Dovetail / equipment trailer"
-  | "Not sure yet";
-
-type PickupPreference =
-  | ""
-  | "Customer pickup"
-  | "Delivery requested"
-  | "Pickup and delivery requested"
   | "Not sure yet";
 
 type PaymentPreference =
@@ -40,7 +34,9 @@ type ContactFormState = {
   rentalType: RentalType;
   rentalDate: string;
   returnDate: string;
-  pickupPreference: PickupPreference;
+  serviceType: ServiceType | "";
+  pickupLocation: string;
+  destination: string;
   paymentPreference: PaymentPreference;
   addOns: string[];
   haulingDetails: string;
@@ -79,7 +75,8 @@ const textareaClassName =
   "w-full resize-y rounded-2xl border border-white/10 bg-black/45 px-4 py-3 text-sm leading-6 text-white outline-none transition duration-200 placeholder:text-zinc-600 hover:border-white/20 focus:border-[#d4af37]/70 focus:ring-2 focus:ring-[#d4af37]/15 disabled:cursor-not-allowed disabled:opacity-60";
 
 function createInitialFormState(
-  prefilledTrailer = ""
+  prefilledTrailer = "",
+  serviceType: ServiceType | "" = ""
 ): ContactFormState {
   return {
     name: "",
@@ -90,7 +87,9 @@ function createInitialFormState(
     rentalType: "",
     rentalDate: "",
     returnDate: "",
-    pickupPreference: "",
+    serviceType,
+    pickupLocation: "",
+    destination: "",
     paymentPreference: "",
     addOns: [],
     haulingDetails: "",
@@ -134,9 +133,10 @@ function getDeviceType(): string {
 export function ContactForm() {
   const searchParams = useSearchParams();
   const prefilledTrailer = searchParams.get("trailer") ?? "";
+  const prefilledService = parseServiceType(searchParams.get("service"));
 
   const [form, setForm] = useState<ContactFormState>(() =>
-    createInitialFormState(prefilledTrailer)
+    createInitialFormState(prefilledTrailer, prefilledService)
   );
 
   const [submitStatus, setSubmitStatus] =
@@ -152,6 +152,7 @@ export function ContactForm() {
     setForm((currentForm) => ({
       ...currentForm,
       trailer: currentForm.trailer || prefilledTrailer,
+      serviceType: prefilledService,
       sourcePage: `${window.location.pathname}${window.location.search}`,
       referrer: document.referrer || "Direct / unknown",
       utmSource: params.get("utm_source") || "",
@@ -161,7 +162,7 @@ export function ContactForm() {
       utmContent: params.get("utm_content") || "",
       deviceType: getDeviceType(),
     }));
-  }, [prefilledTrailer]);
+  }, [prefilledTrailer, prefilledService]);
 
   function clearSubmitFeedback() {
     if (submitStatus !== "idle") {
@@ -216,7 +217,12 @@ export function ContactForm() {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(form),
+        body: JSON.stringify({
+          ...form,
+          pickupLocation: form.serviceType === "delivery" || form.serviceType === "transport" ? form.pickupLocation : "",
+          destination: form.serviceType === "transport" ? form.destination : "",
+          returnDate: form.serviceType === "transport" ? "" : form.returnDate,
+        }),
       });
 
       const data = (await response
@@ -235,11 +241,11 @@ export function ContactForm() {
       setSubmitStatus("success");
       setSubmitMessage(
         data.message ||
-          "Your rental inquiry has been sent. Tow-N-Go Trailers will follow up with availability and next steps."
+          "Your inquiry has been sent. Tow-N-Go Trailers will follow up with availability and next steps."
       );
 
       setForm((currentForm) => ({
-        ...createInitialFormState(prefilledTrailer),
+        ...createInitialFormState(prefilledTrailer, currentForm.serviceType),
         sourcePage: currentForm.sourcePage,
         referrer: currentForm.referrer,
         utmSource: currentForm.utmSource,
@@ -290,7 +296,7 @@ export function ContactForm() {
       <div className="relative">
         <div className="mb-7">
           <p className="text-xs font-semibold uppercase tracking-[0.32em] text-[#d4af37]">
-            Rental Inquiry
+            Service Inquiry
           </p>
 
           <h2 className="mt-3 text-3xl font-bold tracking-tight text-white">
@@ -299,10 +305,21 @@ export function ContactForm() {
 
           <p className="mt-4 max-w-3xl text-sm leading-7 text-zinc-400">
             Send the key details and Tow-N-Go Trailers will follow up
-            with availability, rental options, pickup or delivery
-            details, and next steps. A confirmation email will also be
+            with availability, service options, pricing
+            and next steps. A confirmation email will also be
             sent to the address provided.
           </p>
+        </div>
+
+        <div className="mb-7 rounded-2xl border border-[#d4af37]/30 bg-[#d4af37]/[0.04] p-4 sm:p-5">
+          <label className="grid min-w-0 gap-2 text-sm font-semibold text-white">
+            Service needed
+            <select name="serviceType" value={form.serviceType} onChange={(event) => updateField("serviceType", parseServiceType(event.target.value))} aria-describedby="service-description" className={fieldClassName} disabled={isSubmitting}>
+              <option value="">Help me choose</option>
+              {servicePathways.map((service) => <option key={service.id} value={service.id}>{service.title}</option>)}
+            </select>
+          </label>
+          <p id="service-description" aria-live="polite" className="mt-3 text-sm leading-7 text-zinc-300">{servicePathways.find((service) => service.id === form.serviceType)?.description ?? "Not sure which service fits? Share your project below and we’ll help you choose."}</p>
         </div>
 
         <div className="grid gap-5 md:grid-cols-2">
@@ -395,7 +412,7 @@ export function ContactForm() {
           </label>
 
           <label className="grid min-w-0 gap-2 text-sm font-semibold text-white">
-            Rental Type
+            Trailer Type
             <select
               name="rentalType"
               value={form.rentalType}
@@ -421,7 +438,7 @@ export function ContactForm() {
           </label>
 
           <label className="grid min-w-0 gap-2 text-sm font-semibold text-white">
-            Preferred Start Date
+            {form.serviceType === "transport" ? "Preferred Transport Date" : "Preferred Start Date"}
             <input
               type="date"
               name="rentalDate"
@@ -434,6 +451,7 @@ export function ContactForm() {
             />
           </label>
 
+          {form.serviceType !== "transport" && (
           <label className="grid min-w-0 gap-2 text-sm font-semibold text-white">
             Preferred Return Date
             <input
@@ -447,34 +465,7 @@ export function ContactForm() {
               disabled={isSubmitting}
             />
           </label>
-
-          <label className="grid min-w-0 gap-2 text-sm font-semibold text-white">
-            Pickup / Delivery
-            <select
-              name="pickupPreference"
-              value={form.pickupPreference}
-              onChange={(event) =>
-                updateField(
-                  "pickupPreference",
-                  event.target.value as PickupPreference
-                )
-              }
-              className={fieldClassName}
-              disabled={isSubmitting}
-            >
-              <option value="">Select preference</option>
-              <option value="Customer pickup">
-                Customer pickup
-              </option>
-              <option value="Delivery requested">
-                Delivery requested
-              </option>
-              <option value="Pickup and delivery requested">
-                Pickup and delivery requested
-              </option>
-              <option value="Not sure yet">Not sure yet</option>
-            </select>
-          </label>
+          )}
 
           <label className="grid min-w-0 gap-2 text-sm font-semibold text-white">
             Payment Preference
@@ -498,6 +489,23 @@ export function ContactForm() {
             </select>
           </label>
         </div>
+
+        {(form.serviceType === "delivery" || form.serviceType === "transport") && (
+          <fieldset className="mt-6 min-w-0 rounded-2xl border border-white/10 p-4 sm:p-5">
+            <legend className="px-2 text-sm font-semibold text-white">{form.serviceType === "delivery" ? "Trailer delivery details" : "Transport route"}</legend>
+            <div className="grid gap-5 md:grid-cols-2">
+              <label className="grid min-w-0 gap-2 text-sm font-semibold text-white">
+                {form.serviceType === "delivery" ? "Empty-trailer delivery location" : "Cargo pickup location"}
+                <input type="text" name="pickupLocation" value={form.pickupLocation} onChange={(event) => updateField("pickupLocation", event.target.value)} className={fieldClassName} placeholder={form.serviceType === "delivery" ? "City or general delivery area" : "City or general pickup area"} maxLength={240} disabled={isSubmitting} />
+              </label>
+              {form.serviceType === "transport" && <label className="grid min-w-0 gap-2 text-sm font-semibold text-white">
+                Cargo destination
+                <input type="text" name="destination" value={form.destination} onChange={(event) => updateField("destination", event.target.value)} className={fieldClassName} placeholder="City or general delivery area" maxLength={240} disabled={isSubmitting} />
+              </label>}
+            </div>
+            <p className="mt-3 text-sm leading-7 text-zinc-400">Share the general locations now. We’ll confirm the addresses, access and arrangements with you.</p>
+          </fieldset>
+        )}
 
         <fieldset className="mt-6 min-w-0">
           <legend className="text-sm font-semibold text-white">
@@ -551,11 +559,13 @@ export function ContactForm() {
               updateField("message", event.target.value)
             }
             className={`${textareaClassName} min-h-32`}
-            placeholder="Tell us anything else that would help with the rental."
+            placeholder="Tell us about your job, access, timing and any other requirements."
             maxLength={3000}
             disabled={isSubmitting}
           />
         </label>
+
+        <p className="mt-5 text-xs leading-6 text-zinc-400">{serviceAvailabilityNote} An inquiry does not confirm a booking.</p>
 
         {submitMessage && (
           <div

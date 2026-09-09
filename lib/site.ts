@@ -17,7 +17,7 @@ export const siteConfig = {
   shortName: "Tow-N-Go Trailers",
 
   description:
-    "Premium trailer rentals in Kelowna and the Okanagan, including enclosed trailers, dump trailers, flat deck trailers, dovetail trailers, flexible rental options, pickup and delivery availability, and equipment ready for real work.",
+    "Trailer rentals, empty-trailer delivery and collection, and loaded transport in Kelowna and the Okanagan. Enclosed, dump and flatdeck / dovetail trailers for your next job.",
 
   shortDescription:
     "Premium trailer rentals across Kelowna and the Okanagan for moving, hauling, cleanup jobs, equipment, and contractor work.",
