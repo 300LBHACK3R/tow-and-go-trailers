@@ -4,7 +4,7 @@ import { Inter } from "next/font/google";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
 import { TikTokSocialStrip } from "@/components/social/TikTokSocial";
-import { siteConfig } from "@/lib/site";
+import { siteConfig, socialImage } from "@/lib/site";
 import "./globals.css";
 
 const inter = Inter({
@@ -60,23 +60,14 @@ export const metadata: Metadata = {
     siteName: siteConfig.name,
     locale: "en_CA",
     type: "website",
-    images: [
-      {
-        url: "/images/okanagan-trailer-rentals-dump-enclosed-flatdeck-black-trailers.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Tow-N-Go Trailers offering black trailer rentals in the Okanagan",
-      },
-    ],
+    images: [socialImage],
   },
   twitter: {
     card: "summary_large_image",
     title: "Tow-N-Go Trailers | Trailer Rentals in Kelowna & the Okanagan",
     description:
       "Premium dump trailer, enclosed trailer, and dovetail trailer rentals across Kelowna and the Okanagan.",
-    images: [
-      "/images/okanagan-trailer-rentals-dump-enclosed-flatdeck-black-trailers.jpg",
-    ],
+    images: [socialImage.url],
   },
 };
 

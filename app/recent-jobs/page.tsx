@@ -4,7 +4,7 @@ import { RecentJobs } from "@/components/sections/RecentJobs";
 import { CTASection } from "@/components/sections/CTASection";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { getPublishedJobs } from "@/data/recentJobs";
-import { siteConfig } from "@/lib/site";
+import { siteConfig, socialImage } from "@/lib/site";
 
 const description =
   "Explore Tow-N-Go trailer projects and updates from Kelowna and the Okanagan. Plan your next trailer rental, delivery or transport inquiry.";
@@ -17,6 +17,7 @@ export const metadata: Metadata = {
     ? { index: true, follow: true }
     : { index: false, follow: true },
   openGraph: {
+    images: [socialImage],
     title: "Recent Jobs | Tow-N-Go Trailers",
     description,
     url: `${siteConfig.url}/recent-jobs`,

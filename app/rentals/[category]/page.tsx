@@ -7,7 +7,7 @@ import {
   trailerCategories,
   type TrailerCategoryId,
 } from "@/data/trailerCategories";
-import { siteConfig } from "@/lib/site";
+import { siteConfig, socialImage } from "@/lib/site";
 import { CategoryRentalsClient } from "./CategoryRentalsClient";
 
 type CategoryPageProps = {
@@ -53,20 +53,13 @@ export async function generateMetadata({
       url: categoryUrl,
       siteName: siteConfig.name,
       type: "website",
-      images: [
-        {
-          url: "/opengraph-image.png",
-          width: 1200,
-          height: 630,
-          alt: `${category.title} from Tow-N-Go Trailers`,
-        },
-      ],
+      images: [socialImage],
     },
     twitter: {
       card: "summary_large_image",
       title: socialTitle,
       description: category.seoDescription,
-      images: ["/twitter-image.png"],
+      images: [socialImage.url],
     },
   };
 }

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { FaqDirectory } from "@/components/faq/FaqDirectory";
 import { Container } from "@/components/ui/Container";
 import { allFaqItems } from "@/data/faqDirectory";
+import { socialImage } from "@/lib/site";
 
 const SITE_URL =
   "https://www.towandgotrailers.ca";
@@ -34,6 +35,7 @@ export const metadata: Metadata = {
   },
 
   openGraph: {
+    images: [socialImage],
     type: "website",
     locale: "en_CA",
     url: CANONICAL_URL,
@@ -45,6 +47,7 @@ export const metadata: Metadata = {
   },
 
   twitter: {
+    images: [socialImage.url],
     card:
       "summary_large_image",
     title: PAGE_TITLE,

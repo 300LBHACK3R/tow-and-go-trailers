@@ -3,7 +3,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { ServicesPreview } from "@/components/sections/ServicesPreview";
-import { siteConfig } from "@/lib/site";
+import { siteConfig, socialImage } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Trailer Rentals, Delivery & Transport",
@@ -13,27 +13,20 @@ export const metadata: Metadata = {
     canonical: `${siteConfig.url}/services`,
   },
   openGraph: {
-    title: "Trailer Trailer Rentals, Delivery & Transport | Tow-N-Go Trailers",
+    title: "Trailer Rentals, Delivery & Transport | Tow-N-Go Trailers",
     description:
       "Trailer rentals, empty-trailer delivery and collection, and pickup, transport and delivery across Kelowna and the Okanagan.",
     url: `${siteConfig.url}/services`,
     siteName: siteConfig.name,
     type: "website",
-    images: [
-      {
-        url: "/opengraph-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Tow-N-Go Trailers services and add-ons",
-      },
-    ],
+    images: [socialImage],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Trailer Trailer Rentals, Delivery & Transport | Tow-N-Go Trailers",
+    title: "Trailer Rentals, Delivery & Transport | Tow-N-Go Trailers",
     description:
       "Trailer rentals, empty-trailer delivery and collection, and pickup, transport and delivery across Kelowna and the Okanagan.",
-    images: ["/twitter-image.png"],
+    images: [socialImage.url],
   },
 };
 

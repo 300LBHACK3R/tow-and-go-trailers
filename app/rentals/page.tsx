@@ -9,7 +9,7 @@ import {
   getCategoryTrailerCount,
   trailerCategories,
 } from "@/data/trailerCategories";
-import { siteConfig } from "@/lib/site";
+import { siteConfig, socialImage } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Trailer Rentals",
@@ -25,20 +25,13 @@ export const metadata: Metadata = {
     url: `${siteConfig.url}/rentals`,
     siteName: siteConfig.name,
     type: "website",
-    images: [
-      {
-        url: "/opengraph-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Tow-N-Go Trailers rental fleet in the Okanagan",
-      },
-    ],
+    images: [socialImage],
   },
   twitter: {
     card: "summary_large_image",
     title: "Trailer Rentals in Kelowna & the Okanagan | Tow-N-Go Trailers",
     description: "Browse trailer rentals by category from Tow-N-Go Trailers.",
-    images: ["/twitter-image.png"],
+    images: [socialImage.url],
   },
 };
 

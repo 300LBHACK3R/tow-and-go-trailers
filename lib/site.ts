@@ -1,5 +1,14 @@
 const websiteUrl = "https://www.towandgotrailers.ca";
 
+// Share one existing fleet image across routes, with its actual file dimensions.
+export const socialImage = {
+  url: `${websiteUrl}/images/golden-hour-over-industrial-trailers-and-mountains.png`,
+  width: 1672,
+  height: 941,
+  type: "image/png",
+  alt: "Tow-N-Go black dump, enclosed and flatdeck trailers overlooking the Okanagan at sunset",
+} as const;
+
 const phone = "778-215-3422";
 const phoneHref = "tel:+17782153422";
 
@@ -45,8 +54,8 @@ export const siteConfig = {
   },
 
   logo: "/icon.png",
-  openGraphImage: "/opengraph-image.png",
-  twitterImage: "/twitter-image.png",
+  openGraphImage: socialImage.url,
+  twitterImage: socialImage.url,
 
   address: {
     locality: "Kelowna",

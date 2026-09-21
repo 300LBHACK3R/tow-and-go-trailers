@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import { Container } from "@/components/ui/Container";
 import { ReviewsSection } from "@/components/sections/ReviewsSection";
+import { socialImage } from "@/lib/site";
 
 const SITE_URL = "https://www.towandgotrailers.ca";
 const PAGE_PATH = "/reviews";
@@ -28,6 +29,7 @@ export const metadata: Metadata = {
   },
 
   openGraph: {
+    images: [socialImage],
     type: "website",
     locale: "en_CA",
     url: CANONICAL_URL,
@@ -37,6 +39,7 @@ export const metadata: Metadata = {
   },
 
   twitter: {
+    images: [socialImage.url],
     card: "summary_large_image",
     title: PAGE_TITLE,
     description: PAGE_DESCRIPTION,

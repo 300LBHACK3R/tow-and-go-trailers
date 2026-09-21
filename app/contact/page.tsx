@@ -3,7 +3,7 @@ import Image from "next/image";
 import { Suspense } from "react";
 import { ContactForm } from "@/components/contact/ContactForm";
 import { Container } from "@/components/ui/Container";
-import { siteConfig } from "@/lib/site";
+import { siteConfig, socialImage } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -18,21 +18,14 @@ export const metadata: Metadata = {
       "Ask about trailer rentals, empty-trailer delivery or loaded transport across Kelowna and the Okanagan.",
     url: `${siteConfig.url}/contact`,
     siteName: siteConfig.name,
-    images: [
-      {
-        url: "/opengraph-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Contact Tow-N-Go Trailers",
-      },
-    ],
+    images: [socialImage],
   },
   twitter: {
     card: "summary_large_image",
     title: "Contact Tow-N-Go Trailers",
     description:
       "Ask about trailer rentals, empty-trailer delivery or loaded transport across Kelowna and the Okanagan.",
-    images: ["/twitter-image.png"],
+    images: [socialImage.url],
   },
 };
 
