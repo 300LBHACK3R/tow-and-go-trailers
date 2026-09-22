@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
+import { HalloweenDecor } from "@/components/seasonal/HalloweenDecor";
 
 const trustItems = [
   "Commercial-grade trailers",
@@ -225,6 +226,8 @@ export function Hero() {
           </div>
         </div>
       </Container>
+
+      <HalloweenDecor placement="hero" />
 
       <div className="pointer-events-none absolute bottom-7 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-zinc-500 lg:flex">
         <span className="text-[0.62rem] font-semibold uppercase tracking-[0.28em]">

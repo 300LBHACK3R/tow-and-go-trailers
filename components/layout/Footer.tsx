@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
+import { HalloweenDecor } from "@/components/seasonal/HalloweenDecor";
 import {
   FacebookFooterButton,
   TikTokFooterButton,
@@ -52,6 +53,7 @@ export function Footer() {
               loaded transport across Kelowna and the Okanagan.
               You load it. Tow-N-Go hauls it.
             </p>
+            <HalloweenDecor placement="footer" />
           </div>
 
           <nav aria-label="Footer navigation">

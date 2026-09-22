@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
 import { TikTokSocialStrip } from "@/components/social/TikTokSocial";
+import { HalloweenSeason } from "@/components/seasonal/HalloweenSeason";
 import { siteConfig, socialImage } from "@/lib/site";
 import "./globals.css";
 
@@ -85,7 +86,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
       <body className={`${inter.className} bg-[#050505] text-white`}>
-        <div className="relative isolate flex min-h-screen flex-col overflow-x-clip bg-[#050505]">
+        <HalloweenSeason>
           <div
             aria-hidden="true"
             className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[42rem] bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.075),transparent_62%)]"
@@ -100,7 +101,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           {/* TNG_TIKTOK_STRIP_END */}
 
           <Footer />
-        </div>
+        </HalloweenSeason>
       </body>
     </html>
   );
