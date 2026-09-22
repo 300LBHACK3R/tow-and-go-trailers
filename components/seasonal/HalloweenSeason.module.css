@@ -5,26 +5,76 @@
 .heroDecoration,
 .footerDecoration {
   display: none;
-  pointer-events: none;
-  user-select: none;
 }
 
-.season[data-season="halloween"] .heroDecoration,
+.season[data-season="halloween"] .heroDecoration {
+  display: flex;
+}
+
 .season[data-season="halloween"] .footerDecoration {
   display: block;
 }
 
 .heroDecoration {
   position: relative;
-  height: 120px;
-  margin-top: -44px;
+  width: min(100%, 1500px);
+  min-height: 180px;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin: -24px auto 0;
+  padding: 0 1.25rem 1.5rem;
+}
+
+.greeting {
+  flex: 0 1 200px;
+  min-width: 0;
+  text-align: center;
+  text-shadow: 0 2px 16px rgb(0 0 0 / 70%);
+}
+
+.greeting::before {
+  content: "";
+  display: block;
+  width: 3.25rem;
+  height: 1px;
+  margin: 0 auto 0.85rem;
+  background: linear-gradient(90deg, transparent, var(--seasonal-amber), transparent);
+}
+
+.greetingTitle {
+  margin: 0;
+  color: #f1d28a;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.625rem, 4vw, 2rem);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.06;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+.greetingFrom {
+  margin: 0.65rem 0 0;
+  color: #dbc797;
+  font-size: 0.5625rem;
+  font-weight: 600;
+  line-height: 1.6;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.greetingNote {
+  margin: 0.65rem 0 0;
+  color: #d5cec0;
+  font-size: 0.6875rem;
+  line-height: 1.5;
+  text-wrap: balance;
 }
 
 .heroDecoration .decorationImage {
-  position: absolute;
-  right: max(1.25rem, calc((100vw - 1440px) / 2));
-  bottom: 8px;
-  width: 180px;
+  width: clamp(120px, 38vw, 180px);
+  flex: 0 0 auto;
 }
 
 .footerDecoration {
@@ -35,38 +85,37 @@
 
 .decorationImage {
   height: auto;
+  pointer-events: none;
+  user-select: none;
 }
 
 .fog {
   position: fixed;
   z-index: 30;
   inset: auto 0 0;
-  height: min(32vh, 280px);
+  height: clamp(240px, 44svh, 460px);
   overflow: hidden;
   pointer-events: none;
   user-select: none;
   contain: strict;
-  mask-image: linear-gradient(to bottom, transparent, black 45%);
+  mask-image: linear-gradient(to bottom, transparent, black 30%);
 }
 
 .fogNear,
 .fogFar {
   position: absolute;
-  inset: 0 -20%;
-  opacity: 0.18;
-  background:
-    radial-gradient(ellipse at 15% 72%, rgb(198 195 183 / 38%), transparent 42%),
-    radial-gradient(ellipse at 60% 86%, rgb(221 221 213 / 30%), transparent 38%),
-    radial-gradient(ellipse at 96% 54%, rgb(182 185 187 / 28%), transparent 40%);
-  animation: fog-drift 28s ease-in-out infinite alternate;
+  inset: -5% -24% -8%;
+  background: url("/images/seasonal/halloween-fog.webp") center bottom / 100% 100% no-repeat;
+  opacity: 0.32;
+  animation: fog-near 26s ease-in-out infinite alternate;
   animation-play-state: paused;
 }
 
 .fogFar {
-  inset: 20% -25% -20%;
-  opacity: 0.13;
+  inset: 12% -35% -22%;
+  opacity: 0.16;
+  animation-name: fog-far;
   animation-duration: 39s;
-  animation-direction: alternate-reverse;
 }
 
 .season[data-seasonal-motion="on"] .fogNear,
@@ -74,75 +123,64 @@
   animation-play-state: running;
 }
 
-.motionControl {
-  position: fixed;
-  z-index: 40;
-  right: max(1rem, env(safe-area-inset-right));
-  bottom: max(1rem, env(safe-area-inset-bottom));
-  display: inline-flex;
-  min-height: 44px;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.5rem 0.85rem;
-  border: 1px solid rgb(227 184 94 / 25%);
-  border-radius: 999px;
-  background: rgb(10 10 10 / 94%);
-  color: #e0cfad;
-  font-size: 0.6875rem;
-  font-weight: 500;
-  letter-spacing: 0.025em;
-  box-shadow: 0 4px 20px rgb(0 0 0 / 18%);
-  cursor: pointer;
+@keyframes fog-near {
+  from { transform: translate3d(-6%, 4%, 0) scale(1.02); }
+  to { transform: translate3d(6%, -5%, 0) scale(1.06); }
 }
 
-.motionControl:hover {
-  border-color: var(--seasonal-amber);
-  color: #fff;
+@keyframes fog-far {
+  from { transform: translate3d(5%, -3%, 0) scale(-1.03, 1.03); }
+  to { transform: translate3d(-5%, 5%, 0) scale(-1.08, 1.08); }
 }
 
-.motionControl:focus-visible {
-  outline: 2px solid var(--seasonal-amber);
-  outline-offset: 4px;
-}
-
-@keyframes fog-drift {
-  from { transform: translate3d(-5%, 5%, 0) scale(1); }
-  to { transform: translate3d(5%, -3%, 0) scale(1.06); }
+@media (min-width: 640px) {
+  .heroDecoration {
+    gap: 1rem;
+    padding-right: 2rem;
+    padding-left: 2rem;
+  }
 }
 
 @media (min-width: 1280px) {
   .heroDecoration {
     position: absolute;
-    inset: auto 0 0;
-    height: 0;
-    margin: 0;
-  }
-
-  .heroDecoration .decorationImage {
-    width: clamp(260px, 24vw, 340px);
     right: max(1.5rem, calc((100vw - 1440px) / 2));
     bottom: 24px;
+    width: clamp(280px, 24vw, 340px);
+    min-height: 0;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin: 0;
+    padding: 0;
   }
+
+  .greeting {
+    flex: none;
+    width: 100%;
+  }
+
+  .greetingTitle { font-size: 2.25rem; }
+  .greetingFrom { font-size: 0.625rem; }
+  .greetingNote { font-size: 0.75rem; }
+
+  .heroDecoration .decorationImage { width: 100%; }
 }
 
 @media (max-width: 639px) {
-  .fog { height: 160px; }
-  .fogNear { opacity: 0.13; }
-  .fogFar { display: none; }
-  .motionControl { right: 0.75rem; bottom: max(0.75rem, env(safe-area-inset-bottom)); }
+  .fog { height: clamp(180px, 35svh, 290px); }
+  .fogNear { opacity: 0.28; }
+  .fogFar { opacity: 0.12; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .fog,
-  .motionControl { display: none; }
+  /* Keep the Halloween atmosphere visible without movement. */
   .fogNear,
   .fogFar { animation: none; }
+  .fogFar { transform: scaleX(-1); }
 }
 
 @media print {
   .fog,
-  .motionControl,
   .season[data-season="halloween"] .heroDecoration,
   .season[data-season="halloween"] .footerDecoration { display: none; }
 }
