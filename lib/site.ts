@@ -102,6 +102,10 @@ export const navigationLinks = [
     href: "/services",
   },
   {
+    label: "Gallery",
+    href: "/recent-jobs",
+  },
+  {
     label: "About",
     href: "/about",
   },

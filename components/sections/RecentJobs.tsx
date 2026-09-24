@@ -1,126 +1,69 @@
-import Image from "next/image";
 import Link from "next/link";
+import { JobCard } from "@/components/jobs/JobCard";
 import { Container } from "@/components/ui/Container";
-import { Button } from "@/components/ui/Button";
-import { getPublishedJobs } from "@/data/recentJobs";
-import { getServiceLabel, serviceInquiryHref } from "@/data/servicePathways";
-import { siteConfig } from "@/lib/site";
+import { getGalleryEntries } from "@/data/projectGallery";
 
 export function RecentJobs({ fullPage = false }: { fullPage?: boolean }) {
-  const allJobs = getPublishedJobs();
-  const jobs = fullPage ? allJobs : allJobs.slice(0, 3);
-  const JobHeading = fullPage ? "h2" : "h3";
+  const allEntries = getGalleryEntries();
+  const entries = fullPage ? allEntries : allEntries.slice(0, 2);
+  const hasEntries = entries.length > 0;
+  const hasExamples = entries.some((entry) => entry.kind === "example");
+  const EmptyHeading = fullPage ? "h2" : "h3";
+  const imageSizes = entries.length === 1
+    ? "(max-width: 639px) calc(100vw - 32px), (max-width: 767px) calc(100vw - 48px), 700px"
+    : "(max-width: 639px) calc(100vw - 32px), (max-width: 767px) calc(100vw - 48px), (max-width: 1023px) calc(50vw - 44px), (max-width: 1500px) calc(50vw - 56px), 700px";
+  const detailImageSizes = entries.length === 1
+    ? "(max-width: 639px) calc(100vw - 32px), (max-width: 767px) calc(50vw - 34px), 340px"
+    : "(max-width: 639px) calc(100vw - 32px), (max-width: 767px) calc(50vw - 34px), (max-width: 1023px) calc(25vw - 32px), (max-width: 1500px) calc(25vw - 39px), 340px";
+
   return (
     <section
-      aria-label="Recent jobs"
-      className="border-b border-white/10 bg-[#050505] py-14 sm:py-20"
+      id={fullPage ? "project-gallery" : "recent-jobs"}
+      aria-label={hasExamples ? "Hauling ideas" : "Recent jobs"}
+      className={`bg-[#050505] ${fullPage ? "pb-16 pt-6 sm:pb-24 sm:pt-8" : "py-16 sm:py-24"}`}
     >
       <Container className="max-w-[1500px]">
         {!fullPage && (
-          <div className="mb-8 max-w-3xl">
-            <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[#d4af37]">
-              Out on the job
-            </p>
-            <h2 className="mt-4 text-3xl font-bold tracking-tight text-white sm:text-5xl">
-              Real trailers. Real projects.
-            </h2>
-            <p className="mt-5 text-base leading-8 text-zinc-300">
-              See how Tow-N-Go fits into moving days, workdays and the projects
-              in between.
-            </p>
-          </div>
-        )}
-        {jobs.length > 0 ? (
-          <>
-            <div
-              className={`grid gap-7 ${jobs.length === 1 ? "max-w-5xl" : jobs.length === 2 ? "md:grid-cols-2" : "md:grid-cols-2 xl:grid-cols-3"}`}
-            >
-              {jobs.map((job) => (
-                <article
-                  key={job.id}
-                  id={job.id}
-                  className="flex min-w-0 scroll-mt-28 flex-col overflow-hidden rounded-3xl border border-white/15 bg-white/[0.025]"
-                >
-                  <Image
-                    src={job.image.src}
-                    alt={job.image.alt}
-                    width={job.image.width}
-                    height={job.image.height}
-                    sizes={
-                      jobs.length === 1
-                        ? "(max-width: 1024px) 100vw, 1024px"
-                        : jobs.length === 2 ? "(max-width: 768px) 100vw, 50vw" : "(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
-                    }
-                    className="aspect-[4/3] w-full object-cover"
-                  />
-                  <div className="flex flex-1 flex-col p-6 sm:p-8">
-                    <p className="text-xs font-semibold uppercase tracking-widest text-[#d4af37]">
-                      {job.location}
-                    </p>
-                    <JobHeading className="mt-3 text-2xl font-semibold text-white">
-                      {job.title}
-                    </JobHeading>
-                    <p className="mt-4 text-sm leading-7 text-zinc-300">
-                      {job.summary}
-                    </p>
-                    <dl className="mt-5 space-y-2 border-t border-white/10 pt-5 text-sm leading-6">
-                      <div>
-                        <dt className="text-zinc-400">Trailer</dt>
-                        <dd className="text-white">{job.trailer}</dd>
-                      </div>
-                      <div>
-                        <dt className="text-zinc-400">Service</dt>
-                        <dd className="text-white">
-                          {getServiceLabel(job.service)}
-                        </dd>
-                      </div>
-                    </dl>
-                    <Button
-                      href={serviceInquiryHref(job.service, job.trailer)}
-                      variant="secondary"
-                      className="mt-7 w-full"
-                    >
-                      Plan a similar job
-                    </Button>
-                  </div>
-                </article>
-              ))}
-            </div>
-            {!fullPage && (
-              <Link
-                href="/recent-jobs"
-                className="mt-7 inline-flex min-h-11 items-center font-semibold text-[#d4af37] underline-offset-4 hover:underline"
-              >
-                View all recent jobs{" "}
-                <span aria-hidden="true" className="ml-2">
-                  →
-                </span>
-              </Link>
-            )}
-          </>
-        ) : (
-          <div className="grid items-center gap-6 rounded-3xl border border-[#d4af37]/25 bg-[#d4af37]/[0.04] p-6 sm:p-9 lg:grid-cols-[1fr_auto]">
+          <div className="mb-9 flex flex-col items-start justify-between gap-5 sm:mb-12 lg:flex-row lg:items-end">
             <div className="max-w-2xl">
-              <JobHeading className="text-2xl font-semibold text-white">
-                See what Tow-N-Go is working on.
-              </JobHeading>
-              <p className="mt-3 text-base leading-8 text-zinc-300">
-                Visit our Facebook page for the latest trailer photos, project
-                updates and ideas for your next rental.
+              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#d4af37]">
+                {hasExamples ? "Hauling ideas" : "Recent jobs"}
+              </p>
+              <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-5xl">
+                {hasExamples ? "Picture your next project." : hasEntries ? "A closer look at the work." : "Your next project starts here."}
+              </h2>
+              <p className="mt-4 text-sm leading-7 text-zinc-400 sm:text-base">
+                {hasExamples
+                  ? "Illustrative scenes, not completed customer jobs."
+                  : hasEntries
+                    ? "Recent trailer projects around the Okanagan."
+                    : "A move, a cleanup or a load to deliver. We’ll help you find the right setup."}
               </p>
             </div>
-            <a
-              href={siteConfig.social.facebook}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex min-h-12 items-center justify-center rounded-2xl bg-[#d4af37] px-6 py-4 text-center text-sm font-semibold text-black hover:bg-[#edca52]"
-            >
-              Latest photos &amp; updates
-              <span className="sr-only"> on Facebook (opens in a new tab)</span>
-              <span aria-hidden="true" className="ml-2">
-                ↗
-              </span>
-            </a>
+            <Link href="/recent-jobs" className="inline-flex min-h-11 shrink-0 items-center gap-3 text-sm font-semibold text-[#e6c354] underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37]">
+              View gallery <span aria-hidden="true">→</span>
+            </Link>
+          </div>
+        )}
+
+        {fullPage && hasExamples && (
+          <div className="mb-8 sm:mb-10">
+            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#d4af37]">Hauling ideas</p>
+            <p className="mt-3 text-sm leading-7 text-zinc-400">Illustrative scenes, not completed customer jobs.</p>
+          </div>
+        )}
+
+        {hasEntries ? (
+          <div className={`grid items-start gap-x-10 gap-y-12 sm:gap-y-16 lg:gap-x-12 ${entries.length === 1 ? "max-w-[700px]" : "md:grid-cols-2"}`}>
+            {entries.map((entry) => <JobCard key={entry.project.id} entry={entry} fullPage={fullPage} imageSizes={imageSizes} detailImageSizes={detailImageSizes} />)}
+          </div>
+        ) : (
+          <div className="max-w-2xl py-6">
+            <EmptyHeading className="text-xl font-semibold tracking-tight text-white sm:text-2xl">Project photos are on their way.</EmptyHeading>
+            <p className="mt-4 text-sm leading-7 text-zinc-400">Explore the fleet while we put together our customer project gallery.</p>
+            <Link href="/rentals" className="mt-4 inline-flex min-h-11 items-center text-sm font-medium text-[#e6c354] underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37]">
+              Explore the fleet
+            </Link>
           </div>
         )}
       </Container>

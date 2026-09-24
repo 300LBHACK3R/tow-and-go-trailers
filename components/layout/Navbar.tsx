@@ -18,6 +18,10 @@ const navItems = [
     label: "Services / Add-Ons",
   },
   {
+    href: "/recent-jobs",
+    label: "Gallery",
+  },
+  {
     href: "/about",
     label: "About",
   },
@@ -151,7 +155,7 @@ export function Navbar() {
 
         <nav
           aria-label="Main navigation"
-          className="hidden min-w-0 items-center gap-5 xl:flex 2xl:gap-7"
+          className="hidden min-w-0 items-center gap-3 xl:flex 2xl:gap-5"
         >
           {navItems.map((item) => {
             const isActive = isNavItemActive(
@@ -182,7 +186,7 @@ export function Navbar() {
 
           <a
             href={siteConfig.phoneHref}
-            className="ml-1 inline-flex min-h-12 shrink-0 items-center justify-center rounded-2xl bg-[#d4af37] px-7 py-3.5 text-sm font-black text-black shadow-[0_16px_45px_rgba(212,175,55,0.23)] transition duration-200 hover:-translate-y-0.5 hover:bg-[#edca52] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#f0d36e] focus-visible:ring-offset-4 focus-visible:ring-offset-black"
+            className="ml-1 inline-flex min-h-12 shrink-0 items-center justify-center rounded-2xl bg-[#d4af37] px-5 py-3.5 text-sm font-black text-black shadow-[0_16px_45px_rgba(212,175,55,0.23)] transition duration-200 hover:-translate-y-0.5 hover:bg-[#edca52] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#f0d36e] focus-visible:ring-offset-4 focus-visible:ring-offset-black"
           >
             Call or Text
           </a>
@@ -214,7 +218,7 @@ export function Navbar() {
         className={[
           "overflow-hidden border-t bg-black/[0.98] shadow-[0_24px_50px_rgba(0,0,0,0.45)] transition-[max-height,opacity,border-color] duration-300 ease-out xl:hidden",
           isOpen
-            ? "max-h-[620px] border-white/10 opacity-100"
+            ? "max-h-[calc(100dvh-5rem)] overflow-y-auto border-white/10 opacity-100 sm:max-h-[calc(100dvh-6rem)]"
             : "pointer-events-none max-h-0 border-transparent opacity-0",
         ].join(" ")}
       >
