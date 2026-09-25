@@ -2,13 +2,16 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { PremiumTrailerCard } from "@/components/rentals/PremiumTrailerCard";
 import type { TrailerCategory } from "@/data/trailerCategories";
+import type { Trailer } from "@/data/trailers";
 import { trackRentalCategoryClick } from "@/lib/analytics";
 
 type TrailerCategoryCardProps = {
   category: TrailerCategory;
   previewImage: string;
   trailerCount: number;
+  trailer?: Trailer;
 };
 
 function ArrowIcon() {
@@ -34,7 +37,12 @@ export function TrailerCategoryCard({
   category,
   previewImage,
   trailerCount,
+  trailer,
 }: TrailerCategoryCardProps) {
+  if (trailer) {
+    return <PremiumTrailerCard trailer={trailer} category={category} />;
+  }
+
   const categoryHref = `/rentals/${category.id}`;
 
   const availabilityText =

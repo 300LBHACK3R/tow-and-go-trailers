@@ -7,6 +7,7 @@ import { Container } from "@/components/ui/Container";
 import {
   getCategoryPreviewImage,
   getCategoryTrailerCount,
+  getTrailersForCategory,
   trailerCategories,
 } from "@/data/trailerCategories";
 import { siteConfig, socialImage } from "@/lib/site";
@@ -179,6 +180,7 @@ export default function RentalsPage() {
                 category={category}
                 previewImage={getCategoryPreviewImage(category.id)}
                 trailerCount={getCategoryTrailerCount(category.id)}
+                trailer={getTrailersForCategory(category.id)[0]}
               />
             ))}
           </div>
