@@ -214,6 +214,12 @@ export default function FaqPage() {
           title="Trailer questions, answered."
           description="Clear information about booking, towing, delivery, hauling, loading, and returns throughout Kelowna and the Okanagan."
           breadcrumb="FAQ"
+          image={{
+            src: "/images/suretrac-6x10-dump-trailer-okanagan-6.jpg",
+            alt: "The empty bed and rear gates of a black Sure-Trac dump trailer",
+            position: "58% 52%",
+            mobilePosition: "50% 55%",
+          }}
         >
           <Button href="#faq-directory">Search questions</Button>
           <Button href="/contact" variant="secondary">Request a quote</Button>

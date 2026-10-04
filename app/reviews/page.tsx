@@ -139,6 +139,12 @@ export default function ReviewsPage() {
           title="Good service. In their words."
           description="Experiences with our enclosed, dump, flatdeck, and dovetail trailer rentals from customers across Kelowna, West Kelowna, and the Okanagan."
           breadcrumb="Reviews"
+          image={{
+            src: "/images/golden-hour-over-industrial-trailers-and-mountains.png",
+            alt: "Black enclosed, dump, and flatdeck trailers overlooking the Okanagan",
+            position: "65% 64%",
+            mobilePosition: "62% 62%",
+          }}
         />
 
         <ReviewsSection />

@@ -175,6 +175,12 @@ export default function ContactPage() {
         title="Let’s plan your next job."
         description="Choose your service and share your timing, location and details about the job. We’ll review your request and get back to you with availability and next steps."
         breadcrumb="Contact"
+        image={{
+          src: "/images/tow-and-go-royal-cargo-enclosed-trailer-okanagan-interior-empty-02.png",
+          alt: "All-black tandem-axle enclosed trailer with a side access door",
+          position: "62% 58%",
+          mobilePosition: "53% 62%",
+        }}
       />
 
       <section className="relative isolate overflow-hidden py-12 sm:py-16 lg:py-20">

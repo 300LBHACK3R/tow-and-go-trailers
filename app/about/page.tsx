@@ -9,7 +9,12 @@ export default function AboutPage() {
         title="Built on resilience, family, and doing things the right way."
         description="Tow-N-Go Trailers is a family-owned business built to provide safe, dependable trailer rentals with honest service, strong values, and a long-term vision for growth."
         breadcrumb="About"
-        image={{ src: "/images/golden-hour-over-industrial-trailers-and-mountains.png", alt: "Trailers against the Okanagan mountain landscape at golden hour" }}
+        image={{
+          src: "/images/golden-hour-over-industrial-trailers-and-mountains.png",
+          alt: "Trailers against the Okanagan mountain landscape at golden hour",
+          position: "65% 62%",
+          mobilePosition: "60% 62%",
+        }}
       />
 
       <section className="py-14 sm:py-20">

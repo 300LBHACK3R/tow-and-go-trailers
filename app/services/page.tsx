@@ -38,7 +38,12 @@ export default function ServicesPage() {
         title="Three ways to get the job moving."
         description="Tow it yourself, have an empty rental trailer brought to you, or arrange transport for cargo you prepare and load. Choose the service that fits your job."
         breadcrumb="Services"
-        image={{ src: "/images/services-add-ons-premium-trailer-banner.png", alt: "Tow-N-Go trailer services and add-ons in the Okanagan" }}
+        image={{
+          src: "/images/services-add-ons-premium-trailer-banner.png",
+          alt: "Tow-N-Go trailer services and add-ons in the Okanagan",
+          position: "70% 55%",
+          mobilePosition: "78% 58%",
+        }}
       />
 
       <ServicesPreview details />

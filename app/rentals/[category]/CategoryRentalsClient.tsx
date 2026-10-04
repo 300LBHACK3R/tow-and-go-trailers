@@ -20,6 +20,32 @@ type CategoryRentalsClientProps = {
   trailers: Trailer[];
 };
 
+const categoryHeroImages = {
+  "enclosed-trailers": {
+    src: "/images/tow-and-go-royal-cargo-enclosed-trailer-okanagan-interior-empty-02.png",
+    alt: "All-black enclosed trailer with black wheels and a side access door",
+    position: "62% 58%",
+    mobilePosition: "53% 62%",
+  },
+  "dump-trailers": {
+    src: "/images/suretrac-6x10-dump-trailer-okanagan-5.jpg",
+    alt: "Black Sure-Trac dump trailer with its empty bed, tandem axles, and front toolbox",
+    position: "56% 55%",
+    mobilePosition: "48% 55%",
+  },
+  "flatdeck-equipment-trailers": {
+    src: "/images/tow-and-go-southland-dovetail-deckover-trailer-kelowna-angled-view-03.jpg",
+    alt: "Black Southland flatdeck trailer with a timber deck and tandem axles",
+    position: "58% 63%",
+    mobilePosition: "55% 63%",
+  },
+} satisfies Record<TrailerCategory["id"], {
+  src: string;
+  alt: string;
+  position: string;
+  mobilePosition: string;
+}>;
+
 type TrailerGalleryCardProps = {
   trailer: Trailer;
 };
@@ -358,7 +384,7 @@ export function CategoryRentalsClient({
         description={category.description}
         breadcrumb={category.title}
         parent={{ label: "Rentals", href: "/rentals" }}
-        image={trailers[0] ? { src: trailers[0].image, alt: `${category.title} from Tow-N-Go Trailers` } : undefined}
+        image={categoryHeroImages[category.id]}
       >
         <Link href="/rentals" className="inline-flex items-center gap-2 text-sm font-medium text-[#d4af37] transition-colors hover:text-white">
           <span aria-hidden="true">←</span> All trailer categories

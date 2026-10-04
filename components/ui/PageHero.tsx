@@ -1,15 +1,16 @@
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { HalloweenPageDecor } from "@/components/seasonal/HalloweenDecor";
 import { Container } from "@/components/ui/Container";
+import styles from "./PageHero.module.css";
 
 type PageHeroProps = {
   eyebrow: string;
   title: string;
   description: string;
   breadcrumb: string;
-  image?: { src: string; alt: string };
+  image: { src: string; alt: string; position?: string; mobilePosition?: string };
   parent?: { label: string; href: string };
   children?: ReactNode;
 };
@@ -26,26 +27,28 @@ export function PageHero({
   return (
     <section
       aria-labelledby="page-heading"
-      className="relative isolate overflow-hidden border-b border-white/10 bg-[#111210]"
+      className="relative isolate overflow-hidden border-b border-white/10 bg-[#0b0d0c]"
+      style={{
+        "--hero-position": image.position ?? "center",
+        "--hero-mobile-position": image.mobilePosition ?? image.position ?? "center",
+      } as CSSProperties}
     >
-      {image && (
-        <div className="pointer-events-none absolute inset-0 -z-20">
-          <Image
-            src={image.src}
-            alt={image.alt}
-            fill
-            preload
-            sizes="100vw"
-            className="object-cover object-center opacity-40"
-          />
-        </div>
-      )}
+      <div className={styles.media}>
+        <Image
+          src={image.src}
+          alt={image.alt}
+          fill
+          preload
+          sizes="(min-width: 1024px) 78vw, 100vw"
+          className={styles.image}
+        />
+      </div>
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(10,11,10,0.97)_0%,rgba(10,11,10,0.89)_38%,rgba(10,11,10,0.42)_100%)]"
+        className={styles.shade}
       />
       <HalloweenPageDecor />
-      <Container className="relative z-10 pb-12 pt-7 sm:pb-14 sm:pt-8 lg:pb-16">
+      <Container className={`relative z-10 pt-7 sm:pt-8 ${styles.content}`}>
         <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2.5 text-[11px] font-medium uppercase tracking-[0.16em] text-zinc-400">
           <Link href="/" className="transition-colors hover:text-[#d4af37]">Home</Link>
           <span aria-hidden="true" className="text-zinc-600">/</span>
@@ -58,7 +61,7 @@ export function PageHero({
           <span aria-current="page" className="text-zinc-200">{breadcrumb}</span>
         </nav>
 
-        <div className="mt-9 max-w-[760px] sm:mt-11">
+        <div className={`mt-9 sm:mt-11 ${styles.copy}`}>
           <p className="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.23em] text-[#d4af37] sm:text-xs">
             <span aria-hidden="true" className="h-px w-8 bg-[#d4af37]" />
             {eyebrow}
