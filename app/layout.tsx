@@ -88,6 +88,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
       <body className={`${inter.className} bg-[#050505] text-white`}>
+        <a href="#main-content" className="skip-link">Skip to content</a>
         <HalloweenSeason>
           <div
             aria-hidden="true"
@@ -96,7 +97,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
 
           <Navbar />
 
-          <div className="relative flex-1">{children}</div>
+          <div id="main-content" tabIndex={-1} className="relative flex-1 outline-none">{children}</div>
 
           {/* TNG_TIKTOK_STRIP_START */}
           <TikTokSocialStrip />

@@ -15,11 +15,11 @@ const navItems = [
   },
   {
     href: "/services",
-    label: "Services / Add-Ons",
+    label: "Services",
   },
   {
     href: "/recent-jobs",
-    label: "Gallery",
+    label: "On the Job",
   },
   {
     href: "/about",
@@ -104,14 +104,12 @@ export function Navbar() {
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        // eslint-disable-next-line react-hooks/set-state-in-effect -- Route changes intentionally close the mobile menu.
         setIsOpen(false);
       }
     };
 
     const handleResize = () => {
       if (window.innerWidth >= 1280) {
-        // eslint-disable-next-line react-hooks/set-state-in-effect -- Route changes intentionally close the mobile menu.
         setIsOpen(false);
       }
     };
@@ -137,7 +135,7 @@ export function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-black/[0.95] shadow-[0_12px_40px_rgba(0,0,0,0.34)] backdrop-blur-xl">
-      <div className="mx-auto flex h-20 w-full max-w-[1500px] items-center justify-between gap-3 px-4 sm:h-24 sm:gap-5 sm:px-6 xl:h-28 xl:px-8">
+      <div className="mx-auto flex h-20 w-full max-w-7xl items-center justify-between gap-3 px-4 sm:h-24 sm:gap-5 sm:px-6 xl:h-28 xl:px-8">
         <Link
           href="/"
           aria-label="Tow-N-Go Trailers home"
@@ -224,7 +222,7 @@ export function Navbar() {
       >
         <nav
           aria-label="Mobile navigation"
-          className="mx-auto w-full max-w-[1500px] px-4 py-5 sm:px-6 lg:px-8"
+          className="mx-auto w-full max-w-7xl px-4 py-5 sm:px-6 lg:px-8"
         >
           <div className="grid gap-3">
             {navItems.map((item) => {

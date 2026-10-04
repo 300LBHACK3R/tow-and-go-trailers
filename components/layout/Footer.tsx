@@ -8,7 +8,7 @@ import {
 import { siteConfig } from "@/lib/site";
 
 const footerLinks = [
-  { href: "/recent-jobs", label: "Project Gallery" },
+  { href: "/recent-jobs", label: "On the Job" },
   {
     href: "/rentals",
     label: "Trailer Rentals",

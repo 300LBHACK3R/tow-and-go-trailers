@@ -37,7 +37,7 @@ type ButtonProps = LinkButtonProps | ActionButtonProps;
 
 const baseStyles = [
   "inline-flex min-h-12 items-center justify-center",
-  "rounded-2xl px-6 py-3.5",
+  "rounded-xl px-6 py-3.5",
   "text-center text-sm font-semibold",
   "transition-[transform,background-color,border-color,color,box-shadow,opacity]",
   "duration-200 ease-out",
@@ -52,10 +52,10 @@ const baseStyles = [
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary: [
-    "bg-[#d4af37] text-black",
+    "border border-[#f0d576]/40 bg-[linear-gradient(135deg,#ebcd73,#d4af37)] text-[#141006]",
     "shadow-[0_16px_45px_rgba(212,175,55,0.20)]",
     "hover:-translate-y-0.5",
-    "hover:bg-[#edca52]",
+    "hover:brightness-110",
     "hover:shadow-[0_20px_55px_rgba(212,175,55,0.27)]",
     "active:translate-y-0",
     "active:shadow-[0_10px_28px_rgba(212,175,55,0.18)]",
@@ -103,6 +103,10 @@ export function Button(props: ButtonProps) {
       ...linkProps
     } = props;
 
+    // Styling-only props are consumed above and must not reach the DOM.
+    void _className;
+    void _variant;
+
     return (
       <Link
         {...linkProps}
@@ -135,6 +139,10 @@ export function Button(props: ButtonProps) {
     type = "button",
     ...buttonProps
   } = props;
+
+  // Styling-only props are consumed above and must not reach the DOM.
+  void _className;
+  void _variant;
 
   return (
     <button

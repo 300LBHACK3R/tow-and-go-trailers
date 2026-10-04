@@ -102,7 +102,7 @@ export const navigationLinks = [
     href: "/services",
   },
   {
-    label: "Gallery",
+    label: "On the Job",
     href: "/recent-jobs",
   },
   {

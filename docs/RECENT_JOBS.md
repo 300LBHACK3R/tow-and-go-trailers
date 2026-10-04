@@ -1,6 +1,6 @@
-# Project gallery
+# On the Job
 
-The gallery at `/recent-jobs` and on the homepage uses a quiet, photo-led layout: two landscape images per row on desktop, one per row on mobile, short captions, and a single homepage gallery link. Full project details and extra photographs expand on the gallery page.
+The **On the Job** gallery at `/recent-jobs` and on the homepage uses the same spacious, photo-led cards: two landscape images per row on desktop, one per row on mobile, service labels and short captions. The homepage links to the gallery; gallery images open at full size in a new tab. Full project details and extra photographs expand on the gallery page. The existing route, section IDs and project anchor links remain unchanged.
 
 ## Current preview
 
@@ -9,7 +9,7 @@ There are no approved customer jobs in `data/recentJobs.ts` yet. To give the sec
 - Enclosed-trailer delivery at a residential driveway.
 - Dump-trailer rental for a landscaping project.
 
-Both are clearly labeled **“Illustrative scenes, not completed customer jobs.”** They are service ideas, not evidence of work performed. They have no customer name, completed-job date or claimed job location. Their image descriptions identify them as illustrative. Never copy them into the approved customer-job array or represent them as real project photographs.
+Each image carries a visible **“Illustrative scene”** label, and both gallery views disclose **“Illustrative scenes, not completed customer jobs.”** They are service ideas, not evidence of work performed. They have no customer name, completed-job date or claimed job location. Their image descriptions identify them as illustrative. Never copy them into the approved customer-job array or represent them as real project photographs.
 
 The gallery page remains noindex and absent from the sitemap until at least one actual, approved job is added. The website's published version is not changed by preparing this local update.
 

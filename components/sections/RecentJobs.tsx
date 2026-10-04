@@ -10,51 +10,52 @@ export function RecentJobs({ fullPage = false }: { fullPage?: boolean }) {
   const hasExamples = entries.some((entry) => entry.kind === "example");
   const EmptyHeading = fullPage ? "h2" : "h3";
   const imageSizes = entries.length === 1
-    ? "(max-width: 639px) calc(100vw - 32px), (max-width: 767px) calc(100vw - 48px), 700px"
-    : "(max-width: 639px) calc(100vw - 32px), (max-width: 767px) calc(100vw - 48px), (max-width: 1023px) calc(50vw - 44px), (max-width: 1500px) calc(50vw - 56px), 700px";
+    ? "(max-width: 639px) calc(100vw - 34px), (max-width: 767px) calc(100vw - 50px), 698px"
+    : "(max-width: 639px) calc(100vw - 34px), (max-width: 767px) calc(100vw - 50px), (max-width: 1023px) calc(50vw - 42px), (max-width: 1279px) calc(50vw - 54px), 586px";
   const detailImageSizes = entries.length === 1
-    ? "(max-width: 639px) calc(100vw - 32px), (max-width: 767px) calc(50vw - 34px), 340px"
-    : "(max-width: 639px) calc(100vw - 32px), (max-width: 767px) calc(50vw - 34px), (max-width: 1023px) calc(25vw - 32px), (max-width: 1500px) calc(25vw - 39px), 340px";
+    ? "(max-width: 639px) calc(100vw - 76px), (max-width: 767px) calc(50vw - 64px), 310px"
+    : "(max-width: 639px) calc(100vw - 76px), (max-width: 767px) calc(50vw - 64px), (max-width: 1023px) calc(25vw - 60px), (max-width: 1279px) calc(25vw - 66px), 254px";
 
   return (
     <section
       id={fullPage ? "project-gallery" : "recent-jobs"}
-      aria-label={hasExamples ? "Hauling ideas" : "Recent jobs"}
-      className={`bg-[#050505] ${fullPage ? "pb-16 pt-6 sm:pb-24 sm:pt-8" : "py-16 sm:py-24"}`}
+      aria-label="On the Job"
+      className={`bg-[#080907] ${fullPage ? "pb-20 pt-8 sm:pb-28 sm:pt-12" : "border-y border-white/[0.06] py-20 sm:py-28"}`}
     >
-      <Container className="max-w-[1500px]">
+      <Container>
         {!fullPage && (
-          <div className="mb-9 flex flex-col items-start justify-between gap-5 sm:mb-12 lg:flex-row lg:items-end">
+          <div className="mb-9 flex flex-col items-start justify-between gap-5 sm:mb-12 md:flex-row md:items-end">
             <div className="max-w-2xl">
               <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#d4af37]">
-                {hasExamples ? "Hauling ideas" : "Recent jobs"}
+                The gallery
               </p>
-              <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-5xl">
-                {hasExamples ? "Picture your next project." : hasEntries ? "A closer look at the work." : "Your next project starts here."}
+              <h2 className="mt-4 text-4xl font-semibold tracking-[-0.04em] text-white sm:text-5xl">
+                On the Job
               </h2>
               <p className="mt-4 text-sm leading-7 text-zinc-400 sm:text-base">
                 {hasExamples
-                  ? "Illustrative scenes, not completed customer jobs."
+                  ? "A little inspiration for the job ahead."
                   : hasEntries
                     ? "Recent trailer projects around the Okanagan."
                     : "A move, a cleanup or a load to deliver. We’ll help you find the right setup."}
               </p>
+              {hasExamples && <p className="mt-2 text-xs leading-6 text-zinc-400">Illustrative scenes, not completed customer jobs.</p>}
             </div>
-            <Link href="/recent-jobs" className="inline-flex min-h-11 shrink-0 items-center gap-3 text-sm font-semibold text-[#e6c354] underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37]">
-              View gallery <span aria-hidden="true">→</span>
+            <Link href="/recent-jobs" className="inline-flex min-h-11 shrink-0 items-center gap-4 rounded-full border border-white/15 px-5 py-3 text-sm font-semibold text-[#e6c354] transition-colors hover:border-[#d4af37]/50 hover:bg-[#d4af37]/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37]">
+              Explore the gallery <span aria-hidden="true">→</span>
             </Link>
           </div>
         )}
 
         {fullPage && hasExamples && (
-          <div className="mb-8 sm:mb-10">
-            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#d4af37]">Hauling ideas</p>
-            <p className="mt-3 text-sm leading-7 text-zinc-400">Illustrative scenes, not completed customer jobs.</p>
+          <div className="mb-8 flex flex-col gap-2 border-b border-white/10 pb-5 text-xs leading-6 text-zinc-400 sm:mb-10 sm:flex-row sm:justify-between sm:gap-6">
+            <p>Illustrative scenes, not completed customer jobs.</p>
+            <p>Open any image for a closer look.</p>
           </div>
         )}
 
         {hasEntries ? (
-          <div className={`grid items-start gap-x-10 gap-y-12 sm:gap-y-16 lg:gap-x-12 ${entries.length === 1 ? "max-w-[700px]" : "md:grid-cols-2"}`}>
+          <div className={`grid items-start gap-6 sm:gap-8 lg:gap-10 ${entries.length === 1 ? "max-w-[700px]" : "md:grid-cols-2"}`}>
             {entries.map((entry) => <JobCard key={entry.project.id} entry={entry} fullPage={fullPage} imageSizes={imageSizes} detailImageSizes={detailImageSizes} />)}
           </div>
         ) : (

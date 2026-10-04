@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
+import { PageHero } from "@/components/ui/PageHero";
 import { TrailerCategorySeoSection } from "@/components/sections/TrailerCategorySeoSection";
 import {
   trackContactOptionClick,
@@ -92,17 +93,17 @@ function TrailerGalleryCard({ trailer }: TrailerGalleryCardProps) {
     <>
       <article
         id={trailer.id}
-        className="group scroll-mt-28 overflow-hidden rounded-[1.75rem] border border-white/10 bg-black/40 shadow-[0_25px_80px_rgba(0,0,0,0.5)] backdrop-blur-sm transition-colors duration-300 hover:border-[#d4af37]/35"
+        className="group scroll-mt-28 overflow-hidden rounded-lg border border-white/10 bg-[#121411]"
       >
-        <div className="grid xl:grid-cols-[minmax(0,1.08fr)_minmax(360px,0.92fr)]">
-          <div className="min-w-0 border-b border-white/10 xl:border-b-0 xl:border-r">
+        <div className="grid lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)]">
+          <div className="min-w-0 border-b border-white/10 lg:border-b-0 lg:border-r">
             <button
               type="button"
               onClick={() => setIsLightboxOpen(true)}
               aria-label={`Open image ${selectedIndex + 1} of ${totalImages} for ${
                 trailer.name
               }`}
-              className="relative block h-[340px] w-full overflow-hidden bg-black text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#d4af37] sm:h-[420px] md:h-[500px]"
+              className="relative block aspect-[4/3] w-full overflow-hidden bg-black text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#d4af37]"
             >
               <Image
                 src={selectedImage}
@@ -117,12 +118,12 @@ function TrailerGalleryCard({ trailer }: TrailerGalleryCardProps) {
                 className="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-black/10"
               />
 
-              <div className="absolute left-4 top-4 rounded-full border border-white/10 bg-black/65 px-3 py-1.5 text-xs font-semibold text-white shadow-lg backdrop-blur-md sm:left-5 sm:top-5">
+              <div className="absolute left-4 top-4 rounded-sm border border-white/10 bg-black/70 px-3 py-1.5 text-xs font-semibold text-white shadow-lg backdrop-blur-md sm:left-5 sm:top-5">
                 {trailer.status}
               </div>
 
               {totalImages > 1 && (
-                <div className="absolute right-4 top-4 rounded-full border border-white/10 bg-black/65 px-3 py-1.5 text-xs font-semibold text-white shadow-lg backdrop-blur-md sm:right-5 sm:top-5">
+                <div className="absolute right-4 top-4 rounded-sm border border-white/10 bg-black/70 px-3 py-1.5 text-xs font-semibold text-white shadow-lg backdrop-blur-md sm:right-5 sm:top-5">
                   {selectedIndex + 1} / {totalImages}
                 </div>
               )}
@@ -132,14 +133,14 @@ function TrailerGalleryCard({ trailer }: TrailerGalleryCardProps) {
                   Tow-N-Go Fleet
                 </p>
 
-                <h2 className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+                <p className="mt-2 text-2xl font-semibold tracking-tight text-white sm:text-3xl">
                   {trailer.shortName}
-                </h2>
+                </p>
               </div>
             </button>
 
             {totalImages > 1 && (
-              <div className="grid grid-cols-2 gap-3 border-t border-white/10 p-4 sm:grid-cols-4">
+              <div className="flex gap-2 overflow-x-auto border-t border-white/10 p-3">
                 {galleryImages.map((image, index) => {
                   const isActive = selectedIndex === index;
 
@@ -152,7 +153,7 @@ function TrailerGalleryCard({ trailer }: TrailerGalleryCardProps) {
                         index + 1
                       }`}
                       aria-pressed={isActive}
-                      className={`relative h-24 overflow-hidden rounded-xl border transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] sm:h-28 md:h-32 ${
+                      className={`relative h-20 w-24 shrink-0 overflow-hidden rounded-sm border transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] ${
                         isActive
                           ? "border-[#d4af37] ring-1 ring-[#d4af37]/40"
                           : "border-white/10 bg-black/30 hover:border-white/25"
@@ -162,7 +163,7 @@ function TrailerGalleryCard({ trailer }: TrailerGalleryCardProps) {
                         src={image}
                         alt={`${trailer.shortName} photo ${index + 1}`}
                         fill
-                        sizes="(max-width: 639px) 50vw, (max-width: 1279px) 25vw, 14vw"
+                        sizes="96px"
                         className="object-cover transition-transform duration-300 hover:scale-105"
                       />
                     </button>
@@ -172,12 +173,12 @@ function TrailerGalleryCard({ trailer }: TrailerGalleryCardProps) {
             )}
           </div>
 
-          <div className="min-w-0 p-6 sm:p-7 md:p-8 xl:p-9">
+          <div className="min-w-0 p-5 sm:p-7 lg:p-8">
             <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[#d4af37]">
               Trailer Details
             </p>
 
-            <h2 className="mt-3 text-3xl font-bold tracking-tight text-white">
+            <h2 className="mt-3 text-2xl font-semibold leading-tight tracking-[-0.03em] text-white sm:text-3xl">
               {trailer.name}
             </h2>
 
@@ -185,16 +186,7 @@ function TrailerGalleryCard({ trailer }: TrailerGalleryCardProps) {
               {trailer.description}
             </p>
 
-            <div className="mt-5 flex flex-wrap gap-2.5 text-xs text-zinc-400">
-              {trailer.specs.slice(0, 3).map((spec) => (
-                <span
-                  key={spec}
-                  className="rounded-full border border-white/10 bg-white/[0.045] px-3 py-1.5"
-                >
-                  {spec}
-                </span>
-              ))}
-            </div>
+            <p className="mt-5 border-b border-white/10 pb-6 text-sm text-zinc-400">Starting at <span className="ml-1 text-xl font-semibold text-[#d4af37]">{trailer.startingPrice}</span></p>
 
             <div className="mt-8 grid gap-8 sm:grid-cols-2">
               <div>
@@ -261,7 +253,7 @@ function TrailerGalleryCard({ trailer }: TrailerGalleryCardProps) {
                 onClick={() => {
                   trackTrailerInquiryClick(trailer.id, trailer.name);
                 }}
-                className="inline-flex min-h-12 items-center justify-center rounded-2xl bg-[#d4af37] px-6 py-3.5 text-center text-sm font-semibold text-black shadow-[0_18px_55px_rgba(212,175,55,0.24)] transition duration-200 hover:-translate-y-0.5 hover:bg-[#f0c94a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#f0c94a] focus-visible:ring-offset-4 focus-visible:ring-offset-black"
+                className="inline-flex min-h-12 items-center justify-center rounded-xl border border-[#f0d576]/40 bg-[linear-gradient(135deg,#ebcd73,#d4af37)] px-6 py-3.5 text-center text-sm font-semibold text-black transition duration-200 hover:-translate-y-0.5 hover:bg-[#f0c94a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#f0c94a] focus-visible:ring-offset-4 focus-visible:ring-offset-black"
               >
                 Request This Trailer
               </Link>
@@ -269,7 +261,7 @@ function TrailerGalleryCard({ trailer }: TrailerGalleryCardProps) {
               <a
                 href={siteConfig.phoneHref}
                 onClick={() => trackContactOptionClick("phone")}
-                className="inline-flex min-h-12 items-center justify-center rounded-2xl border border-white/15 bg-white/[0.045] px-6 py-3.5 text-center text-sm font-semibold text-white backdrop-blur transition duration-200 hover:-translate-y-0.5 hover:border-[#d4af37]/40 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37]/70 focus-visible:ring-offset-4 focus-visible:ring-offset-black"
+                className="inline-flex min-h-12 items-center justify-center rounded-xl border border-white/15 bg-white/[0.045] px-6 py-3.5 text-center text-sm font-semibold text-white backdrop-blur transition duration-200 hover:-translate-y-0.5 hover:border-[#d4af37]/40 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37]/70 focus-visible:ring-offset-4 focus-visible:ring-offset-black"
               >
                 Call Now
               </a>
@@ -359,68 +351,21 @@ export function CategoryRentalsClient({
   }, [category.id, category.title]);
 
   return (
-    <main className="overflow-x-clip bg-[#050505]">
-      <section className="relative isolate overflow-hidden border-b border-white/10 bg-black">
-        <div className="absolute inset-0 -z-20">
-          <Image
-            src="/images/rentals-premium-fleet-flatdeck-dump-banner.png"
-            alt={`${category.title} in Kelowna and the Okanagan`}
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover object-center"
-          />
-        </div>
+    <main className="overflow-x-clip bg-[#090a09]">
+      <PageHero
+        eyebrow={category.eyebrow}
+        title={category.title}
+        description={category.description}
+        breadcrumb={category.title}
+        parent={{ label: "Rentals", href: "/rentals" }}
+        image={trailers[0] ? { src: trailers[0].image, alt: `${category.title} from Tow-N-Go Trailers` } : undefined}
+      >
+        <Link href="/rentals" className="inline-flex items-center gap-2 text-sm font-medium text-[#d4af37] transition-colors hover:text-white">
+          <span aria-hidden="true">←</span> All trailer categories
+        </Link>
+      </PageHero>
 
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 -z-10 bg-black/30"
-        />
-
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 -z-10 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.62)_0%,rgba(0,0,0,0.25)_43%,rgba(0,0,0,0.76)_100%)]"
-        />
-
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_50%_42%,rgba(212,175,55,0.10),transparent_44%)]"
-        />
-
-        <div
-          aria-hidden="true"
-          className="absolute inset-x-0 bottom-0 -z-10 h-36 bg-gradient-to-t from-[#050505] to-transparent"
-        />
-
-        <Container className="relative">
-          <div className="mx-auto flex min-h-[420px] max-w-5xl flex-col items-center justify-center py-16 text-center sm:min-h-[460px] sm:py-20 lg:min-h-[500px]">
-            <p className="rounded-full border border-[#d4af37]/35 bg-black/40 px-5 py-2 text-[0.68rem] font-semibold uppercase tracking-[0.3em] text-[#e4c456] shadow-[0_10px_40px_rgba(0,0,0,0.3)] backdrop-blur-md sm:text-xs sm:tracking-[0.35em]">
-              {category.eyebrow}
-            </p>
-
-            <h1 className="mt-6 max-w-4xl text-[clamp(2.65rem,5.5vw,5rem)] font-bold leading-[0.98] tracking-[-0.045em] text-white [text-wrap:balance]">
-              {category.title}
-            </h1>
-
-            <p className="mx-auto mt-6 max-w-3xl text-base leading-8 text-zinc-200 [text-wrap:balance] sm:text-lg lg:text-xl lg:leading-9">
-              {category.description}
-            </p>
-
-            <div className="mt-8 flex justify-center">
-              <Link
-                href="/rentals"
-                className="inline-flex min-h-11 items-center justify-center rounded-full border border-white/15 bg-black/50 px-5 py-2.5 text-sm font-semibold text-white shadow-lg backdrop-blur transition duration-200 hover:-translate-y-0.5 hover:border-[#d4af37]/60 hover:text-[#e4c456] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37]/70 focus-visible:ring-offset-4 focus-visible:ring-offset-black"
-              >
-                Back to Trailer Categories
-              </Link>
-            </div>
-          </div>
-        </Container>
-      </section>
-
-      <TrailerCategorySeoSection category={category} />
-
-      <section className="relative isolate overflow-hidden py-16 sm:py-20 lg:py-24">
+      <section className="relative isolate overflow-hidden py-12 sm:py-16 lg:py-20">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,rgba(212,175,55,0.1),transparent_27%),radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.04),transparent_23%)]"
@@ -431,7 +376,7 @@ export function CategoryRentalsClient({
           className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.15),rgba(0,0,0,0.68))]"
         />
 
-        <Container className="max-w-[1500px]">
+        <Container>
           {trailers.length > 0 ? (
             <div className="space-y-10 lg:space-y-12">
               {trailers.map((trailer) => (
@@ -442,14 +387,13 @@ export function CategoryRentalsClient({
               ))}
             </div>
           ) : (
-            <div className="rounded-[1.75rem] border border-dashed border-white/15 bg-white/[0.03] p-8 text-center leading-7 text-zinc-400 sm:p-10">
-              This trailer category is ready for future fleet expansion. As
-              Tow-N-Go adds more trailers, this page can be filled without
-              redesigning the rental structure.
+            <div className="rounded-lg border border-dashed border-white/15 bg-white/[0.03] p-8 text-center leading-7 text-zinc-400 sm:p-10">
+              Please contact us for current availability in this trailer category.
             </div>
           )}
         </Container>
       </section>
+      <TrailerCategorySeoSection category={category} />
     </main>
   );
 }

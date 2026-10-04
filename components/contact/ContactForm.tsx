@@ -69,10 +69,10 @@ const addOnOptions = [
 ] as const;
 
 const fieldClassName =
-  "min-h-12 w-full rounded-2xl border border-white/10 bg-black/45 px-4 py-3 text-sm text-white outline-none transition duration-200 placeholder:text-zinc-600 hover:border-white/20 focus:border-[#d4af37]/70 focus:ring-2 focus:ring-[#d4af37]/15 disabled:cursor-not-allowed disabled:opacity-60";
+  "min-h-12 w-full rounded-md border border-white/10 bg-black/45 px-4 py-3 text-sm text-white outline-none transition duration-200 placeholder:text-zinc-600 hover:border-white/20 focus:border-[#d4af37]/70 focus:ring-2 focus:ring-[#d4af37]/15 disabled:cursor-not-allowed disabled:opacity-60";
 
 const textareaClassName =
-  "w-full resize-y rounded-2xl border border-white/10 bg-black/45 px-4 py-3 text-sm leading-6 text-white outline-none transition duration-200 placeholder:text-zinc-600 hover:border-white/20 focus:border-[#d4af37]/70 focus:ring-2 focus:ring-[#d4af37]/15 disabled:cursor-not-allowed disabled:opacity-60";
+  "w-full resize-y rounded-md border border-white/10 bg-black/45 px-4 py-3 text-sm leading-6 text-white outline-none transition duration-200 placeholder:text-zinc-600 hover:border-white/20 focus:border-[#d4af37]/70 focus:ring-2 focus:ring-[#d4af37]/15 disabled:cursor-not-allowed disabled:opacity-60";
 
 function createInitialFormState(
   prefilledTrailer = "",
@@ -268,7 +268,7 @@ export function ContactForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="relative h-fit min-w-0 overflow-hidden rounded-[1.5rem] border border-white/10 bg-[linear-gradient(145deg,rgba(255,255,255,0.055),rgba(255,255,255,0.018))] p-5 shadow-[0_25px_90px_rgba(0,0,0,0.42)] backdrop-blur sm:p-7 md:p-8"
+      className="relative h-fit min-w-0 overflow-hidden rounded-lg border border-white/10 bg-[#121411] p-5 sm:p-7 md:p-8"
     >
       <div
         aria-hidden="true"
@@ -299,7 +299,7 @@ export function ContactForm() {
             Service Inquiry
           </p>
 
-          <h2 className="mt-3 text-3xl font-bold tracking-tight text-white">
+          <h2 className="mt-3 text-3xl font-semibold tracking-[-0.03em] text-white">
             Tell us what you need.
           </h2>
 
@@ -311,7 +311,7 @@ export function ContactForm() {
           </p>
         </div>
 
-        <div className="mb-7 rounded-2xl border border-[#d4af37]/30 bg-[#d4af37]/[0.04] p-4 sm:p-5">
+        <div className="mb-7 rounded-md border border-[#d4af37]/30 bg-[#d4af37]/[0.04] p-4 sm:p-5">
           <label className="grid min-w-0 gap-2 text-sm font-semibold text-white">
             Service needed
             <select name="serviceType" value={form.serviceType} onChange={(event) => updateField("serviceType", parseServiceType(event.target.value))} aria-describedby="service-description" className={fieldClassName} disabled={isSubmitting}>
@@ -491,7 +491,7 @@ export function ContactForm() {
         </div>
 
         {(form.serviceType === "delivery" || form.serviceType === "transport") && (
-          <fieldset className="mt-6 min-w-0 rounded-2xl border border-white/10 p-4 sm:p-5">
+          <fieldset className="mt-6 min-w-0 rounded-md border border-white/10 p-4 sm:p-5">
             <legend className="px-2 text-sm font-semibold text-white">{form.serviceType === "delivery" ? "Trailer delivery details" : "Transport route"}</legend>
             <div className="grid gap-5 md:grid-cols-2">
               <label className="grid min-w-0 gap-2 text-sm font-semibold text-white">
@@ -516,7 +516,7 @@ export function ContactForm() {
             {addOnOptions.map((option) => (
               <label
                 key={option}
-                className="flex min-h-12 cursor-pointer items-center gap-3 rounded-2xl border border-white/10 bg-black/35 px-4 py-3 text-sm text-zinc-300 transition duration-200 hover:border-[#d4af37]/45 hover:bg-black/50"
+                className="flex min-h-12 cursor-pointer items-center gap-3 rounded-md border border-white/10 bg-black/35 px-4 py-3 text-sm text-zinc-300 transition duration-200 hover:border-[#d4af37]/45 hover:bg-black/50"
               >
                 <input
                   type="checkbox"
@@ -573,7 +573,7 @@ export function ContactForm() {
             aria-live={
               submitStatus === "error" ? "assertive" : "polite"
             }
-            className={`mt-6 rounded-2xl border px-4 py-3 text-sm leading-7 ${
+            className={`mt-6 rounded-md border px-4 py-3 text-sm leading-7 ${
               submitStatus === "success"
                 ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-200"
                 : "border-red-500/30 bg-red-500/10 text-red-200"
@@ -588,7 +588,7 @@ export function ContactForm() {
             type="submit"
             disabled={isSubmitting}
             aria-busy={isSubmitting}
-            className="inline-flex min-h-12 items-center justify-center rounded-2xl bg-[#d4af37] px-6 py-3.5 text-center text-sm font-bold text-black shadow-[0_18px_55px_rgba(212,175,55,0.22)] transition duration-200 hover:-translate-y-0.5 hover:bg-[#f0c94a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#f0c94a] focus-visible:ring-offset-4 focus-visible:ring-offset-[#0b0b0b] disabled:cursor-not-allowed disabled:transform-none disabled:opacity-65"
+            className="inline-flex min-h-12 items-center justify-center rounded-xl border border-[#f0d576]/40 bg-[linear-gradient(135deg,#ebcd73,#d4af37)] px-6 py-3.5 text-center text-sm font-bold text-black shadow-[0_18px_55px_rgba(212,175,55,0.22)] transition duration-200 hover:-translate-y-0.5 hover:bg-[#f0c94a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#f0c94a] focus-visible:ring-offset-4 focus-visible:ring-offset-[#0b0b0b] disabled:cursor-not-allowed disabled:transform-none disabled:opacity-65"
           >
             {isSubmitting
               ? "Sending..."
@@ -604,7 +604,7 @@ export function ContactForm() {
             onClick={() =>
               trackContactOptionClick("facebook")
             }
-            className="inline-flex min-h-12 items-center justify-center rounded-2xl border border-white/15 bg-white/[0.045] px-6 py-3.5 text-center text-sm font-bold text-white transition duration-200 hover:-translate-y-0.5 hover:border-[#d4af37]/55 hover:bg-[#d4af37]/10 hover:text-[#d4af37] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37]/70 focus-visible:ring-offset-4 focus-visible:ring-offset-[#0b0b0b]"
+            className="inline-flex min-h-12 items-center justify-center rounded-xl border border-white/15 bg-white/[0.045] px-6 py-3.5 text-center text-sm font-bold text-white transition duration-200 hover:-translate-y-0.5 hover:border-[#d4af37]/55 hover:bg-[#d4af37]/10 hover:text-[#d4af37] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37]/70 focus-visible:ring-offset-4 focus-visible:ring-offset-[#0b0b0b]"
           >
             Message on Facebook
           </a>

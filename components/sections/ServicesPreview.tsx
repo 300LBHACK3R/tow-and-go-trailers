@@ -14,7 +14,7 @@ export function ServicesPreview({ details = false }: { details?: boolean }) {
       aria-labelledby="service-options-heading"
       className="scroll-mt-28 border-b border-white/10 bg-[#090909] py-14 sm:py-20"
     >
-      <Container className="max-w-[1500px]">
+      <Container className="max-w-7xl">
         <div className="max-w-3xl">
           <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[#d4af37]">
             Three ways to get moving
@@ -35,7 +35,7 @@ export function ServicesPreview({ details = false }: { details?: boolean }) {
             <article
               key={service.id}
               id={service.id}
-              className="flex min-w-0 scroll-mt-28 flex-col rounded-3xl border border-white/15 bg-white/[0.025] p-6 transition-colors hover:border-[#d4af37]/60 motion-reduce:transition-none sm:p-8"
+              className="flex min-w-0 scroll-mt-28 flex-col rounded-xl border border-white/10 bg-[linear-gradient(145deg,#151512,#0d0d0c)] p-6 transition-colors hover:border-[#d4af37]/60 motion-reduce:transition-none sm:p-8"
             >
               <div className="flex items-start gap-4">
                 <span

@@ -1,6 +1,7 @@
 "use client";
 
-import Link from "next/link";
+import { Button } from "@/components/ui/Button";
+import { Container } from "@/components/ui/Container";
 import {
   useMemo,
   useState,
@@ -147,39 +148,21 @@ export function FaqDirectory() {
   return (
     <section
       id="faq-directory"
-      className="relative overflow-hidden border-t border-white/10 bg-[#050505] py-16 sm:py-20 lg:py-24"
+      className="scroll-mt-24 bg-[#171717] py-16 sm:py-20 lg:py-24"
       aria-labelledby="faq-directory-heading"
     >
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_16%_14%,rgba(212,175,55,0.10),transparent_30%),radial-gradient(circle_at_86%_70%,rgba(212,175,55,0.06),transparent_30%)]"
-      />
-
-      <div className="relative mx-auto max-w-7xl px-5 sm:px-7 lg:px-8">
-        <div className="mx-auto max-w-4xl text-center">
-          <p className="text-xs font-bold uppercase tracking-[0.30em] text-[#d4af37]">
-            Search the directory
-          </p>
-
-          <h2
-            id="faq-directory-heading"
-            className="mt-4 text-3xl font-black tracking-[-0.04em] text-white sm:text-4xl lg:text-5xl"
-          >
-            Straight answers before the
-            job starts.
+      <Container>
+        <div className="max-w-2xl">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#d4af37]">FAQ directory</p>
+          <h2 id="faq-directory-heading" className="mt-4 text-3xl font-semibold tracking-[-0.035em] text-white sm:text-4xl">
+            Find your answer.
           </h2>
-
-          <p className="mx-auto mt-5 max-w-3xl text-base leading-8 text-zinc-300 sm:text-lg">
-            Search by question or filter
-            by topic. Every answer is
-            written to help customers
-            arrive prepared without
-            promising services or terms
-            that have not been confirmed.
+          <p className="mt-5 text-base leading-8 text-zinc-400">
+            Search a question or choose a topic to prepare for your rental.
           </p>
         </div>
 
-        <div className="mx-auto mt-10 max-w-5xl">
+        <div className="mt-8">
           <label
             htmlFor="faq-search"
             className="sr-only"
@@ -204,7 +187,7 @@ export function FaqDirectory() {
               }
               placeholder="Search towing, delivery, deposits, loading, returns..."
               autoComplete="off"
-              className="min-h-16 w-full rounded-2xl border border-white/12 bg-black/70 py-4 pl-14 pr-5 text-base text-white shadow-[0_20px_70px_rgba(0,0,0,0.32)] outline-none transition placeholder:text-zinc-500 focus:border-[#d4af37]/70 focus:ring-4 focus:ring-[#d4af37]/10"
+              className="min-h-14 w-full rounded-md border border-white/15 bg-[#111111] py-4 pl-14 pr-5 text-base text-white outline-none transition placeholder:text-zinc-500 focus:border-[#d4af37] focus:ring-2 focus:ring-[#d4af37]/15"
             />
           </div>
 
@@ -223,7 +206,7 @@ export function FaqDirectory() {
                 activeCategory ===
                 ALL_CATEGORIES
               }
-              className={`shrink-0 rounded-full border px-4 py-2.5 text-xs font-bold uppercase tracking-[0.12em] transition ${
+              className={`shrink-0 rounded-sm border px-4 py-2.5 text-sm font-medium transition ${
                 activeCategory ===
                 ALL_CATEGORIES
                   ? "border-[#d4af37] bg-[#d4af37] text-black"
@@ -249,7 +232,7 @@ export function FaqDirectory() {
                     activeCategory ===
                     category.id
                   }
-                  className={`shrink-0 rounded-full border px-4 py-2.5 text-xs font-bold uppercase tracking-[0.12em] transition ${
+                  className={`shrink-0 rounded-sm border px-4 py-2.5 text-sm font-medium transition ${
                     activeCategory ===
                     category.id
                       ? "border-[#d4af37] bg-[#d4af37] text-black"
@@ -288,7 +271,7 @@ export function FaqDirectory() {
         </div>
 
         {resultCount > 0 ? (
-          <div className="mx-auto mt-12 grid max-w-5xl gap-12">
+          <div className="mt-12 grid gap-12">
             {filteredCategories.map(
               (category) => (
                 <section
@@ -301,15 +284,11 @@ export function FaqDirectory() {
                   aria-labelledby={`${category.id}-heading`}
                   className="scroll-mt-28"
                 >
-                  <div className="grid gap-4 border-b border-white/10 pb-6 sm:grid-cols-[minmax(0,0.65fr)_minmax(0,1fr)] sm:items-end">
+                  <div className="grid gap-3 pb-5 sm:grid-cols-[minmax(0,0.65fr)_minmax(0,1fr)] sm:items-end">
                     <div>
-                      <p className="text-xs font-bold uppercase tracking-[0.24em] text-[#d4af37]">
-                        FAQ Category
-                      </p>
-
                       <h3
                         id={`${category.id}-heading`}
-                        className="mt-3 text-2xl font-black tracking-[-0.03em] text-white sm:text-3xl"
+                        className="text-2xl font-semibold tracking-[-0.03em] text-white"
                       >
                         {
                           category.label
@@ -324,7 +303,7 @@ export function FaqDirectory() {
                     </p>
                   </div>
 
-                  <div className="mt-5 grid gap-3">
+                  <div className="border-t border-white/15">
                     {category.items.map(
                       (
                         item,
@@ -337,11 +316,11 @@ export function FaqDirectory() {
                           id={
                             item.id
                           }
-                          className="group scroll-mt-28 rounded-[1.4rem] border border-white/10 bg-[linear-gradient(145deg,rgba(255,255,255,0.055),rgba(255,255,255,0.018))] shadow-[0_18px_65px_rgba(0,0,0,0.30)] transition duration-200 open:border-[#d4af37]/45 open:bg-[#d4af37]/[0.045] hover:border-[#d4af37]/30"
+                          className="group scroll-mt-28 border-b border-white/10 transition-colors duration-200 open:bg-white/[0.02] hover:bg-white/[0.02]"
                         >
-                          <summary className="flex min-h-20 cursor-pointer list-none items-center justify-between gap-5 px-5 py-5 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37]/70 focus-visible:ring-inset sm:px-6">
+                          <summary className="flex min-h-18 cursor-pointer list-none items-center justify-between gap-5 px-1 py-5 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37]/70 focus-visible:ring-inset sm:px-4">
                             <span className="flex min-w-0 items-start gap-4">
-                              <span className="mt-0.5 text-xs font-black tabular-nums text-[#d4af37]">
+                              <span className="mt-1 text-xs font-medium tabular-nums text-[#d4af37]">
                                 {String(
                                   itemIndex +
                                     1,
@@ -351,19 +330,19 @@ export function FaqDirectory() {
                                 )}
                               </span>
 
-                              <span className="text-base font-bold leading-7 text-white sm:text-lg">
+                              <span className="text-base font-medium leading-7 text-zinc-200 sm:text-lg">
                                 {
                                   item.question
                                 }
                               </span>
                             </span>
 
-                            <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-white/10 bg-black/45 text-[#d4af37]">
+                            <span className="grid h-8 w-8 shrink-0 place-items-center text-[#d4af37]">
                               <ChevronIcon />
                             </span>
                           </summary>
 
-                          <div className="border-t border-white/8 px-5 pb-6 pt-5 sm:px-6 sm:pb-7">
+                          <div className="px-1 pb-6 pl-9 sm:px-4 sm:pb-7 sm:pl-12">
                             <p className="max-w-4xl text-sm leading-7 text-zinc-300 sm:text-base sm:leading-8">
                               {
                                 item.answer
@@ -379,12 +358,12 @@ export function FaqDirectory() {
             )}
           </div>
         ) : (
-          <div className="mx-auto mt-12 max-w-3xl rounded-[1.8rem] border border-[#d4af37]/25 bg-[#d4af37]/[0.055] p-8 text-center sm:p-10">
+          <div className="mt-12 border-y border-white/10 py-10">
             <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#d4af37]">
               No matching answer
             </p>
 
-            <h3 className="mt-4 text-2xl font-black text-white">
+            <h3 className="mt-4 text-2xl font-semibold text-white">
               Try a broader search or
               send the job details
               directly.
@@ -397,57 +376,26 @@ export function FaqDirectory() {
               with you.
             </p>
 
-            <button
-              type="button"
-              onClick={clearFilters}
-              className="mt-6 inline-flex min-h-12 items-center justify-center rounded-xl bg-[#d4af37] px-6 py-3 text-sm font-black uppercase tracking-wide text-black transition hover:bg-[#edca52] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#f0d36e] focus-visible:ring-offset-4 focus-visible:ring-offset-black"
-            >
-              Show All Questions
-            </button>
+            <Button onClick={clearFilters} className="mt-6">Show all questions</Button>
           </div>
         )}
 
-        <div className="mx-auto mt-16 max-w-5xl rounded-[1.8rem] border border-[#d4af37]/30 bg-[linear-gradient(135deg,rgba(212,175,55,0.12),rgba(255,255,255,0.025))] p-7 shadow-[0_28px_90px_rgba(0,0,0,0.38)] sm:p-10">
+        <div className="mt-16 border-t border-white/15 pt-10">
           <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
-            <div className="max-w-3xl">
-              <p className="text-xs font-bold uppercase tracking-[0.26em] text-[#d4af37]">
-                Still not sure?
-              </p>
-
-              <h3 className="mt-4 text-3xl font-black tracking-[-0.04em] text-white">
-                Send the load details.
-                We will help match the
-                job.
-              </h3>
-
-              <p className="mt-4 text-base leading-8 text-zinc-300">
-                Include photos,
-                approximate dimensions
-                and weight, both
-                locations when
-                applicable, and the
-                preferred date.
+            <div className="max-w-2xl">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#d4af37]">Still have a question?</p>
+              <h3 className="mt-4 text-3xl font-semibold tracking-[-0.035em] text-white">Tell us about the job.</h3>
+              <p className="mt-5 text-base leading-8 text-zinc-400">
+                Include photos, approximate dimensions and weight, both locations when applicable, and your preferred date. We can help identify the trailer and service before confirming availability.
               </p>
             </div>
-
-            <div className="flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row">
-              <Link
-                href="/contact"
-                className="inline-flex min-h-12 items-center justify-center rounded-xl bg-[#d4af37] px-6 py-3.5 text-center text-sm font-black uppercase tracking-wide text-black shadow-[0_16px_45px_rgba(212,175,55,0.16)] transition hover:-translate-y-0.5 hover:bg-[#edca52] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#f0d36e] focus-visible:ring-offset-4 focus-visible:ring-offset-black"
-              >
-                Send an Inquiry
-              </Link>
-
-              <a
-                href="tel:+17782153422"
-                className="inline-flex min-h-12 items-center justify-center rounded-xl border border-white/15 bg-black/35 px-6 py-3.5 text-center text-sm font-black uppercase tracking-wide text-white transition hover:-translate-y-0.5 hover:border-[#d4af37]/50 hover:text-[#e4c455] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37]/70 focus-visible:ring-offset-4 focus-visible:ring-offset-black"
-              >
-                Call or Text
-              </a>
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <Button href="/contact">Send an inquiry</Button>
+              <Button href="tel:+17782153422" variant="secondary">778-215-3422</Button>
             </div>
           </div>
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

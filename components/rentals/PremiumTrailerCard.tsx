@@ -69,7 +69,6 @@ export function PremiumTrailerCard({
     description: trailer.summary || trailer.description,
     detailsHref: getTrailerDetailHref(trailer),
   };
-  const previewSpecs = trailer.specs.slice(0, 3);
   const detailSpecs = trailer.specs.slice(0, 4);
 
   const requestHref = `/contact?trailer=${encodeURIComponent(
@@ -231,7 +230,7 @@ export function PremiumTrailerCard({
           </span>
         </button>
 
-        <div className="flex flex-1 flex-col p-5 sm:p-6 xl:h-[366px]">
+        <div className="flex flex-1 flex-col p-5 sm:p-6 xl:h-[366px] xl:min-h-0 xl:overflow-y-auto">
           <div>
             <p className="text-[0.68rem] font-semibold uppercase tracking-[0.28em] text-[#d4af37]">
               Trailer Details
@@ -246,19 +245,6 @@ export function PremiumTrailerCard({
                 From {trailer.startingPrice}
               </span>
             </div>
-
-            {previewSpecs.length > 0 && (
-              <div className="mt-4 flex flex-wrap gap-2">
-                {previewSpecs.map((spec) => (
-                  <span
-                    key={spec}
-                    className="rounded-full border border-white/10 bg-white/[0.045] px-3 py-1.5 text-[0.7rem] leading-4 text-zinc-300"
-                  >
-                    {spec}
-                  </span>
-                ))}
-              </div>
-            )}
 
             <div className="mt-5">
               <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#d4af37]">
@@ -292,9 +278,9 @@ export function PremiumTrailerCard({
                   trailer.name
                 );
               }}
-              className="inline-flex min-h-12 items-center justify-center rounded-2xl bg-[#d4af37] px-5 py-3.5 text-center text-sm font-bold text-black shadow-[0_16px_45px_rgba(212,175,55,0.2)] transition duration-200 hover:-translate-y-0.5 hover:bg-[#edca52] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#f0d36e] focus-visible:ring-offset-3 focus-visible:ring-offset-black"
+              className="inline-flex min-h-12 items-center justify-center rounded-xl border border-[#f0d576]/40 bg-[linear-gradient(135deg,#ebcd73,#d4af37)] px-5 py-3.5 text-center text-sm font-bold text-black shadow-[0_16px_45px_rgba(212,175,55,0.2)] transition duration-200 hover:-translate-y-0.5 hover:bg-[#edca52] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#f0d36e] focus-visible:ring-offset-3 focus-visible:ring-offset-black"
             >
-              Request This Trailer
+              Request Rental
             </Link>
 
             <Link
@@ -304,7 +290,7 @@ export function PremiumTrailerCard({
                   trackRentalCategoryClick(category.id, category.title);
                 }
               }}
-              className="group/button inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl border border-white/15 bg-white/[0.045] px-5 py-3.5 text-center text-sm font-bold text-white transition duration-200 hover:-translate-y-0.5 hover:border-[#d4af37]/45 hover:bg-[#d4af37]/10 hover:text-[#e5c451] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37]/70 focus-visible:ring-offset-3 focus-visible:ring-offset-black"
+              className="group/button inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/[0.045] px-5 py-3.5 text-center text-sm font-bold text-white transition duration-200 hover:-translate-y-0.5 hover:border-[#d4af37]/45 hover:bg-[#d4af37]/10 hover:text-[#e5c451] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37]/70 focus-visible:ring-offset-3 focus-visible:ring-offset-black"
             >
               View Details
               <ArrowIcon />

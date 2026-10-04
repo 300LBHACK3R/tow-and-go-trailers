@@ -34,6 +34,11 @@ function isolatedApp() {
       process: { env: mockEnv },
       require(id) {
         if (id === 'resend') return { Resend: class { emails = { send: async (email) => { sent.push(email); return { data: { id: 'test-message' }, error: null }; } }; } };
+        // Render imported presentation components without a CSS loader.
+        if (id.endsWith('.module.css')) return {
+          __esModule: true,
+          default: new Proxy({}, { get: (_target, className) => typeof className === 'string' ? className : undefined }),
+        };
         if (id.startsWith('@/')) {
           const target = id.slice(2);
           const extension = ['.ts', '.tsx'].find((ext) => fs.existsSync(path.join(root, target + ext)));

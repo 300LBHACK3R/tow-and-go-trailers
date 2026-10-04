@@ -40,7 +40,7 @@ export function TrailerPreview() {
         className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.08),rgba(0,0,0,0.78))]"
       />
 
-      <Container className="max-w-[1500px]">
+      <Container className="max-w-7xl">
         <div className="mx-auto max-w-4xl text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.32em] text-[#d4af37]">
             Our Fleet
