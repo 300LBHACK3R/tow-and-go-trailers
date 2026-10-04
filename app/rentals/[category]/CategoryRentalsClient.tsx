@@ -22,22 +22,22 @@ type CategoryRentalsClientProps = {
 
 const categoryHeroImages = {
   "enclosed-trailers": {
-    src: "/images/tow-and-go-royal-cargo-enclosed-trailer-okanagan-interior-empty-02.png",
+    src: "/images/heroes/enclosed-trailer-premium.webp",
     alt: "All-black enclosed trailer with black wheels and a side access door",
-    position: "62% 58%",
-    mobilePosition: "53% 62%",
+    position: "68% 60%",
+    mobilePosition: "90% 58%",
   },
   "dump-trailers": {
-    src: "/images/suretrac-6x10-dump-trailer-okanagan-5.jpg",
-    alt: "Black Sure-Trac dump trailer with its empty bed, tandem axles, and front toolbox",
-    position: "56% 55%",
-    mobilePosition: "48% 55%",
+    src: "/images/heroes/dump-trailer-premium.webp",
+    alt: "Black dump trailer with a lowered bed and contained mulch load at a landscaping yard",
+    position: "68% 60%",
+    mobilePosition: "90% 58%",
   },
   "flatdeck-equipment-trailers": {
-    src: "/images/tow-and-go-southland-dovetail-deckover-trailer-kelowna-angled-view-03.jpg",
-    alt: "Black Southland flatdeck trailer with a timber deck and tandem axles",
-    position: "58% 63%",
-    mobilePosition: "55% 63%",
+    src: "/images/heroes/flatdeck-trailer-premium.webp",
+    alt: "Empty black flatdeck trailer with a timber deck outside a fabrication workshop at sunset",
+    position: "68% 60%",
+    mobilePosition: "90% 58%",
   },
 } satisfies Record<TrailerCategory["id"], {
   src: string;

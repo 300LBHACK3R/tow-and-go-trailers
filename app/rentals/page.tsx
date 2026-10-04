@@ -89,10 +89,10 @@ export default function RentalsPage() {
         description="Choose enclosed trailers, dump trailers, or flat deck and equipment trailer options built for real work across Kelowna and the Okanagan."
         breadcrumb="Rentals"
         image={{
-          src: "/images/golden-hour-over-industrial-trailers-and-mountains.png",
-          alt: "Black dump, enclosed, and flatdeck trailers at golden hour in the Okanagan",
-          position: "65% 65%",
-          mobilePosition: "61% 63%",
+          src: "/images/heroes/fleet-premium.webp",
+          alt: "Enclosed, dump and flatdeck trailer options in a black fleet at Okanagan sunset",
+          position: "68% 60%",
+          mobilePosition: "90% 58%",
         }}
       >
         <p className="text-sm text-zinc-300">Rentals from <span className="ml-1 text-xl font-semibold text-[#d4af37]">$115<span className="text-sm font-normal"> / day</span></span></p>

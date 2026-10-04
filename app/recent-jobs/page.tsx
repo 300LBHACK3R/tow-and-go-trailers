@@ -66,10 +66,10 @@ export default function RecentJobsPage() {
         title="On the Job"
         breadcrumb="On the Job"
         image={{
-          src: "/images/tow-and-go-southland-dovetail-deckover-trailer-kelowna-angled-view-03.jpg",
-          alt: "An empty black Southland flatdeck trailer with a timber deck",
-          position: "58% 63%",
-          mobilePosition: "55% 63%",
+          src: "/images/heroes/on-the-job-premium.webp",
+          alt: "Illustrative scene of an empty black flatdeck trailer at a residential construction site",
+          position: "68% 60%",
+          mobilePosition: "90% 58%",
         }}
         description={hasJobs
           ? "A closer look at the trailers and services behind our customer projects."

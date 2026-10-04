@@ -176,10 +176,10 @@ export default function ContactPage() {
         description="Choose your service and share your timing, location and details about the job. We’ll review your request and get back to you with availability and next steps."
         breadcrumb="Contact"
         image={{
-          src: "/images/tow-and-go-royal-cargo-enclosed-trailer-okanagan-interior-empty-02.png",
-          alt: "All-black tandem-axle enclosed trailer with a side access door",
-          position: "62% 58%",
-          mobilePosition: "53% 62%",
+          src: "/images/heroes/contact-premium.webp",
+          alt: "Black enclosed trailer parked beside a warmly lit workshop at sunset",
+          position: "68% 60%",
+          mobilePosition: "90% 58%",
         }}
       />
 
