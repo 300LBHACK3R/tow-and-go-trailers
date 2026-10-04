@@ -111,24 +111,25 @@ test('service and trailer links round-trip special characters safely', () => {
   for (const value of [null, '<script>', {}, 'DELIVERY']) assert.equal(parseServiceType(value), '');
 });
 
-test('illustrative gallery stays distinct from completed jobs and remains noindex', () => {
+test('empty customer-job gallery never substitutes marketing artwork and remains noindex', () => {
   const app = isolatedApp();
   const { metadata } = app.load('app/recent-jobs/page.tsx');
   assert.equal(metadata.robots.index, false);
   assert.ok(!app.load('app/sitemap.ts').default().some((route) => route.url.endsWith('/recent-jobs')));
   const html = renderToStaticMarkup(React.createElement(app.load('components/sections/RecentJobs.tsx').RecentJobs));
-  assert.equal((html.match(/<article/g) || []).length, 2);
-  assert.ok(html.includes('Illustrative scenes, not completed customer jobs.'));
-  assert.ok(html.includes('enclosed-trailer-delivery-example'));
-  assert.ok(html.includes('dump-trailer-landscaping-example'));
+  assert.equal((html.match(/<article/g) || []).length, 0);
+  assert.ok(html.includes('Customer job photos are on their way.'));
+  assert.ok(!html.includes('enclosed-trailer-delivery-example'));
+  assert.ok(!html.includes('dump-trailer-landscaping-example'));
   assert.ok(!html.includes('Plan a similar job'));
   assert.equal(app.load('data/recentJobs.ts').getPublishedJobs().length, 0);
   const full = renderToStaticMarkup(React.createElement(app.load('components/sections/RecentJobs.tsx').RecentJobs, { fullPage: true }));
-  assert.ok(full.includes('Illustrative scenes, not completed customer jobs.'));
-  assert.ok(!metadata.description.includes('real Tow-N-Go trailer projects'));
+  assert.ok(full.includes('Customer job photos are on their way.'));
+  assert.equal((full.match(/<article/g) || []).length, 0);
+  assert.ok(metadata.description.includes('coming soon'));
 });
 
-test('gallery replaces illustrative scenes with approved jobs, limits homepage to two, and enables discovery', () => {
+test('gallery displays only approved jobs, limits homepage to two, and enables discovery', () => {
   const app = isolatedApp();
   const { recentJobs, getPublishedJobs } = app.load('data/recentJobs.ts');
   for (let i = 0; i < 5; i++) recentJobs.push({

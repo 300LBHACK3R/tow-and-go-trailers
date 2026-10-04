@@ -3,22 +3,17 @@ import { PageHero } from "@/components/ui/PageHero";
 import { RecentJobs } from "@/components/sections/RecentJobs";
 import { CTASection } from "@/components/sections/CTASection";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { getGalleryEntries } from "@/data/projectGallery";
 import { getPublishedJobs } from "@/data/recentJobs";
 import { siteConfig, socialImage } from "@/lib/site";
 
 const publishedJobs = getPublishedJobs();
-const galleryEntries = getGalleryEntries();
 const hasJobs = publishedJobs.length > 0;
-const hasExamples = galleryEntries.some((entry) => entry.kind === "example");
 const pageTitle = "On the Job";
 const socialTitle = "On the Job | Tow-N-Go Trailers";
 const description = hasJobs
-  ? "Explore Tow-N-Go trailer projects, with job photos and details about trailer rentals, delivery and load transport."
-  : hasExamples
-    ? "Picture your next haul with illustrative trailer scenes. These are project ideas, not completed customer jobs. Explore Tow-N-Go rentals, delivery and transport."
-    : "The Tow-N-Go customer project gallery is coming soon. Explore trailer rentals, trailer delivery and load transport in Kelowna and the Okanagan.";
-const firstPhoto = galleryEntries[0]?.project.image;
+  ? "See Tow-N-Go trailers at work on real customer jobs around Kelowna and the Okanagan, with project photos, trailer details and the services provided."
+  : "Our customer job gallery is coming soon: Tow-N-Go trailers at work on moves, material runs and hauling projects around Kelowna and the Okanagan.";
+const firstPhoto = publishedJobs[0]?.image;
 const galleryImage = firstPhoto ? {
   url: new URL(firstPhoto.src, siteConfig.url).toString(),
   width: firstPhoto.width,
@@ -62,7 +57,7 @@ export default function RecentJobsPage() {
         }}
       />
       <PageHero
-        eyebrow="The gallery"
+        eyebrow="Customer projects"
         title="On the Job"
         breadcrumb="On the Job"
         image={{
@@ -72,10 +67,8 @@ export default function RecentJobsPage() {
           mobilePosition: "90% 58%",
         }}
         description={hasJobs
-          ? "A closer look at the trailers and services behind our customer projects."
-          : hasExamples
-            ? "From moving day to a garden refresh. Explore a few ideas for the job ahead, and find a trailer to make it happen."
-            : "Our customer project gallery is on its way. Explore the fleet and find a trailer for the job ahead."}
+          ? "Our trailers. Your projects. See the fleet put to work on customer moves, material runs and hauling jobs around the Okanagan."
+          : "Our trailers. Your projects. A closer look at customer jobs and the trailers that help make them happen. Photos coming soon."}
       />
       <RecentJobs fullPage />
       <CTASection />

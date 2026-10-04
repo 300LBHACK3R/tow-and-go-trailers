@@ -4,7 +4,7 @@
   position: absolute;
   z-index: -20;
   inset: auto 0 0;
-  height: clamp(270px, 54vw, 380px);
+  height: clamp(240px, 40vw, 310px);
   pointer-events: none;
 }
 
@@ -17,23 +17,35 @@
   position: absolute;
   z-index: -10;
   inset: auto 0 0;
-  height: clamp(270px, 54vw, 380px);
+  height: clamp(240px, 40vw, 310px);
   background: linear-gradient(180deg, #0b0d0c 0%, rgb(11 13 12 / 88%) 14%, rgb(11 13 12 / 12%) 46%, rgb(11 13 12 / 8%) 78%, rgb(11 13 12 / 45%) 100%);
   pointer-events: none;
 }
 
 .content {
-  padding-bottom: clamp(230px, 43vw, 310px);
+  padding-bottom: clamp(195px, 31vw, 240px);
 }
 
 .copy {
   max-width: 760px;
 }
 
+@media (min-width: 640px) and (max-width: 1023px) {
+  .media {
+    /* Keep tablet banners from cropping down to a thin strip of the trailer. */
+    left: auto;
+    width: min(100%, clamp(552px, 92vw, 713px));
+    mask-image: linear-gradient(90deg, transparent, black 15%);
+  }
+}
+
 @media (min-width: 1024px) {
   .media {
-    inset: 0 0 0 22%;
+    inset: 0 0 0 auto;
+    /* Scale the photo width with the shorter hero to retain the full trailer. */
+    width: min(78vw, clamp(864px, 60vw, 1056px));
     height: auto;
+    mask-image: linear-gradient(90deg, transparent, black 15%);
   }
 
   .image {
@@ -49,9 +61,8 @@
   }
 
   .content {
-    /* Keep the trailer roof and wheels in view as desktop screens widen. */
-    min-height: clamp(440px, 32vw, 640px);
-    padding-bottom: 4rem;
+    min-height: clamp(360px, 25vw, 440px);
+    padding-bottom: 2.5rem;
   }
 
   .copy {
@@ -59,11 +70,9 @@
   }
 }
 
-@media (min-width: 2100px) {
+@media (min-width: 1800px) {
   .media {
-    left: auto;
-    right: calc((100vw - 2100px) / 2);
-    width: 1560px;
+    right: calc((100vw - 1800px) / 2);
     mask-image: linear-gradient(90deg, transparent, black 14%, black 88%, transparent);
   }
 }

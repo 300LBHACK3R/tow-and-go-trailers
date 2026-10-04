@@ -7,7 +7,6 @@ export function RecentJobs({ fullPage = false }: { fullPage?: boolean }) {
   const allEntries = getGalleryEntries();
   const entries = fullPage ? allEntries : allEntries.slice(0, 2);
   const hasEntries = entries.length > 0;
-  const hasExamples = entries.some((entry) => entry.kind === "example");
   const EmptyHeading = fullPage ? "h2" : "h3";
   const imageSizes = entries.length === 1
     ? "(max-width: 639px) calc(100vw - 34px), (max-width: 767px) calc(100vw - 50px), 698px"
@@ -27,30 +26,18 @@ export function RecentJobs({ fullPage = false }: { fullPage?: boolean }) {
           <div className="mb-9 flex flex-col items-start justify-between gap-5 sm:mb-12 md:flex-row md:items-end">
             <div className="max-w-2xl">
               <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#d4af37]">
-                The gallery
+                Customer projects
               </p>
               <h2 className="mt-4 text-4xl font-semibold tracking-[-0.04em] text-white sm:text-5xl">
                 On the Job
               </h2>
               <p className="mt-4 text-sm leading-7 text-zinc-400 sm:text-base">
-                {hasExamples
-                  ? "A little inspiration for the job ahead."
-                  : hasEntries
-                    ? "Recent trailer projects around the Okanagan."
-                    : "A move, a cleanup or a load to deliver. We’ll help you find the right setup."}
+                Our trailers. Your projects. A closer look at customer jobs around the Okanagan.
               </p>
-              {hasExamples && <p className="mt-2 text-xs leading-6 text-zinc-400">Illustrative scenes, not completed customer jobs.</p>}
             </div>
             <Link href="/recent-jobs" className="inline-flex min-h-11 shrink-0 items-center gap-4 rounded-full border border-white/15 px-5 py-3 text-sm font-semibold text-[#e6c354] transition-colors hover:border-[#d4af37]/50 hover:bg-[#d4af37]/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37]">
-              Explore the gallery <span aria-hidden="true">→</span>
+              View customer projects <span aria-hidden="true">→</span>
             </Link>
-          </div>
-        )}
-
-        {fullPage && hasExamples && (
-          <div className="mb-8 flex flex-col gap-2 border-b border-white/10 pb-5 text-xs leading-6 text-zinc-400 sm:mb-10 sm:flex-row sm:justify-between sm:gap-6">
-            <p>Illustrative scenes, not completed customer jobs.</p>
-            <p>Open any image for a closer look.</p>
           </div>
         )}
 
@@ -59,9 +46,10 @@ export function RecentJobs({ fullPage = false }: { fullPage?: boolean }) {
             {entries.map((entry) => <JobCard key={entry.project.id} entry={entry} fullPage={fullPage} imageSizes={imageSizes} detailImageSizes={detailImageSizes} />)}
           </div>
         ) : (
-          <div className="max-w-2xl py-6">
-            <EmptyHeading className="text-xl font-semibold tracking-tight text-white sm:text-2xl">Project photos are on their way.</EmptyHeading>
-            <p className="mt-4 text-sm leading-7 text-zinc-400">Explore the fleet while we put together our customer project gallery.</p>
+          <div className="max-w-3xl rounded-2xl border border-white/10 bg-[#111210] px-6 py-8 sm:px-9 sm:py-10">
+            <span aria-hidden="true" className="mb-6 block h-px w-10 bg-[#d4af37]" />
+            <EmptyHeading className="text-xl font-semibold tracking-tight text-white sm:text-2xl">Customer job photos are on their way.</EmptyHeading>
+            <p className="mt-3 max-w-xl text-sm leading-7 text-zinc-400">See the trailers in use, what they helped move and where the job took them. In the meantime, find the right trailer for your next project.</p>
             <Link href="/rentals" className="mt-4 inline-flex min-h-11 items-center text-sm font-medium text-[#e6c354] underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37]">
               Explore the fleet
             </Link>

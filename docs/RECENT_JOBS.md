@@ -2,14 +2,16 @@
 
 The **On the Job** gallery at `/recent-jobs` and on the homepage uses the same spacious, photo-led cards: two landscape images per row on desktop, one per row on mobile, service labels and short captions. The homepage links to the gallery; gallery images open at full size in a new tab. Full project details and extra photographs expand on the gallery page. The existing route, section IDs and project anchor links remain unchanged.
 
-## Current preview
+## Current state
 
-There are no approved customer jobs in `data/recentJobs.ts` yet. To give the section a finished starting point, `data/projectGallery.ts` supplies two generated illustrative scenes:
+There are no approved customer jobs in `data/recentJobs.ts` yet. On the Job now displays a concise photo-coming-soon state on the homepage and gallery page. It only displays actual approved customer projects, showing the trailers being put to use. It does not fall back to generated advertising scenes.
+
+The two generated illustrative scenes remain preserved in `data/projectGallery.ts` as marketing artwork references:
 
 - Enclosed-trailer delivery at a residential driveway.
 - Dump-trailer rental for a landscaping project.
 
-Each image carries a visible **“Illustrative scene”** label, and both gallery views disclose **“Illustrative scenes, not completed customer jobs.”** They are service ideas, not evidence of work performed. They have no customer name, completed-job date or claimed job location. Their image descriptions identify them as illustrative. Never copy them into the approved customer-job array or represent them as real project photographs.
+These are service ideas, not evidence of work performed, and are not published in On the Job. Never copy them into the approved customer-job array or represent them as real project photographs. The page's general hero artwork also remains illustrative, with an explicit image description; it is not a customer job entry.
 
 The gallery page remains noindex and absent from the sitemap until at least one actual, approved job is added. The website's published version is not changed by preparing this local update.
 
@@ -21,7 +23,7 @@ The gallery page remains noindex and absent from the sitemap until at least one 
 4. Set `approvedForWebsite: true` only once that entry's photographs and details are ready to publish. Unapproved entries are never displayed. Do not commit sensitive drafts or private customer information.
 5. Run `npm run build` and `node --test --test-name-pattern=gallery scripts/check-service-pathways.mjs`. Preview `/` and `/recent-jobs` on desktop and mobile using `npm run dev`. Check photos, inquiry links and expanded details.
 
-**Once the first approved actual job exists, it automatically replaces the starter examples.** The homepage displays the first two approved jobs; the gallery page displays all approved jobs. Its search indexing and sitemap entry are enabled on the next build. Its social preview uses the first real job photo.
+**Once the first approved actual job exists, it automatically replaces the coming-soon state.** The homepage displays the first two approved jobs; the gallery page displays all approved jobs. Its search indexing and sitemap entry are enabled on the next build. Its social preview uses the first real job photo.
 
 No CMS, paid service or file-upload endpoint is added. Publishing new entries still means editing the data file and deploying the website.
 

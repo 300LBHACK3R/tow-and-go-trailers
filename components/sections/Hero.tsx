@@ -37,11 +37,7 @@ export function Hero() {
           }
 
           .tng-hero-stage {
-            min-height: clamp(
-              720px,
-              calc(100svh - 80px),
-              940px
-            );
+            min-height: 0;
           }
 
           .tng-hero-image {
@@ -57,23 +53,15 @@ export function Hero() {
               both;
           }
 
-          @media (min-width: 640px) {
+          @media (min-width: 1024px) {
             .tng-hero-stage {
-              min-height: clamp(
-                740px,
-                calc(100svh - 96px),
-                960px
-              );
+              min-height: clamp(560px, 68svh, 620px);
             }
           }
 
-          @media (min-width: 1280px) {
+          @media (min-width: 1536px) {
             .tng-hero-stage {
-              min-height: clamp(
-                780px,
-                calc(100svh - 112px),
-                980px
-              );
+              min-height: clamp(640px, 78svh, 760px);
             }
           }
 
@@ -135,17 +123,17 @@ export function Hero() {
       />
 
       <Container className="relative max-w-[1500px]">
-        <div className="tng-hero-stage flex items-center py-16 sm:py-20 lg:py-24">
-          <div className="w-full max-w-[970px]">
+        <div className="tng-hero-stage flex items-center pb-7 pt-10 sm:pb-8 sm:pt-14 lg:pb-10 lg:pt-16 2xl:pb-20">
+          <div className="w-full max-w-[880px]">
             <p
-              className="tng-hero-reveal inline-flex max-w-full rounded-full border border-[#d4af37]/45 bg-black/45 px-4 py-2.5 text-[0.65rem] font-semibold uppercase tracking-[0.22em] text-[#e5c451] shadow-[0_14px_42px_rgba(0,0,0,0.38)] backdrop-blur-md sm:px-5 sm:text-xs sm:tracking-[0.3em]"
+              className="tng-hero-reveal inline-flex max-w-full rounded-full border border-[#d4af37]/40 bg-black/45 px-3.5 py-2 text-[0.6rem] font-semibold uppercase tracking-[0.18em] text-[#e5c451] shadow-[0_14px_42px_rgba(0,0,0,0.38)] backdrop-blur-md sm:px-4 sm:text-[0.65rem] sm:tracking-[0.25em]"
               style={{ animationDelay: "80ms" }}
             >
               Premium trailer rentals in the Okanagan
             </p>
 
             <h1
-              className="tng-hero-reveal mt-7 max-w-[960px] text-[clamp(3.35rem,6.25vw,6.65rem)] font-black leading-[0.89] tracking-[-0.065em] text-white [text-shadow:0_10px_38px_rgba(0,0,0,0.72)]"
+              className="tng-hero-reveal mt-6 max-w-[880px] text-[clamp(2.5rem,5vw,5.25rem)] font-black leading-[0.96] tracking-[-0.055em] text-white [text-shadow:0_10px_38px_rgba(0,0,0,0.72)]"
               style={{ animationDelay: "150ms" }}
             >
               <span className="block">
@@ -162,29 +150,29 @@ export function Hero() {
             </h1>
 
             <div
-              className="tng-hero-reveal mt-8 max-w-3xl"
+              className="tng-hero-reveal mt-6 max-w-[680px]"
               style={{ animationDelay: "230ms" }}
             >
-              <p className="text-xl font-semibold text-white sm:text-2xl lg:text-[1.7rem]">
+              <p className="text-lg font-semibold text-white sm:text-xl lg:text-[1.4rem]">
                 Trailer rentals starting at{" "}
                 <span className="text-[#d4af37]">
                   $115/day
                 </span>
               </p>
 
-              <p className="mt-4 max-w-3xl text-base leading-8 text-zinc-300 sm:text-lg lg:text-xl lg:leading-9">
+              <p className="mt-3 max-w-[660px] text-sm leading-6 text-zinc-300 sm:text-base sm:leading-7 lg:text-lg">
                 Tow it yourself, have an empty trailer delivered, or let Tow-N-Go
                 transport your prepared load. Serving Kelowna and the Okanagan.
               </p>
             </div>
 
             <div
-              className="tng-hero-reveal mt-9 grid max-w-[660px] gap-3 sm:grid-cols-2"
+              className="tng-hero-reveal mt-6 grid max-w-[560px] gap-3 sm:grid-cols-2"
               style={{ animationDelay: "310ms" }}
             >
               <Button
                 href="/rentals"
-                className="min-h-14 w-full justify-center px-8 text-base"
+                className="min-h-12 w-full justify-center px-6 text-sm sm:min-h-[52px]"
               >
                 Browse Trailers
               </Button>
@@ -192,14 +180,14 @@ export function Hero() {
               <Button
                 href="#service-options"
                 variant="secondary"
-                className="min-h-14 w-full justify-center border-white/20 bg-black/45 px-8 text-base"
+                className="min-h-12 w-full justify-center border-white/20 bg-black/45 px-6 text-sm sm:min-h-[52px]"
               >
                 Choose Your Service
               </Button>
             </div>
 
             <div
-              className="tng-hero-reveal mt-9 w-full max-w-[830px] overflow-hidden rounded-2xl border border-white/10 bg-black/40 shadow-[0_20px_60px_rgba(0,0,0,0.32)] backdrop-blur-md"
+              className="tng-hero-reveal mt-6 w-full max-w-[790px] overflow-hidden rounded-xl border border-white/10 bg-black/35 shadow-[0_16px_40px_rgba(0,0,0,0.25)] backdrop-blur-md"
               style={{ animationDelay: "390ms" }}
             >
               <div className="flex flex-col sm:flex-row sm:items-stretch">
@@ -207,7 +195,7 @@ export function Hero() {
                   <div
                     key={item}
                     className={[
-                      "flex min-h-14 flex-1 items-center gap-3 px-5 py-3.5 text-xs font-semibold uppercase tracking-[0.16em] text-zinc-300",
+                      "flex min-h-10 flex-1 items-center gap-2.5 px-4 py-2.5 text-[0.6rem] font-semibold uppercase tracking-[0.14em] text-zinc-300 sm:min-h-12",
                       index > 0
                         ? "border-t border-white/10 sm:border-l sm:border-t-0"
                         : "",
@@ -229,12 +217,12 @@ export function Hero() {
 
       <HalloweenDecor placement="hero" />
 
-      <div className="pointer-events-none absolute bottom-7 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-zinc-500 lg:flex">
+      <div className="pointer-events-none absolute bottom-5 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-zinc-500 2xl:flex">
         <span className="text-[0.62rem] font-semibold uppercase tracking-[0.28em]">
           Explore the fleet
         </span>
 
-        <span className="h-10 w-px bg-gradient-to-b from-[#d4af37]/80 to-transparent" />
+        <span className="h-6 w-px bg-gradient-to-b from-[#d4af37]/80 to-transparent" />
       </div>
     </section>
   );

@@ -15,7 +15,7 @@ export type GalleryEntry =
   | { kind: "job"; project: RecentJob }
   | { kind: "example"; project: GalleryExample };
 
-// Kept separate from the approved customer-job data, including its SEO controls.
+// Retained as marketing artwork references; these never populate On the Job.
 export const galleryExamples: readonly GalleryExample[] = [
   {
     id: "enclosed-delivery-idea",
@@ -48,9 +48,5 @@ export const galleryExamples: readonly GalleryExample[] = [
 ];
 
 export function getGalleryEntries(): readonly GalleryEntry[] {
-  const jobs = getPublishedJobs();
-  if (jobs.length > 0) {
-    return jobs.map((project) => ({ kind: "job", project }));
-  }
-  return galleryExamples.map((project) => ({ kind: "example", project }));
+  return getPublishedJobs().map((project) => ({ kind: "job", project }));
 }

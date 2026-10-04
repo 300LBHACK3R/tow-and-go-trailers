@@ -31,7 +31,7 @@ export function HalloweenPageDecor() {
           width={720}
           height={480}
           alt=""
-          sizes="180px"
+          sizes="150px"
           className={styles.decorationImage}
           draggable={false}
         />
@@ -70,7 +70,7 @@ export function HalloweenDecor({ placement }: { placement: "hero" | "footer" }) 
           width={isHero ? 720 : 420}
           height={isHero ? 480 : 525}
           alt=""
-          sizes={isHero ? "(min-width: 1536px) 340px, (min-width: 640px) 220px, 160px" : "132px"}
+          sizes={isHero ? "(min-width: 1536px) 280px, (min-width: 640px) 175px, 140px" : "132px"}
           className={styles.decorationImage}
           draggable={false}
         />
