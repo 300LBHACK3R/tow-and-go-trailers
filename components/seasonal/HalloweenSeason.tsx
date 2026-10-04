@@ -2,6 +2,7 @@
 
 import { useSyncExternalStore, type ReactNode } from "react";
 import { halloweenSeason, isHalloweenSeasonActive } from "@/lib/seasonal";
+import { HalloweenBats } from "./HalloweenBats";
 import styles from "./HalloweenSeason.module.css";
 
 function subscribeToSeason(onChange: () => void) {
@@ -67,6 +68,7 @@ export function HalloweenSeason({ children }: { children: ReactNode }) {
       data-seasonal-motion={moving ? "on" : "off"}
     >
       {children}
+      {active && <HalloweenBats />}
       {active && (
         <div className={styles.fog} aria-hidden="true">
           <div className={styles.fogNear} />

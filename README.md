@@ -55,7 +55,7 @@ The contact endpoint sends the business an inquiry email and attempts a confirma
 - **Frequently asked questions:** edit `data/faqDirectory.ts`. The FAQ page is at `/faq`.
 - **Reviews:** the review presentation lives in `components/sections/ReviewsSection.tsx` and `app/reviews/page.tsx`. Use approved, accurate customer feedback.
 - **On the Job gallery:** follow [docs/RECENT_JOBS.md](docs/RECENT_JOBS.md) before adding entries to `data/recentJobs.ts`. Starter artwork in `data/projectGallery.ts` is labeled as illustrative and is automatically replaced once approved real jobs exist.
-- **Seasonal decoration:** campaign dates are in `lib/seasonal.ts`; presentation is in `components/seasonal/`. The current Halloween campaign has an explicit end date.
+- **Seasonal decoration:** campaign dates are in `lib/seasonal.ts`; presentation is in `components/seasonal/`. The current Halloween campaign has an explicit end date. Small black-and-gold bats fly across every page, with a cobweb and black widow at the navigation edge. Decorative layers cannot intercept clicks, use fewer bats on mobile, and become static for reduced-motion visitors.
 
 Run the relevant checks after editing, then preview affected pages at desktop and mobile sizes. The shared header, footer, buttons and inquiry form serve multiple routes.
 

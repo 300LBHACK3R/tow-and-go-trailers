@@ -1,0 +1,95 @@
+.sky {
+  position: fixed;
+  z-index: 35;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+  contain: strict;
+}
+
+.flight {
+  position: absolute;
+  top: var(--flight-level);
+  left: -72px;
+  width: var(--flight-size);
+  opacity: 0;
+  animation: fly-across var(--flight-duration) linear var(--flight-delay) infinite;
+  animation-play-state: paused;
+}
+
+.reverse { animation-direction: reverse; }
+
+.bat {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  filter: drop-shadow(0 2px 3px rgb(0 0 0 / 45%));
+}
+
+.gold {
+  color: #d6ae56;
+  stroke: #f2d58d;
+  stroke-width: 0.7;
+}
+
+.black {
+  color: #101011;
+  stroke: #c6a05a;
+  stroke-width: 1.4;
+}
+
+.body { fill: #111113; stroke: #c6a05a; stroke-width: 1; }
+
+.leftWing,
+.rightWing {
+  transform-origin: 50px 25px;
+  animation: wingbeat var(--wing-rate) ease-in-out infinite alternate;
+  animation-play-state: paused;
+}
+
+:global([data-seasonal-motion="on"]) .flight,
+:global([data-seasonal-motion="on"]) .leftWing,
+:global([data-seasonal-motion="on"]) .rightWing {
+  animation-play-state: running;
+}
+
+@keyframes fly-across {
+  0% { opacity: 0; transform: translate3d(0, 0, 0) rotate(-8deg); }
+  5% { opacity: 0.65; }
+  23% { transform: translate3d(32vw, var(--flight-rise), 0) rotate(5deg); }
+  45% { transform: translate3d(67vw, 14px, 0) rotate(-5deg); }
+  65% { opacity: 0.65; }
+  72%, 100% { opacity: 0; transform: translate3d(calc(100vw + 144px), -20px, 0) rotate(8deg); }
+}
+
+@keyframes wingbeat {
+  from { transform: scaleY(0.55); }
+  to { transform: scaleY(1); }
+}
+
+@media (max-width: 639px) {
+  .flight { width: calc(var(--flight-size) * 0.78); }
+  .flight:nth-child(n + 4) { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* A stationary edge accent preserves the theme without crossing the page. */
+  .flight { display: none; animation: none; }
+  .flight:first-child {
+    display: block;
+    top: 132px;
+    right: 14px;
+    left: auto;
+    width: 25px;
+    opacity: 0.35;
+    transform: rotate(-14deg);
+  }
+  .leftWing,
+  .rightWing { animation: none; }
+}
+
+@media print {
+  .sky { display: none; }
+}
