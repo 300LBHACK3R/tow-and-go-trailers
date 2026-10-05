@@ -49,12 +49,12 @@ The contact endpoint sends the business an inquiry email and attempts a confirma
 
 ## Editing content
 
-- **Business details and navigation:** edit `lib/site.ts` for contact information, service area, social links and shared metadata.
+- **Business details:** edit `lib/site.ts` for contact information, service area, social links and shared metadata. Header and footer navigation live in `components/layout/Navbar.tsx` and `components/layout/Footer.tsx`.
 - **Trailers and rental categories:** edit `data/trailers.ts`, `data/trailerCategories.ts` and `data/trailerCategorySeoContent.ts`. Keep existing fleet image paths intact unless replacing a photograph intentionally.
 - **Service options:** edit `data/servicePathways.ts`. Preserve the `rental`, `delivery` and `transport` IDs because inquiry links and email handling use them.
 - **Frequently asked questions:** edit `data/faqDirectory.ts`. The FAQ page is at `/faq`.
 - **Reviews:** the review presentation lives in `components/sections/ReviewsSection.tsx` and `app/reviews/page.tsx`. Use approved, accurate customer feedback.
-- **On the Job gallery:** follow [docs/RECENT_JOBS.md](docs/RECENT_JOBS.md) before adding entries to `data/recentJobs.ts`. Starter artwork in `data/projectGallery.ts` is labeled as illustrative and is automatically replaced once approved real jobs exist.
+- **On the Job gallery:** follow [docs/RECENT_JOBS.md](docs/RECENT_JOBS.md). The four supplied trailer-use photos are in `data/projectGallery.ts`; confirmed customer-job details go in `data/recentJobs.ts`. Approved customer jobs appear first, followed by approved trailer-use photos. The homepage shows two entries and the gallery shows the full collection.
 - **Seasonal decoration:** campaign dates are in `lib/seasonal.ts`; presentation is in `components/seasonal/`. The current Halloween campaign has an explicit end date. Small black-and-gold bats fly across every page, with a cobweb and black widow at the navigation edge. Decorative layers cannot intercept clicks, use fewer bats on mobile, and become static for reduced-motion visitors.
 
 Run the relevant checks after editing, then preview affected pages at desktop and mobile sizes. The shared header, footer, buttons and inquiry form serve multiple routes.
@@ -67,10 +67,10 @@ Keep one project folder containing source, configuration, `package-lock.json`, d
 
 For coding changes, read `AGENTS.md` and the installed Next.js documentation it references.
 
-## October 4 review
+## Maintenance and source archives
 
-This review adds coordinated Halloween edge artwork and lantern glow, shared interior page headers, the renamed On the Job gallery, cleaner navigation and enquiry styling, and removal of 12 confirmed unused backup/source files. Existing contact handling, trailer data, pricing, approved-job controls and analytics are retained.
+The project includes compact photo heroes, the four-photo On the Job gallery, Halloween decorations, analytics and the image-delivery improvements. Active source, artwork and authoring instructions stay together in this folder. Old source backups and retired gallery examples are excluded; Git history provides source recovery.
 
-Build, TypeScript, lint and the nine existing service/gallery regression checks passed. A local-browser preview was unavailable in the build environment; review the homepage, On the Job, rental details, mobile menu and contact page at phone and desktop widths before publishing. This package has not been pushed or deployed.
+Before publishing changes, run `npm run lint`, `npm run test:service-pathways` and `npm run build`. Review affected pages at phone and desktop widths. PageSpeed scores are individual test results and should be checked again after a performance-related deployment.
 
-This folder is a complete source snapshot, without Git history, environment secrets, dependencies or build caches. Keep your existing Git checkout and private environment files. To publish after review, apply the reviewed source changes to that checkout and run the normal build and Git workflow.
+A source ZIP contains one `tow-and-go-trailers/` folder with the tracked source, configuration, lockfile, documentation and active images. It excludes Git history, real environment values, installed dependencies and build caches. Keep the existing Git checkout as the working project; use the ZIP as a clean handoff or source backup. A new checkout requires `npm ci` and your private email environment settings.

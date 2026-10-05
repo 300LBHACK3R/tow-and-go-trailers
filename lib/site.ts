@@ -87,32 +87,3 @@ export const siteConfig = {
     "equipment hauling Okanagan",
   ],
 } as const;
-
-export const navigationLinks = [
-  {
-    label: "Home",
-    href: "/",
-  },
-  {
-    label: "Trailer Rentals",
-    href: "/rentals",
-  },
-  {
-    label: "Services / Add-Ons",
-    href: "/services",
-  },
-  {
-    label: "On the Job",
-    href: "/recent-jobs",
-  },
-  {
-    label: "About",
-    href: "/about",
-  },
-  {
-    label: "Contact",
-    href: "/contact",
-  },
-] as const;
-
-export type NavigationLink = (typeof navigationLinks)[number];

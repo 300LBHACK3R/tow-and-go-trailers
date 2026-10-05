@@ -12,7 +12,7 @@ The original JPEG pixels are preserved under descriptive lowercase filenames in 
 
 There are still no verified customer jobs in `data/recentJobs.ts`. Approved actual jobs will appear first, followed by approved supplied photos. The heading remains **On the Job**, with **Trailers in use** describing the present collection. Once any gallery entries are available, the page is indexable, appears in the sitemap, and uses the first entry’s photograph for social sharing.
 
-The older two generated illustrative scenes remain marketing artwork references only in `galleryExamples`. They do not automatically populate this gallery and must never be represented as evidence of completed work. General hero artwork also remains illustrative.
+The gallery accepts only approved supplied photos and approved actual jobs. General hero artwork remains illustrative and is not evidence of completed customer work.
 
 ## Adding actual jobs later
 
@@ -56,7 +56,3 @@ This is an authoring template, not a customer project. Replace all placeholders 
   approvedForWebsite: false,
 },
 ```
-
-## Starter artwork
-
-The two 1536 × 1024 WebP images in `public/images/gallery/` were generated from the existing fleet references for this preview and optimized without changing their composition. They are intentionally stored apart from real job photos. Keep the illustration disclosure whenever these images are used as gallery examples.

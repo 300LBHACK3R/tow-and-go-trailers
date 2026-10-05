@@ -1,26 +1,21 @@
 import { getPublishedJobs, type JobPhoto, type RecentJob } from "@/data/recentJobs";
 import type { ServiceType } from "@/data/servicePathways";
 
-/** Illustrative advertising scenes. Never present these as completed customer jobs. */
-export type GalleryExample = {
+/** User-supplied trailer-use photos, without unverified completed-job details. */
+export type GalleryPhoto = {
   id: string;
   title: string;
   summary: string;
   trailer: string;
   service: ServiceType;
   image: JobPhoto;
+  rentalHref: string;
+  approvedForWebsite: boolean;
 };
 
 export type GalleryEntry =
   | { kind: "job"; project: RecentJob }
-  | { kind: "photo"; project: GalleryPhoto }
-  | { kind: "example"; project: GalleryExample };
-
-/** User-supplied trailer-use photos, without unverified completed-job details. */
-export type GalleryPhoto = GalleryExample & {
-  rentalHref: string;
-  approvedForWebsite: boolean;
-};
+  | { kind: "photo"; project: GalleryPhoto };
 
 // Tate requested these four supplied images be published on October 4, 2026.
 // Service/category fields route future enquiries; they do not document a past service.
@@ -83,38 +78,6 @@ export const galleryPhotos: readonly GalleryPhoto[] = [
       alt: "Black dump trailer loaded with branches and green waste beside a residential landscaping area.",
       width: 1448,
       height: 1086,
-    },
-  },
-];
-
-// Retained as marketing artwork references; these never populate On the Job.
-export const galleryExamples: readonly GalleryExample[] = [
-  {
-    id: "enclosed-delivery-idea",
-    title: "Space for your next move.",
-    summary:
-      "Have an enclosed trailer delivered to your place. You load and use it; collection is arranged with Tow-N-Go.",
-    trailer: "Enclosed trailer",
-    service: "delivery",
-    image: {
-      src: "/images/gallery/enclosed-trailer-delivery-example.webp",
-      alt: "Illustrative scene of a black enclosed trailer with its ramp lowered on an autumn driveway.",
-      width: 1536,
-      height: 1024,
-    },
-  },
-  {
-    id: "landscaping-rental-idea",
-    title: "Ready for a garden refresh.",
-    summary:
-      "Room for mulch, materials and the weekend’s to-do list. Ask about a dump-trailer rental for your next landscaping project.",
-    trailer: "Dump trailer",
-    service: "rental",
-    image: {
-      src: "/images/gallery/dump-trailer-landscaping-example.webp",
-      alt: "Illustrative scene of a parked black dump trailer carrying bark mulch beside a garden project.",
-      width: 1536,
-      height: 1024,
     },
   },
 ];

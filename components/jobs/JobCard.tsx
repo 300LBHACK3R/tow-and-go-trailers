@@ -25,11 +25,6 @@ export function JobCard({ entry, fullPage, imageSizes, detailImageSizes }: JobCa
         sizes={imageSizes}
         className="object-contain transition-transform duration-700 motion-safe:group-hover/photo:scale-[1.025]"
       />
-      {entry.kind === "example" && (
-        <span className="absolute left-4 top-4 rounded-full border border-white/20 bg-black/75 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-white backdrop-blur-sm sm:left-5 sm:top-5 sm:text-[11px]">
-          Illustrative scene
-        </span>
-      )}
       <span className="absolute bottom-4 right-4 inline-flex min-h-9 items-center gap-2 rounded-full border border-white/20 bg-black/75 px-3.5 py-2 text-xs font-medium text-white backdrop-blur-sm transition-colors group-hover/photo:border-[#d4af37]/60 group-hover/photo:text-[#e6c354] sm:bottom-5 sm:right-5">
         {fullPage ? "View image" : "Take a closer look"}
         <span aria-hidden="true">{fullPage ? "↗" : "→"}</span>
@@ -76,18 +71,6 @@ export function JobCard({ entry, fullPage, imageSizes, detailImageSizes }: JobCa
               className="mt-3 inline-flex min-h-11 items-center gap-3 rounded-sm text-sm font-semibold text-[#e6c354] underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37]"
             >
               Explore trailer rentals<span className="sr-only">: {project.trailer}</span><span aria-hidden="true">→</span>
-            </Link>
-          </>
-        )}
-
-        {fullPage && entry.kind === "example" && (
-          <>
-            <p className="mt-5 max-w-xl border-t border-white/10 pt-5 text-sm leading-7 text-zinc-300">{project.summary}</p>
-            <Link
-              href={`/services#${project.service}`}
-              className="mt-3 inline-flex min-h-11 items-center gap-3 rounded-sm text-sm font-semibold text-[#e6c354] underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37]"
-            >
-              Explore this service<span className="sr-only">: {getServiceLabel(project.service)}</span><span aria-hidden="true">→</span>
             </Link>
           </>
         )}

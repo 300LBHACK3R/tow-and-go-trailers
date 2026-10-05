@@ -120,8 +120,6 @@ test('empty customer-job gallery never substitutes marketing artwork and remains
   const html = renderToStaticMarkup(React.createElement(app.load('components/sections/RecentJobs.tsx').RecentJobs));
   assert.equal((html.match(/<article/g) || []).length, 0);
   assert.ok(html.includes('Customer job photos are on their way.'));
-  assert.ok(!html.includes('enclosed-trailer-delivery-example'));
-  assert.ok(!html.includes('dump-trailer-landscaping-example'));
   assert.ok(!html.includes('Plan a similar job'));
   assert.equal(app.load('data/recentJobs.ts').getPublishedJobs().length, 0);
   const full = renderToStaticMarkup(React.createElement(app.load('components/sections/RecentJobs.tsx').RecentJobs, { fullPage: true }));
@@ -150,8 +148,6 @@ test('gallery displays only approved jobs, limits homepage to two, and enables d
   assert.ok(home.includes('/recent-jobs#fixture-1'));
   assert.ok(all.includes('service=transport'));
   assert.ok(all.includes('trailer=Test'));
-  assert.ok(!all.includes('enclosed-trailer-delivery-example'));
-  assert.ok(!all.includes('dump-trailer-landscaping-example'));
   assert.ok(!all.includes('Illustrative scenes'));
   assert.equal(app.load('app/recent-jobs/page.tsx').metadata.robots.index, true);
   assert.ok(app.load('app/sitemap.ts').default().some((route) => route.url.endsWith('/recent-jobs')));

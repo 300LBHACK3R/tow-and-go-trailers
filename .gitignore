@@ -32,6 +32,8 @@ yarn-error.log*
 .pnpm-debug.log*
 
 # Local recovery and backup artifacts
+/.backup/
+*.bak
 /_reviews-section-backups/
 /_tiktok-update-backups/
 /_local-safety-before-restore/
