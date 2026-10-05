@@ -53,7 +53,7 @@ export function JobCard({ entry, fullPage, imageSizes, detailImageSizes }: JobCa
 
       <div className="px-5 pb-6 pt-6 sm:px-7 sm:pb-7 sm:pt-7">
         <p className="text-[11px] font-semibold uppercase leading-5 tracking-[0.16em] text-[#d4af37]">
-          {getServiceLabel(project.service)}
+          {entry.kind === "photo" ? "Trailers in use" : getServiceLabel(project.service)}
         </p>
         <Heading id={headingId} className="mt-2.5 text-xl font-semibold leading-snug tracking-[-0.025em] text-white sm:text-2xl">
           {project.title}
@@ -67,6 +67,18 @@ export function JobCard({ entry, fullPage, imageSizes, detailImageSizes }: JobCa
             </>
           )}
         </p>
+
+        {entry.kind === "photo" && (
+          <>
+            <p className="mt-5 max-w-xl border-t border-white/10 pt-5 text-sm leading-7 text-zinc-300">{project.summary}</p>
+            <Link
+              href={entry.project.rentalHref}
+              className="mt-3 inline-flex min-h-11 items-center gap-3 rounded-sm text-sm font-semibold text-[#e6c354] underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37]"
+            >
+              Explore trailer rentals<span className="sr-only">: {project.trailer}</span><span aria-hidden="true">→</span>
+            </Link>
+          </>
+        )}
 
         {fullPage && entry.kind === "example" && (
           <>

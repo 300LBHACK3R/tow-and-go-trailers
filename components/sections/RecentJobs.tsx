@@ -7,6 +7,7 @@ export function RecentJobs({ fullPage = false }: { fullPage?: boolean }) {
   const allEntries = getGalleryEntries();
   const entries = fullPage ? allEntries : allEntries.slice(0, 2);
   const hasEntries = entries.length > 0;
+  const hasJobs = allEntries.some((entry) => entry.kind === "job");
   const EmptyHeading = fullPage ? "h2" : "h3";
   const imageSizes = entries.length === 1
     ? "(max-width: 639px) calc(100vw - 34px), (max-width: 767px) calc(100vw - 50px), 698px"
@@ -26,17 +27,19 @@ export function RecentJobs({ fullPage = false }: { fullPage?: boolean }) {
           <div className="mb-9 flex flex-col items-start justify-between gap-5 sm:mb-12 md:flex-row md:items-end">
             <div className="max-w-2xl">
               <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#d4af37]">
-                Customer projects
+                {hasJobs ? "Customer projects & trailers in use" : "Trailers in use"}
               </p>
               <h2 className="mt-4 text-4xl font-semibold tracking-[-0.04em] text-white sm:text-5xl">
                 On the Job
               </h2>
               <p className="mt-4 text-sm leading-7 text-zinc-400 sm:text-base">
-                Our trailers. Your projects. A closer look at customer jobs around the Okanagan.
+                {hasJobs
+                  ? "Customer projects and a closer look at the fleet in use. Explore trailers for moves, cleanup and equipment hauling around the Okanagan."
+                  : "Renovation cleanups, landscaping, moving day and equipment projects. Explore how Tow-N-Go trailers can support the work ahead in Kelowna and the Okanagan."}
               </p>
             </div>
             <Link href="/recent-jobs" className="inline-flex min-h-11 shrink-0 items-center gap-4 rounded-full border border-white/15 px-5 py-3 text-sm font-semibold text-[#e6c354] transition-colors hover:border-[#d4af37]/50 hover:bg-[#d4af37]/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37]">
-              View customer projects <span aria-hidden="true">→</span>
+              View the gallery <span aria-hidden="true">→</span>
             </Link>
           </div>
         )}

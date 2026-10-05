@@ -113,6 +113,7 @@ test('service and trailer links round-trip special characters safely', () => {
 
 test('empty customer-job gallery never substitutes marketing artwork and remains noindex', () => {
   const app = isolatedApp();
+  app.load('data/projectGallery.ts').galleryPhotos.splice(0);
   const { metadata } = app.load('app/recent-jobs/page.tsx');
   assert.equal(metadata.robots.index, false);
   assert.ok(!app.load('app/sitemap.ts').default().some((route) => route.url.endsWith('/recent-jobs')));
@@ -131,6 +132,7 @@ test('empty customer-job gallery never substitutes marketing artwork and remains
 
 test('gallery displays only approved jobs, limits homepage to two, and enables discovery', () => {
   const app = isolatedApp();
+  app.load('data/projectGallery.ts').galleryPhotos.splice(0);
   const { recentJobs, getPublishedJobs } = app.load('data/recentJobs.ts');
   for (let i = 0; i < 5; i++) recentJobs.push({
     id: `fixture-${i}`, title: `Test-only project ${i}`, summary: 'Synthetic test fixture, never saved to site data.',
@@ -157,6 +159,7 @@ test('gallery displays only approved jobs, limits homepage to two, and enables d
 
 test('gallery exposes approved additional photos on the project page without leaking draft photos', () => {
   const app = isolatedApp();
+  app.load('data/projectGallery.ts').galleryPhotos.splice(0);
   const { recentJobs } = app.load('data/recentJobs.ts');
   const job = {
     id: 'gallery-fixture', title: 'Synthetic gallery fixture', summary: 'Never saved to site data.',
@@ -183,4 +186,38 @@ test('gallery exposes approved additional photos on the project page without lea
   assert.equal(metadata.openGraph.images[0].url, 'https://www.towandgotrailers.ca/images/jobs/test-main.webp');
   assert.equal(metadata.twitter.images[0].url, metadata.openGraph.images[0].url);
   assert.equal(metadata.twitter.images[0].alt, job.image.alt);
+});
+
+
+test('gallery publishes supplied photos with visible captions without inventing completed jobs', () => {
+  const app = isolatedApp();
+  const { galleryPhotos, getGalleryEntries } = app.load('data/projectGallery.ts');
+  assert.equal(app.load('data/recentJobs.ts').getPublishedJobs().length, 0);
+  assert.equal(galleryPhotos.length, 4);
+  assert.ok(getGalleryEntries().every((entry) => entry.kind === 'photo'));
+  const { RecentJobs } = app.load('components/sections/RecentJobs.tsx');
+  const home = renderToStaticMarkup(React.createElement(RecentJobs));
+  const all = renderToStaticMarkup(React.createElement(RecentJobs, { fullPage: true }));
+  assert.equal((home.match(/<article/g) || []).length, 2);
+  assert.equal((all.match(/<article/g) || []).length, 4);
+  assert.ok(home.includes('enclosed-trailer-moving-day'));
+  assert.ok(!all.includes('<details'));
+  assert.ok(!all.includes('Plan a similar job'));
+  assert.ok(!all.includes('Customer projects'));
+  assert.ok(!all.includes('photos are on their way'));
+  assert.ok(all.includes('Trailers in use'));
+  for (const photo of galleryPhotos) {
+    assert.ok(all.includes(photo.title.replaceAll('&', '&amp;')));
+    assert.ok(all.includes(photo.summary.replaceAll('&', '&amp;')));
+    assert.ok(all.includes(`href="${photo.rentalHref}"`));
+    assert.ok(all.includes('object-contain'));
+    assert.ok(fs.existsSync(path.join(root, 'public', photo.image.src)));
+    assert.ok(photo.image.alt.length > 20);
+  }
+  const { metadata } = app.load('app/recent-jobs/page.tsx');
+  assert.equal(metadata.robots.index, true);
+  assert.equal(metadata.openGraph.images[0].url, `https://www.towandgotrailers.ca${galleryPhotos[0].image.src}`);
+  assert.ok(app.load('app/sitemap.ts').default().some((route) => route.url.endsWith('/recent-jobs')));
+  galleryPhotos[0].approvedForWebsite = false;
+  assert.equal(getGalleryEntries().length, 3);
 });

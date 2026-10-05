@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-import { getPublishedJobs } from "@/data/recentJobs";
+import { getGalleryEntries } from "@/data/projectGallery";
 import { trailerCategories } from "@/data/trailerCategories";
 
 const SITE_URL =
@@ -59,7 +59,7 @@ export default function sitemap():
 
   const allRoutes = [
     ...staticRoutes,
-    ...(getPublishedJobs().length ? [{ url: `${SITE_URL}/recent-jobs`, changeFrequency: "weekly" as const, priority: 0.7 }] : []),
+    ...(getGalleryEntries().length ? [{ url: `${SITE_URL}/recent-jobs`, changeFrequency: "weekly" as const, priority: 0.7 }] : []),
     ...trailerRoutes,
   ];
 

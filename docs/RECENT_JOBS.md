@@ -4,16 +4,15 @@ The **On the Job** gallery at `/recent-jobs` and on the homepage uses the same s
 
 ## Current state
 
-There are no approved customer jobs in `data/recentJobs.ts` yet. On the Job now displays a concise photo-coming-soon state on the homepage and gallery page. It only displays actual approved customer projects, showing the trailers being put to use. It does not fall back to generated advertising scenes.
+Tate supplied and requested publication of four trailer-use photos on October 4, 2026: renovation debris in a dump trailer, furniture moving with an enclosed trailer, construction equipment on a flatdeck, and landscaping cleanup with a dump trailer.
 
-The two generated illustrative scenes remain preserved in `data/projectGallery.ts` as marketing artwork references:
+They are stored as `GalleryPhoto` records in `data/projectGallery.ts`, with `kind: "photo"` in the combined gallery. These records have permission to display but do not assert a completed customer job, customer identity, date or job location. The `service` field is enquiry context, not a historical service record. Captions describe visible trailer uses and Tow-N-Go’s known service area. The equipment caption describes the parked setup before load securement.
 
-- Enclosed-trailer delivery at a residential driveway.
-- Dump-trailer rental for a landscaping project.
+The original JPEG pixels are preserved under descriptive lowercase filenames in `public/images/jobs/`; Next Image supplies responsive image optimization. Captions are always visible below these images, the full compositions are retained with `object-contain`, and category links lead to relevant rental pages. The homepage shows the first two entries; the gallery shows all four.
 
-These are service ideas, not evidence of work performed, and are not published in On the Job. Never copy them into the approved customer-job array or represent them as real project photographs. The page's general hero artwork also remains illustrative, with an explicit image description; it is not a customer job entry.
+There are still no verified customer jobs in `data/recentJobs.ts`. Approved actual jobs will appear first, followed by approved supplied photos. The heading remains **On the Job**, with **Trailers in use** describing the present collection. Once any gallery entries are available, the page is indexable, appears in the sitemap, and uses the first entry’s photograph for social sharing.
 
-The gallery page remains noindex and absent from the sitemap until at least one actual, approved job is added. The website's published version is not changed by preparing this local update.
+The older two generated illustrative scenes remain marketing artwork references only in `galleryExamples`. They do not automatically populate this gallery and must never be represented as evidence of completed work. General hero artwork also remains illustrative.
 
 ## Adding actual jobs later
 
@@ -23,7 +22,7 @@ The gallery page remains noindex and absent from the sitemap until at least one 
 4. Set `approvedForWebsite: true` only once that entry's photographs and details are ready to publish. Unapproved entries are never displayed. Do not commit sensitive drafts or private customer information.
 5. Run `npm run build` and `node --test --test-name-pattern=gallery scripts/check-service-pathways.mjs`. Preview `/` and `/recent-jobs` on desktop and mobile using `npm run dev`. Check photos, inquiry links and expanded details.
 
-**Once the first approved actual job exists, it automatically replaces the coming-soon state.** The homepage displays the first two approved jobs; the gallery page displays all approved jobs. Its search indexing and sitemap entry are enabled on the next build. Its social preview uses the first real job photo.
+**Approved actual jobs appear before supplied trailer-use photos.** The homepage displays the first two combined entries; the gallery page displays all approved entries. Project-specific facts and expanded additional photographs are reserved for confirmed actual jobs. If both sources are empty, the coming-soon state returns and the page becomes noindex and is omitted from the sitemap.
 
 No CMS, paid service or file-upload endpoint is added. Publishing new entries still means editing the data file and deploying the website.
 

@@ -3,17 +3,18 @@ import { PageHero } from "@/components/ui/PageHero";
 import { RecentJobs } from "@/components/sections/RecentJobs";
 import { CTASection } from "@/components/sections/CTASection";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { getPublishedJobs } from "@/data/recentJobs";
+import { getGalleryEntries } from "@/data/projectGallery";
 import { siteConfig, socialImage } from "@/lib/site";
 
-const publishedJobs = getPublishedJobs();
-const hasJobs = publishedJobs.length > 0;
+const galleryEntries = getGalleryEntries();
+const hasEntries = galleryEntries.length > 0;
+const hasJobs = galleryEntries.some((entry) => entry.kind === "job");
 const pageTitle = "On the Job";
 const socialTitle = "On the Job | Tow-N-Go Trailers";
-const description = hasJobs
-  ? "See Tow-N-Go trailers at work on real customer jobs around Kelowna and the Okanagan, with project photos, trailer details and the services provided."
+const description = hasEntries
+  ? "Explore Tow-N-Go trailers in use for renovation cleanup, landscaping, moving and equipment projects. Trailer rentals serving Kelowna and the Okanagan."
   : "Our customer job gallery is coming soon: Tow-N-Go trailers at work on moves, material runs and hauling projects around Kelowna and the Okanagan.";
-const firstPhoto = publishedJobs[0]?.image;
+const firstPhoto = galleryEntries[0]?.project.image;
 const galleryImage = firstPhoto ? {
   url: new URL(firstPhoto.src, siteConfig.url).toString(),
   width: firstPhoto.width,
@@ -25,8 +26,8 @@ export const metadata: Metadata = {
   title: pageTitle,
   description,
   alternates: { canonical: `${siteConfig.url}/recent-jobs` },
-  // Illustrative examples never make this page indexable as completed work.
-  robots: { index: hasJobs, follow: true },
+  // Index the populated gallery without representing supplied photos as verified jobs.
+  robots: { index: hasEntries, follow: true },
   openGraph: {
     images: [galleryImage],
     title: socialTitle,
@@ -57,7 +58,7 @@ export default function RecentJobsPage() {
         }}
       />
       <PageHero
-        eyebrow="Customer projects"
+        eyebrow={hasJobs ? "Customer projects & trailers in use" : "Trailers in use"}
         title="On the Job"
         breadcrumb="On the Job"
         image={{
@@ -66,8 +67,8 @@ export default function RecentJobsPage() {
           position: "68% 60%",
           mobilePosition: "90% 58%",
         }}
-        description={hasJobs
-          ? "Our trailers. Your projects. See the fleet put to work on customer moves, material runs and hauling jobs around the Okanagan."
+        description={hasEntries
+          ? "Renovation cleanups, landscaping, moving day and equipment projects. Explore the fleet in use, with trailer rental options for Kelowna, the Okanagan and beyond."
           : "Our trailers. Your projects. A closer look at customer jobs and the trailers that help make them happen. Photos coming soon."}
       />
       <RecentJobs fullPage />
