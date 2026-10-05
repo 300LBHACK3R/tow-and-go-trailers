@@ -80,8 +80,9 @@ export function Hero() {
           src="/images/golden-hour-over-industrial-trailers-and-moun.png"
           alt="Premium Tow-N-Go trailer rentals serving Kelowna and the Okanagan"
           fill
-          priority
-          quality={92}
+          loading="eager"
+          fetchPriority="high"
+          quality={75}
           sizes="100vw"
           className="tng-hero-image object-cover object-[66%_center] brightness-[0.88] contrast-[1.08] saturate-[1.06] sm:object-[68%_center] lg:object-[70%_center]"
         />

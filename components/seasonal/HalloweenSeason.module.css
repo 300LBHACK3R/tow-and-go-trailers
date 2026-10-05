@@ -314,6 +314,11 @@
 }
 
 @media (max-width: 639px) {
+  .fogNear,
+  .fogFar {
+    background-image: url("/images/seasonal/halloween-fog-mobile.webp");
+  }
+
   .fog { height: min(24svh, 180px); }
   .fogNear { opacity: 0.23; }
   .fogFar { opacity: 0.08; }

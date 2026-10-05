@@ -163,7 +163,8 @@ export function PremiumTrailerCard({
           src={trailer.image}
           alt={`${presentation.title} available from Tow-N-Go Trailers`}
           fill
-          sizes="(max-width: 767px) 100vw, (max-width: 1279px) 50vw, 33vw"
+          quality={65}
+          sizes="(min-width: 1280px) 388px, (min-width: 1024px) calc(50vw - 46px), (min-width: 768px) calc(50vw - 38px), (min-width: 640px) calc(100vw - 50px), calc(100vw - 34px)"
           className="object-cover object-center transition-transform duration-[900ms] ease-out group-hover/card:scale-[1.025] motion-reduce:transform-none motion-reduce:transition-none"
         />
 

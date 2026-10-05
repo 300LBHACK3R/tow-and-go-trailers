@@ -38,7 +38,8 @@ export function PageHero({
           src={image.src}
           alt={image.alt}
           fill
-          preload
+          loading="eager"
+          fetchPriority="high"
           sizes="(min-width: 1760px) 1056px, (min-width: 1440px) 60vw, (min-width: 1108px) 864px, (min-width: 1024px) 78vw, (min-width: 775px) 713px, (min-width: 640px) 92vw, 100vw"
           className={styles.image}
         />
