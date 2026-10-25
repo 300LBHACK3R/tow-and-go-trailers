@@ -189,14 +189,16 @@ test('gallery publishes supplied photos with visible captions without inventing 
   const app = isolatedApp();
   const { galleryPhotos, getGalleryEntries } = app.load('data/projectGallery.ts');
   assert.equal(app.load('data/recentJobs.ts').getPublishedJobs().length, 0);
-  assert.equal(galleryPhotos.length, 4);
+  assert.ok(galleryPhotos.length > 0);
+  assert.equal(new Set(galleryPhotos.map((photo) => photo.id)).size, galleryPhotos.length);
+  assert.equal(new Set(galleryPhotos.map((photo) => photo.image.src)).size, galleryPhotos.length);
   assert.ok(getGalleryEntries().every((entry) => entry.kind === 'photo'));
   const { RecentJobs } = app.load('components/sections/RecentJobs.tsx');
   const home = renderToStaticMarkup(React.createElement(RecentJobs));
   const all = renderToStaticMarkup(React.createElement(RecentJobs, { fullPage: true }));
   assert.equal((home.match(/<article/g) || []).length, 2);
-  assert.equal((all.match(/<article/g) || []).length, 4);
-  assert.ok(home.includes('enclosed-trailer-moving-day'));
+  assert.equal((all.match(/<article/g) || []).length, galleryPhotos.length);
+  for (const photo of galleryPhotos.slice(0, 2)) assert.ok(home.includes(`/recent-jobs#${photo.id}`));
   assert.ok(!all.includes('<details'));
   assert.ok(!all.includes('Plan a similar job'));
   assert.ok(!all.includes('Customer projects'));
@@ -215,5 +217,5 @@ test('gallery publishes supplied photos with visible captions without inventing 
   assert.equal(metadata.openGraph.images[0].url, `https://www.towandgotrailers.ca${galleryPhotos[0].image.src}`);
   assert.ok(app.load('app/sitemap.ts').default().some((route) => route.url.endsWith('/recent-jobs')));
   galleryPhotos[0].approvedForWebsite = false;
-  assert.equal(getGalleryEntries().length, 3);
+  assert.equal(getGalleryEntries().length, galleryPhotos.length - 1);
 });

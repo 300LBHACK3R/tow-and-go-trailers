@@ -54,7 +54,7 @@ The contact endpoint sends the business an inquiry email and attempts a confirma
 - **Service options:** edit `data/servicePathways.ts`. Preserve the `rental`, `delivery` and `transport` IDs because inquiry links and email handling use them.
 - **Frequently asked questions:** edit `data/faqDirectory.ts`. The FAQ page is at `/faq`.
 - **Reviews:** the review presentation lives in `components/sections/ReviewsSection.tsx` and `app/reviews/page.tsx`. Use approved, accurate customer feedback.
-- **On the Job gallery:** follow [docs/RECENT_JOBS.md](docs/RECENT_JOBS.md). The four supplied trailer-use photos are in `data/projectGallery.ts`; confirmed customer-job details go in `data/recentJobs.ts`. Approved customer jobs appear first, followed by approved trailer-use photos. The homepage shows two entries and the gallery shows the full collection.
+- **On the Job gallery:** follow [docs/RECENT_JOBS.md](docs/RECENT_JOBS.md). The supplied trailer-use photos are in `data/projectGallery.ts`; confirmed customer-job details go in `data/recentJobs.ts`. Approved customer jobs appear first, followed by approved trailer-use photos. The homepage shows two entries and the gallery shows the full collection.
 - **Seasonal decoration:** campaign dates are in `lib/seasonal.ts`; presentation is in `components/seasonal/`. The current Halloween campaign has an explicit end date. Small black-and-gold bats fly across every page, with a cobweb and black widow at the navigation edge. Decorative layers cannot intercept clicks, use fewer bats on mobile, and become static for reduced-motion visitors.
 
 Run the relevant checks after editing, then preview affected pages at desktop and mobile sizes. The shared header, footer, buttons and inquiry form serve multiple routes.
@@ -69,7 +69,7 @@ For coding changes, read `AGENTS.md` and the installed Next.js documentation it 
 
 ## Maintenance and source archives
 
-The project includes compact photo heroes, the four-photo On the Job gallery, Halloween decorations, analytics and the image-delivery improvements. Active source, artwork and authoring instructions stay together in this folder. Old source backups and retired gallery examples are excluded; Git history provides source recovery.
+The project includes compact photo heroes, the On the Job gallery, Halloween decorations, analytics and the image-delivery improvements. Active source, artwork and authoring instructions stay together in this folder. Old source backups and retired gallery examples are excluded; Git history provides source recovery.
 
 Before publishing changes, run `npm run lint`, `npm run test:service-pathways` and `npm run build`. Review affected pages at phone and desktop widths. PageSpeed scores are individual test results and should be checked again after a performance-related deployment.
 

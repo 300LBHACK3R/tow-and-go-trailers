@@ -17,9 +17,54 @@ export type GalleryEntry =
   | { kind: "job"; project: RecentJob }
   | { kind: "photo"; project: GalleryPhoto };
 
-// Tate requested these four supplied images be published on October 4, 2026.
+// Approved supplied images, newest first. Existing scenes are not added twice.
 // Service/category fields route future enquiries; they do not document a past service.
 export const galleryPhotos: readonly GalleryPhoto[] = [
+  {
+    id: "flatdeck-mini-excavator",
+    title: "Mini Excavator Transport",
+    summary: "A mini excavator is shown at the rear loading ramps of a black flatdeck trailer. Tow-N-Go offers flatdeck equipment trailer rentals for landscaping and construction projects in Kelowna and the Okanagan. Ask about trailer and ramp suitability for your equipment’s size and weight, or transport for your prepared, customer-loaded equipment.",
+    trailer: "Flatdeck equipment trailer",
+    service: "rental",
+    rentalHref: "/rentals/flatdeck-equipment-trailers",
+    approvedForWebsite: true,
+    image: {
+      src: "/images/jobs/tow-n-go-flatdeck-mini-excavator-transport-okanagan.webp",
+      alt: "Mini excavator and operator at the rear ramps of a black flatdeck trailer beside a landscaping project.",
+      width: 1448,
+      height: 1086,
+    },
+  },
+  {
+    id: "enclosed-trailer-event-setup",
+    title: "Event Setup & Equipment",
+    summary: "An enclosed trailer sits beside event tents, chairs and equipment cases in an autumn orchard. Tow-N-Go’s enclosed trailer rentals provide covered cargo space for event supplies in Kelowna and the Okanagan. Tow it yourself or ask about empty-trailer delivery and collection. You prepare and load your items.",
+    trailer: "Enclosed trailer",
+    service: "rental",
+    rentalHref: "/rentals/enclosed-trailers",
+    approvedForWebsite: true,
+    image: {
+      src: "/images/jobs/tow-n-go-enclosed-trailer-event-equipment-okanagan.webp",
+      alt: "Black enclosed trailer beside white event tents, chairs and equipment cases in an autumn orchard.",
+      width: 1920,
+      height: 1440,
+    },
+  },
+  {
+    id: "flatdeck-riding-mower",
+    title: "Riding Mower Transport",
+    summary: "A riding mower is shown on a flatdeck trailer in an orchard setting. Tow-N-Go offers flatdeck trailer rentals for lawn equipment and property-maintenance projects across Kelowna and the Okanagan. Share your equipment’s dimensions and weight when enquiring so trailer suitability can be confirmed.",
+    trailer: "Flatdeck equipment trailer",
+    service: "rental",
+    rentalHref: "/rentals/flatdeck-equipment-trailers",
+    approvedForWebsite: true,
+    image: {
+      src: "/images/jobs/tow-n-go-flatdeck-riding-mower-transport-okanagan.webp",
+      alt: "Green riding mower on a black tandem-axle flatdeck trailer attached to a pickup in an autumn orchard.",
+      width: 1920,
+      height: 1440,
+    },
+  },
   {
     id: "renovation-cleanup",
     title: "Renovation Cleanup",

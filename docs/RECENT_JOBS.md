@@ -6,9 +6,11 @@ The **On the Job** gallery at `/recent-jobs` and on the homepage uses the same s
 
 Tate supplied and requested publication of four trailer-use photos on October 4, 2026: renovation debris in a dump trailer, furniture moving with an enclosed trailer, construction equipment on a flatdeck, and landscaping cleanup with a dump trailer.
 
+On October 25, three new supplied scenes were added: mini-excavator transport, enclosed-trailer event setup and riding-mower transport. The resupplied moving-day and landscaping-cleanup scenes were already present and were not added again. The three new images appear first, with excavator transport and event setup featured on the homepage.
+
 They are stored as `GalleryPhoto` records in `data/projectGallery.ts`, with `kind: "photo"` in the combined gallery. These records have permission to display but do not assert a completed customer job, customer identity, date or job location. The `service` field is enquiry context, not a historical service record. Captions describe visible trailer uses and Tow-N-Go’s known service area. The equipment caption describes the parked setup before load securement.
 
-The original JPEG pixels are preserved under descriptive lowercase filenames in `public/images/jobs/`; Next Image supplies responsive image optimization. Captions are always visible below these images, the full compositions are retained with `object-contain`, and category links lead to relevant rental pages. The homepage shows the first two entries; the gallery shows all four.
+The original four JPEGs and three optimized WebP images are stored under descriptive lowercase filenames in `public/images/jobs/`; Next Image supplies responsive image optimization. The new WebP files retain the supplied dimensions, complete compositions, logos and contact footers, with metadata removed. Captions are always visible below these images, the full compositions are retained with `object-contain`, and category links lead to relevant rental pages. The homepage shows the first two entries; the gallery shows all seven.
 
 There are still no verified customer jobs in `data/recentJobs.ts`. Approved actual jobs will appear first, followed by approved supplied photos. The heading remains **On the Job**, with **Trailers in use** describing the present collection. Once any gallery entries are available, the page is indexable, appears in the sitemap, and uses the first entry’s photograph for social sharing.
 
