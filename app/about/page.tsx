@@ -1,5 +1,7 @@
+import Image from "next/image";
 import { PageHero } from "@/components/ui/PageHero";
 import { Container } from "@/components/ui/Container";
+import styles from "./page.module.css";
 
 export default function AboutPage() {
   return (
@@ -17,15 +19,24 @@ export default function AboutPage() {
         }}
       />
 
-      <section className="py-14 sm:py-20">
+      <section className={styles.content}>
         <Container>
-          <article aria-labelledby="our-story-heading" className="grid gap-6 border-t border-white/10 py-10 first:border-t-0 first:pt-0 sm:py-12 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-16">
-              <div>
-                <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#d4af37]">01 / Our beginning</p>
-                <h2 id="our-story-heading" className="mt-4 text-3xl font-semibold tracking-[-0.03em] text-white">Our Story</h2>
+          <article aria-labelledby="our-story-heading" className={styles.story}>
+              <div className={styles.storyIntro}>
+                <p className={styles.eyebrow}>01 / Our beginning</p>
+                <h2 id="our-story-heading" className={styles.heading}>Our Story</h2>
+                <div aria-hidden="true" className={styles.storyPhoto}>
+                  <Image
+                    src="/images/heroes/fleet-premium.webp"
+                    alt=""
+                    fill
+                    sizes="(max-width: 639px) calc(100vw - 32px), (max-width: 1023px) calc(100vw - 48px), (max-width: 1279px) 40vw, 460px"
+                    className={styles.photo}
+                  />
+                </div>
               </div>
-              <div className="max-w-[680px] space-y-5 text-base leading-8 text-zinc-300">
-                <p>
+              <div className={styles.storyCopy}>
+                <p className={styles.lead}>
                   Tow-N-Go Trailers was built through resilience, persistence, and a
                   genuine desire to create something meaningful for our family and the
                   community we serve.
@@ -47,18 +58,17 @@ export default function AboutPage() {
                   deliver a better rental experience — one defined by quality
                   equipment, reliability, and genuine customer care.
                 </p>
-                <p>
+                <p className={styles.promise}>
                   We’re proud to serve the Okanagan with a standard of service we
                   would expect ourselves.
                 </p>
               </div>
           </article>
-          <article aria-labelledby="why-we-started-heading" className="grid gap-6 border-t border-white/10 py-10 first:border-t-0 first:pt-0 sm:py-12 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-16">
-              <div>
-                <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#d4af37]">02 / Our purpose</p>
-                <h2 id="why-we-started-heading" className="mt-4 text-3xl font-semibold tracking-[-0.03em] text-white">Why We Started</h2>
-              </div>
-              <div className="max-w-[680px] space-y-5 text-base leading-8 text-zinc-300">
+          <article aria-labelledby="why-we-started-heading" className={styles.purpose}>
+              <div className={styles.purposeCopy}>
+                <p className={styles.eyebrow}>02 / Our purpose</p>
+                <h2 id="why-we-started-heading" className={styles.heading}>Why We Started</h2>
+                <div className={styles.purposeText}>
                 <p>
                   We saw a gap in the market. Trailer rentals were often overpriced,
                   poorly maintained, limited in selection, and frustrating to deal
@@ -73,6 +83,16 @@ export default function AboutPage() {
                   stressful situation, the last thing they should worry about is the
                   trailer they rented.
                 </p>
+                </div>
+              </div>
+              <div aria-hidden="true" className={styles.purposePhoto}>
+                <Image
+                  src="/images/tow-and-go-royal-cargo-enclosed-trailer-okanagan-interior-empty-02.png"
+                  alt=""
+                  fill
+                  sizes="(max-width: 639px) calc(100vw - 80px), (max-width: 1023px) calc(100vw - 128px), (max-width: 1279px) 38vw, 456px"
+                  className={styles.photo}
+                />
               </div>
           </article>
         </Container>
