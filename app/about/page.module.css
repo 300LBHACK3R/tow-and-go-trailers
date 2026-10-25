@@ -56,9 +56,13 @@
 }
 
 .storyPhoto {
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 7 / 5;
   margin-top: 2rem;
   box-shadow: 0 1.5rem 3.5rem rgb(0 0 0 / 25%);
+}
+
+.storyPhoto .photo {
+  object-position: right center;
 }
 
 .storyPhoto::after {
